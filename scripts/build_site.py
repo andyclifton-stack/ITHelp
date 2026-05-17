@@ -1,0 +1,605 @@
+import html
+import json
+import re
+import shutil
+import textwrap
+import stat
+from pathlib import Path
+from urllib.parse import urljoin, urlparse
+
+import requests
+from bs4 import BeautifulSoup, NavigableString, Tag
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE_HOME = "https://sites.google.com/claremontschool.co.uk/claremontschoolit/home"
+SOURCE_PREFIX = "https://sites.google.com/claremontschool.co.uk/claremontschoolit"
+SITE_PATH_PREFIX = "/claremontschool.co.uk/claremontschoolit"
+
+CATEGORY_ORDER = [
+    "Start Here",
+    "Requests & Support",
+    "Classlink",
+    "Google Workspace",
+    "Microsoft Teams",
+    "iSAMS",
+    "Printing",
+    "Office Desk Phones",
+    "Devices & Windows",
+    "School Systems",
+    "Security",
+    "Room Help",
+    "Files & Conversion",
+    "Miscellaneous",
+]
+
+CATEGORY_LABELS = {
+    "Google - Drive, Mail, Meet etc": "Google Workspace",
+    "Conversion, general file problems": "Files & Conversion",
+    "Senior Specific Room Help": "Room Help",
+    "Prep Specific Room Help": "Room Help",
+}
+
+CATEGORY_ICONS = {
+    "Start Here": "M4 5.5h16M4 12h10M4 18.5h16",
+    "Requests & Support": "M4 5h16v10H7l-3 3V5ZM8 9h8M8 12h5",
+    "Classlink": "M7 8h10M7 12h10M7 16h6M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z",
+    "Google Workspace": "M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-11ZM8 8h8M8 12h8M8 16h5",
+    "Microsoft Teams": "M8 7h8M8 12h8M8 17h5M5 4h14v16H5V4Z",
+    "iSAMS": "M12 4v16M5 8h14M6 16h12M8 4h8a3 3 0 0 1 0 6H8V4Z",
+    "Printing": "M7 8V4h10v4M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v6H7v-6Z",
+    "Office Desk Phones": "M8 5h8v14H8V5ZM10 8h4M10 11h4M10 14h1M13 14h1M10 17h4",
+    "Devices & Windows": "M4 5h16v10H4V5ZM8 19h8M10 15v4M14 15v4",
+    "School Systems": "M4 7h16M6 7v13h12V7M8 4h8v3H8V4ZM8 11h3M13 11h3M8 15h3M13 15h3",
+    "Security": "M12 3l7 3v5c0 4.5-3 7.5-7 10-4-2.5-7-5.5-7-10V6l7-3ZM9.5 12l1.7 1.7 3.8-4",
+    "Room Help": "M4 20V8l8-4 8 4v12M8 20v-7h8v7M9 9h.01M15 9h.01",
+    "Files & Conversion": "M6 3h8l4 4v14H6V3ZM13 3v5h5M9 13h6M9 17h4",
+    "Miscellaneous": "M5 5h6v6H5V5ZM13 5h6v6h-6V5ZM5 13h6v6H5v-6ZM13 13h6v6h-6v-6Z",
+}
+
+CATEGORY_OVERRIDES = {
+    "Student Password Reset Form": "Requests & Support",
+    "Submitting a Support Ticket": "Requests & Support",
+    "Tab Wrangler": "Devices & Windows",
+    "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More": "Devices & Windows",
+    "Opening multiple favourite tabs": "Devices & Windows",
+    "How to use Chrome Remote Desktop": "Devices & Windows",
+    "No sound and the speaker icon has a red cross through it": "Devices & Windows",
+    "Chromebook shortcuts": "Devices & Windows",
+    "Changing display settings on Chromebook and Windows": "Devices & Windows",
+    "Activating Text to Speech - Chromebook + Windows": "Devices & Windows",
+    "Exam Information": "School Systems",
+    "Sign In App": "School Systems",
+    "OneDrive": "School Systems",
+    "Photography Sharepoint": "School Systems",
+    "Engage Client": "School Systems",
+    "Universal Printer": "Printing",
+    "What is the WiFi password (SSID:Internet)": "Requests & Support",
+    "Accident Forms": "School Systems",
+}
+
+CATEGORY_ACCENTS = [
+    "navy",
+    "blue",
+    "sky",
+    "orange",
+]
+
+CLEANUPS = {
+    "Sevice Desk": "Service Desk",
+    "soltutions": "solutions",
+    "origional": "original",
+    "wont": "won't",
+    "Youtube": "YouTube",
+    "google ": "Google ",
+    "google.": "Google.",
+    "google,": "Google,",
+    " do i ": " do I ",
+    "how do i": "how do I",
+    "How do i": "How do I",
+    "add/remote": "add/remove",
+    "SEPERATE": "SEPARATE",
+    "Persistant": "Persistent",
+    "quick assistant": "quick assistance",
+}
+
+SESSION = requests.Session()
+SESSION.headers.update({"User-Agent": "Claremont IT static migration/1.0"})
+
+
+def slugify(value):
+    value = html.unescape(value).strip().lower()
+    value = value.replace("&", "and")
+    value = re.sub(r"[^a-z0-9]+", "-", value)
+    return re.sub(r"-+", "-", value).strip("-") or "page"
+
+
+def clean_text(value):
+    value = html.unescape(value or "")
+    value = re.sub(r"\s+", " ", value).strip()
+    for old, new in CLEANUPS.items():
+        value = value.replace(old, new)
+    return value
+
+
+def excerpt(value, limit=180):
+    value = clean_text(value)
+    if len(value) <= limit:
+        return value
+    clipped = value[:limit].rsplit(" ", 1)[0].rstrip(" ,.;:-")
+    return clipped + "..."
+
+
+def fetch(url):
+    response = SESSION.get(url, timeout=30)
+    response.raise_for_status()
+    return response.text
+
+
+def full_source_url(href):
+    if not href:
+        return ""
+    if href.startswith(SITE_PATH_PREFIX):
+        return "https://sites.google.com" + href
+    return urljoin(SOURCE_HOME, href)
+
+
+def normalize_source_url(url):
+    parsed = urlparse(url)
+    path = parsed.path.rstrip("/")
+    if path.startswith(SITE_PATH_PREFIX):
+        return "https://sites.google.com" + path
+    return url.split("#", 1)[0].rstrip("/")
+
+
+def page_output_path(source_url):
+    path = urlparse(source_url).path
+    rel = path.split("/claremontschoolit/", 1)[-1].strip("/")
+    if rel == "home":
+        return "index.html"
+    return f"articles/{rel}/index.html"
+
+
+def relative_link(from_file, to_file):
+    return Path(to_file).relative_to(ROOT).as_posix() if Path(to_file).is_absolute() else to_file
+
+
+def href_for(source_url, from_output):
+    target = page_output_path(source_url)
+    return Path(target).as_posix()
+
+
+def build_nav():
+    soup = BeautifulSoup(fetch(SOURCE_HOME), "lxml")
+    items = []
+    current_category = "Start Here"
+    seen = set()
+    for a in soup.find_all("a"):
+        label = clean_text(a.get_text(" ", strip=True))
+        href = a.get("href")
+        if not label:
+            continue
+        source_category_labels = set(CATEGORY_ORDER) | set(CATEGORY_LABELS.keys()) | {"Senior Specific Room Help", "Prep Specific Room Help"}
+        if href is None and label in source_category_labels:
+            current_category = CATEGORY_LABELS.get(label, label)
+            continue
+        if not href or not href.startswith(SITE_PATH_PREFIX):
+            continue
+        if label == "Claremont School IT":
+            continue
+        source_url = normalize_source_url(full_source_url(href))
+        if source_url in seen:
+            continue
+        seen.add(source_url)
+        category = CATEGORY_OVERRIDES.get(label, CATEGORY_LABELS.get(current_category, current_category))
+        if label == "Home":
+            category = "Start Here"
+        items.append({"title": label, "source_url": source_url, "category": category})
+    return items
+
+
+def rewrite_href(href):
+    if not href:
+        return "#"
+    if href.startswith("#"):
+        return href
+    full = normalize_source_url(full_source_url(href))
+    if full.startswith(SOURCE_PREFIX):
+        return "/" + href_for(full, "")
+    return href
+
+
+def render_inline(node):
+    if isinstance(node, NavigableString):
+        text = re.sub(r"\s+", " ", str(node))
+        for old, new in CLEANUPS.items():
+            text = text.replace(old, new)
+        return html.escape(text)
+    if not isinstance(node, Tag):
+        return ""
+    name = node.name.lower()
+    if name == "a":
+        text = "".join(render_inline(child) for child in node.children).strip()
+        href = rewrite_href(node.get("href"))
+        if not text:
+            text = html.escape(href)
+        return f' <a href="{html.escape(href)}">{text}</a> '
+    if name in {"strong", "b"}:
+        return f"<strong>{''.join(render_inline(child) for child in node.children)}</strong>"
+    if name in {"em", "i"}:
+        return f"<em>{''.join(render_inline(child) for child in node.children)}</em>"
+    if name == "br":
+        return "<br>"
+    return "".join(render_inline(child) for child in node.children)
+
+
+def render_list(tag):
+    name = "ol" if tag.name == "ol" else "ul"
+    items = []
+    for li in tag.find_all("li", recursive=False):
+        text = render_inline(li).strip()
+        if text:
+            items.append(f"<li>{text}</li>")
+    return f"<{name}>" + "".join(items) + f"</{name}>" if items else ""
+
+
+def should_skip_tag(tag):
+    if tag.find_parent(["li", "p", "h1", "h2", "h3", "ul", "ol"]):
+        return True
+    text = clean_text(tag.get_text(" ", strip=True))
+    return text in {"Report abuse", "Page details", "Page updated"}
+
+
+def extract_article(item):
+    soup = BeautifulSoup(fetch(item["source_url"]), "lxml")
+    h1 = None
+    for candidate in soup.find_all("h1"):
+        text = clean_text(candidate.get_text(" ", strip=True))
+        if text:
+            h1 = candidate
+            break
+    title = clean_text(h1.get_text(" ", strip=True)) if h1 else item["title"]
+    if item["title"] == "Home":
+        title = "Welcome to Claremont School IT"
+
+    parts = []
+    plain = []
+    media = []
+    resource_media = []
+    resource_headings = []
+    if h1:
+        for tag in h1.find_all_next(["h2", "h3", "p", "ul", "ol", "table", "img", "iframe", "video", "a"]):
+            if should_skip_tag(tag):
+                continue
+            text = clean_text(tag.get_text(" ", strip=True))
+            if text in {"Learn more"}:
+                break
+            if tag.name == "h2":
+                parts.append(f"<h2>{html.escape(text)}</h2>")
+                plain.append(text)
+                if text.lower() in {"video", "embedded files", "embedded file"}:
+                    resource_headings.append(text)
+            elif tag.name == "h3":
+                parts.append(f"<h3>{html.escape(text)}</h3>")
+                plain.append(text)
+                if text.lower() in {"video", "embedded files", "embedded file"}:
+                    resource_headings.append(text)
+            elif tag.name == "p":
+                body = render_inline(tag).strip()
+                if body:
+                    parts.append(f"<p>{body}</p>")
+                    plain.append(text)
+            elif tag.name in {"ul", "ol"}:
+                block = render_list(tag)
+                if block:
+                    parts.append(block)
+                    plain.append(text)
+            elif tag.name == "table":
+                rows = []
+                for tr in tag.find_all("tr"):
+                    cells = [clean_text(c.get_text(" ", strip=True)) for c in tr.find_all(["th", "td"])]
+                    if cells:
+                        rows.append("<tr>" + "".join(f"<td>{html.escape(c)}</td>" for c in cells) + "</tr>")
+                if rows:
+                    parts.append('<div class="table-wrap"><table>' + "".join(rows) + "</table></div>")
+                    plain.append(text)
+            elif tag.name == "img":
+                src = tag.get("src") or tag.get("data-src")
+                alt = clean_text(tag.get("alt") or title)
+                if src and src.startswith("http") and "gstatic.com" not in src and "google.com/images/icons/product" not in src:
+                    parts.append(f'<figure class="media-frame"><img src="{html.escape(src)}" alt="{html.escape(alt)}"></figure>')
+                    media.append({"type": "image", "url": src})
+            elif tag.name in {"iframe", "video"}:
+                src = tag.get("src")
+                if src:
+                    parts.append(f'<p class="resource-link"><a href="{html.escape(src)}">Open embedded media</a></p>')
+                    media.append({"type": tag.name, "url": src})
+                    resource_media.append(src)
+            elif tag.name == "a":
+                href = tag.get("href")
+                label = clean_text(tag.get_text(" ", strip=True))
+                if href and ("googleusercontent" in href or "drive.google" in href):
+                    link_text = label or "Open original embedded resource"
+                    parts.append(f'<p class="resource-link"><a href="{html.escape(href)}">{html.escape(link_text)}</a></p>')
+                    media.append({"type": "embedded resource", "url": href})
+                    resource_media.append(href)
+
+    if not parts:
+        parts = ["<p>This page did not expose readable body content during migration. Please check the original Google Site source.</p>"]
+        media.append({"type": "unresolved", "url": item["source_url"]})
+    if resource_headings and not resource_media:
+        parts.append('<p class="resource-link">This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed.</p>')
+        media.append({"type": "unresolved embedded media", "url": item["source_url"]})
+    summary = " ".join(plain)
+    summary = clean_text(summary[:260])
+    return {
+        **item,
+        "title": title,
+        "summary": summary,
+        "body": "\n".join(parts),
+        "text": clean_text(" ".join(plain)),
+        "media": media,
+        "output": page_output_path(item["source_url"]),
+    }
+
+
+def category_slug(category):
+    return f"categories/{slugify(category)}/index.html"
+
+
+def root_prefix(output_path):
+    depth = len(Path(output_path).parts) - 1
+    return "../" * depth
+
+
+def page_shell(title, description, body, page="", output_path="index.html"):
+    prefix = root_prefix(output_path)
+    content = f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{html.escape(title)} | Claremont School IT</title>
+  <meta name="description" content="{html.escape(description[:155])}">
+  <link rel="stylesheet" href="{prefix}assets/css/styles.css">
+  <link rel="icon" href="{prefix}favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="{prefix}assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="{prefix}assets/img/favicon-180.png">
+</head>
+<body data-page="{html.escape(page)}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+  <main id="main">
+{body}
+  </main>
+  <div id="site-footer"></div>
+  <script src="{prefix}assets/data/search-index.js"></script>
+  <script src="{prefix}assets/js/site.js"></script>
+</body>
+</html>
+"""
+    return content.replace('href="/', f'href="{prefix}').replace('src="/', f'src="{prefix}')
+
+
+def write(path, content):
+    target = ROOT / path
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(content, encoding="utf-8")
+
+
+def article_page(article):
+    body = f"""
+    <section class="page-hero compact">
+      <div class="container">
+        <h1>{html.escape(article['title'])}</h1>
+        <p class="page-meta">{html.escape(article['category'])}</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container article-layout">
+        <article class="article-content">
+          {article['body']}
+          <div class="source-note">
+            <strong>Original source:</strong> <a href="{html.escape(article['source_url'])}">Google Site page</a>
+          </div>
+        </article>
+        <aside class="article-aside">
+          <h2>Need more help?</h2>
+          <p>For faults or requests, submit a ticket through the Service Desk so the IT team can track and respond properly.</p>
+          <a class="button" href="/articles/submitting-a-support-ticket/index.html">Submit a support ticket</a>
+        </aside>
+      </div>
+    </section>"""
+    return page_shell(article["title"], article["summary"], body, "article", article["output"])
+
+
+def home_page(articles, categories):
+    featured_titles = [
+        "Submitting a Support Ticket",
+        "Student Password Reset Form",
+        "How to Log Into Google Drive",
+        "Papercut Hive",
+        "What is the WiFi password (SSID:Internet)",
+        "Have you tried switching it off and on again?!",
+    ]
+    by_title = {a["title"]: a for a in articles}
+    cards = []
+    for title in featured_titles:
+        article = by_title.get(title)
+        if article:
+            cards.append(f"""<article class="card">
+              <h3>{html.escape(article['title'])}</h3>
+              <p>{html.escape(excerpt(article['summary'], 150))}</p>
+              <a href="/{article['output']}">Open guide</a>
+            </article>""")
+    category_cards = []
+    for category in categories:
+        count = len([a for a in articles if a["category"] == category])
+        if count:
+            accent = CATEGORY_ACCENTS[len(category_cards) % len(CATEGORY_ACCENTS)]
+            icon_path = CATEGORY_ICONS.get(category, CATEGORY_ICONS["Miscellaneous"])
+            category_cards.append(f"""<a class="category-card" href="/{category_slug(category)}">
+              <span class="category-icon {accent}" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="{html.escape(icon_path)}"></path>
+                </svg>
+              </span>
+              <span class="category-count">{count} {'guide' if count == 1 else 'guides'}</span>
+              <strong>{html.escape(category)}</strong>
+            </a>""")
+    total_articles = len(articles)
+    quick_links = [
+        ("Submit a Support Ticket", "/articles/submitting-a-support-ticket/index.html", "For faults, requests and anything that needs tracking."),
+        ("Student Password Reset", "/articles/student-password-reset-form/index.html", "Reset requests for student accounts."),
+        ("Printing Help", "/categories/printing/index.html", "Papercut Hive, toner and exam paper printing."),
+        ("Google Workspace", "/categories/google-workspace/index.html", "Drive, Gmail, Calendar, Meet and Classroom guides."),
+    ]
+    quick_link_cards = "".join(
+        f"""<a class="quick-link" href="{href}">
+          <strong>{html.escape(title)}</strong>
+          <span>{html.escape(description)}</span>
+        </a>"""
+        for title, href, description in quick_links
+    )
+    body = f"""
+    <section class="home-hero">
+      <div class="container home-hero-inner">
+        <div class="home-intro">
+          <img class="hero-logo" src="/assets/img/claremont-logo-white.png" alt="Claremont School">
+          <h1>Claremont School IT Help</h1>
+          <p>Search practical staff guides, common fixes and classroom technology notes.</p>
+        </div>
+        <div class="search-panel" role="search">
+          <label for="site-search">Search IT help</label>
+          <input id="site-search" type="search" placeholder="Try password, Gmail, Teams, printing, iSAMS or WiFi">
+          <div id="search-results" class="search-results" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+    <section class="support-strip">
+      <div class="container">
+        <div class="support-message">
+          <strong>Need IT to act on something?</strong>
+          <span>Technical faults and requests should still go through the Service Desk so they can be tracked and prioritised.</span>
+          <a class="button" href="/articles/submitting-a-support-ticket/index.html">Service Desk guide</a>
+        </div>
+      </div>
+    </section>
+    <section class="section home-section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Common Tasks</h2>
+          <p>{total_articles} guides across {len(categories)} help areas.</p>
+        </div>
+        <div class="quick-link-grid">{quick_link_cards}</div>
+        <div class="grid">{''.join(cards)}</div>
+      </div>
+    </section>
+    <section class="section soft home-section">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Browse by Category</h2>
+          <p>Choose the system or problem area you need.</p>
+        </div>
+        <div class="category-grid">{''.join(category_cards)}</div>
+      </div>
+    </section>
+    <section class="section home-section">
+      <div class="container two-col">
+        <div>
+          <h2>Contact IT Support</h2>
+          <p>Use Google Chat for quick questions only. Faults and requests should go through the Service Desk so they can be tracked and prioritised.</p>
+          <div class="button-row">
+            <a class="button" href="/articles/submitting-a-support-ticket/index.html">Service Desk guide</a>
+            <a class="button secondary" href="https://chat.google.com/">Open Google Chat</a>
+          </div>
+        </div>
+        <aside class="callout blue">
+          <p><strong>New content needed?</strong> Submit a ticket and the IT team can help directly, then add a guide here where it will help others too.</p>
+        </aside>
+      </div>
+    </section>"""
+    return page_shell("Home", "Searchable IT help for Claremont School staff.", body, "home", "index.html")
+
+
+def category_page(category, articles):
+    cards = "".join(
+        f"""<article class="list-card">
+          <h2><a href="/{a['output']}">{html.escape(a['title'])}</a></h2>
+          <p>{html.escape(excerpt(a['summary'], 220))}</p>
+        </article>"""
+        for a in articles
+    )
+    body = f"""
+    <section class="page-hero compact">
+      <div class="container">
+        <h1>{html.escape(category)}</h1>
+        <p class="page-meta">{len(articles)} {'help guide' if len(articles) == 1 else 'help guides'} in this section.</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container list-layout">
+        {cards}
+      </div>
+    </section>"""
+    return page_shell(category, f"{category} IT help guides.", body, slugify(category), category_slug(category))
+
+
+def media_inventory(articles):
+    rows = ["# Media and Embedded Resource Inventory", ""]
+    unresolved = []
+    for article in articles:
+        if article["media"]:
+            rows.append(f"## {article['title']}")
+            rows.append(f"- Original page: {article['source_url']}")
+            for item in article["media"]:
+                rows.append(f"- {item['type']}: {item['url']}")
+            rows.append("")
+        elif "video" in article["text"].lower() or "recording" in article["title"].lower():
+            unresolved.append(article)
+    if unresolved:
+        rows.extend(["## Pages mentioning video with no resolved embed", ""])
+        for article in unresolved:
+            rows.append(f"- {article['title']}: {article['source_url']}")
+    return "\n".join(rows).strip() + "\n"
+
+
+def main():
+    def clear_readonly(func, path, _exc):
+        Path(path).chmod(stat.S_IWRITE)
+        func(path)
+
+    for folder in ["articles", "categories"]:
+        shutil.rmtree(ROOT / folder, onexc=clear_readonly)
+    nav = build_nav()
+    articles = []
+    for item in nav:
+        if item["title"] == "Home":
+            continue
+        print(f"Fetching {item['title']}")
+        articles.append(extract_article(item))
+
+    category_order = [c for c in CATEGORY_ORDER if any(a["category"] == c for a in articles)]
+    for article in articles:
+        write(article["output"], article_page(article))
+    for category in category_order:
+        write(category_slug(category), category_page(category, [a for a in articles if a["category"] == category]))
+    write("index.html", home_page(articles, category_order))
+
+    search_index = [
+        {
+            "title": a["title"],
+            "category": a["category"],
+            "url": a["output"],
+            "summary": a["summary"],
+            "text": a["text"][:1600],
+        }
+        for a in articles
+    ]
+    write("assets/data/search-index.js", "window.IT_HELP_SEARCH_INDEX = " + json.dumps(search_index, ensure_ascii=False, indent=2) + ";\n")
+    write("media-needed.md", media_inventory(articles))
+    print(f"Generated {len(articles)} articles and {len(category_order)} category pages.")
+
+
+if __name__ == "__main__":
+    main()
