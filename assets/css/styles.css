@@ -184,14 +184,14 @@ input:focus-visible {
 
 .hero-logo {
   position: absolute;
-  left: 0;
+  left: clamp(1rem, 4vw, 3rem);
   top: clamp(1rem, 2vw, 1.5rem);
   width: clamp(108px, 9vw, 150px);
   height: auto;
 }
 
 .home-intro {
-  padding-left: clamp(8.5rem, 12vw, 11rem);
+  padding-left: clamp(11rem, 18vw, 15rem);
 }
 
 .home-intro h1 {
@@ -434,9 +434,10 @@ li {
   position: relative;
   display: grid;
   gap: 0.35rem;
-  min-height: 120px;
+  height: 112px;
   align-content: start;
-  padding: 1.1rem;
+  overflow: hidden;
+  padding: 1rem;
   border: 1px solid var(--line);
   border-top: 5px solid var(--school-blue);
   border-radius: 8px;
@@ -455,8 +456,13 @@ li {
 }
 
 .quick-link span {
+  display: -webkit-box;
+  overflow: hidden;
   color: var(--muted);
   font-size: 0.94rem;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .card,
@@ -907,14 +913,11 @@ th {
   }
 
   .hero-logo {
-    position: static;
-    width: 88px;
-    margin-bottom: 0.85rem;
-    display: block;
+    display: none;
   }
 
   .home-hero {
-    padding-top: 5.8rem;
+    padding-top: 5rem;
   }
 
   .search-panel {
