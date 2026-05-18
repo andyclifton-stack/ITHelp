@@ -908,6 +908,10 @@ th {
 }
 
 @media (max-width: 780px) {
+  .site-header {
+    z-index: 30;
+  }
+
   .hero,
   .two-col,
   .article-layout {
@@ -945,6 +949,7 @@ th {
   }
 
   .search-panel {
+    z-index: 1;
     margin-top: 0.5rem;
     padding: 1rem;
   }
