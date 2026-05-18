@@ -537,5 +537,19 @@ window.IT_HELP_SEARCH_INDEX = [
     "url": "articles/chromebook-wont-turn-on/index.html",
     "summary": "A quick key combination that often wakes a Chromebook when the screen is blank or the device appears not to turn on.",
     "text": "If a student says their Chromebook won't turn on, hold Refresh, tap Power once, then let go of Refresh when the screen lights up."
+  },
+  {
+    "title": "ClassLink page not appearing automatically",
+    "category": "Classlink",
+    "url": "articles/classlink/classlink-page-not-appearing-automatically/index.html",
+    "summary": "What to do if the usual ClassLink home page does not open automatically or Google shows the generic ClassLink login finder.",
+    "text": "If the ClassLink home page is not appearing automatically, search for ISP on the ClassLink login finder and choose Staff and Students, or go directly to https://launchpad.classlink.com/ispschools."
+  },
+  {
+    "title": "ClassLink using a personal Microsoft account",
+    "category": "Classlink",
+    "url": "articles/classlink/classlink-using-a-personal-microsoft-account/index.html",
+    "summary": "How to fix ClassLink opening with a personal Microsoft account instead of your school account.",
+    "text": "If ClassLink defaults to a personal Microsoft account, sign out at myaccount.microsoft.com and make sure your school account is the active account before returning to ClassLink."
   }
 ];

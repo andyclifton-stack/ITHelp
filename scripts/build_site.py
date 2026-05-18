@@ -112,6 +112,57 @@ CUSTOM_ARTICLES = [
         "output": "articles/chromebook-wont-turn-on/index.html",
         "source_url": "",
         "custom": True,
+    },
+    {
+        "title": "ClassLink page not appearing automatically",
+        "category": "Classlink",
+        "summary": "What to do if the usual ClassLink home page does not open automatically or Google shows the generic ClassLink login finder.",
+        "text": "If the ClassLink home page is not appearing automatically, search for ISP on the ClassLink login finder and choose Staff and Students, or go directly to https://launchpad.classlink.com/ispschools.",
+        "body": """
+          <p>Some staff have reported that the usual ClassLink home page is not appearing automatically. If you search for ClassLink on Google, you may see the generic ClassLink page that asks you to find your login page.</p>
+          <figure class="media-frame help-illustration">
+            <img src="../../../assets/img/classlink-find-login-page.svg" alt="ClassLink find your login page screen.">
+          </figure>
+          <h3>Option 1: Search for ISP</h3>
+          <ol>
+            <li>On the ClassLink page, type <strong>ISP</strong> into the <strong>Find your login page</strong> box.</li>
+            <li>Select <strong>Staff and Students</strong>.</li>
+            <li>You should then see the ISP landing page. ISP means International Schools Partnership.</li>
+            <li>Select <strong>Sign in with Microsoft</strong>.</li>
+          </ol>
+          <h3>Option 2: Go directly to our login page</h3>
+          <p>Use this direct link to bypass the login finder: <a href="https://launchpad.classlink.com/ispschools">https://launchpad.classlink.com/ispschools</a></p>
+          <p>If you still cannot access ClassLink after trying these steps, please let IT know as soon as possible.</p>
+        """.strip(),
+        "media": [],
+        "output": "articles/classlink/classlink-page-not-appearing-automatically/index.html",
+        "source_url": "",
+        "custom": True,
+    },
+    {
+        "title": "ClassLink using a personal Microsoft account",
+        "category": "Classlink",
+        "summary": "How to fix ClassLink opening with a personal Microsoft account instead of your school account.",
+        "text": "If ClassLink defaults to a personal Microsoft account, sign out at myaccount.microsoft.com and make sure your school account is the active account before returning to ClassLink.",
+        "body": """
+          <p>If ClassLink is defaulting to your personal Microsoft account instead of your school account, it is usually because a personal account has previously been used on the device and kept signed in.</p>
+          <figure class="media-frame help-illustration">
+            <img src="../../../assets/img/microsoft-account-switch.svg" alt="Sign out of a personal Microsoft account and return to ClassLink with your school account.">
+          </figure>
+          <h3>Fix the account selection</h3>
+          <ol>
+            <li>Go to <a href="https://myaccount.microsoft.com/">https://myaccount.microsoft.com/</a>.</li>
+            <li>Select your profile picture or initials in the top-right corner.</li>
+            <li>Sign out of your personal Microsoft account.</li>
+            <li>Make sure your school account is the only account signed in. Sign in with your school account if needed.</li>
+            <li>Go back to ClassLink. It should now take you through using your school account.</li>
+          </ol>
+          <p>If ClassLink still chooses the wrong account, submit a support ticket and IT can help clear the browser sign-in state.</p>
+        """.strip(),
+        "media": [],
+        "output": "articles/classlink/classlink-using-a-personal-microsoft-account/index.html",
+        "source_url": "",
+        "custom": True,
     }
 ]
 

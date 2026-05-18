@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 520" role="img" aria-labelledby="title desc">
+  <title id="title">Switch from personal Microsoft account to school account</title>
+  <desc id="desc">A simple flow showing a personal Microsoft account being signed out, then the school account used for ClassLink.</desc>
+  <rect width="980" height="520" rx="28" fill="#f5f7fb"/>
+  <rect x="70" y="74" width="250" height="292" rx="14" fill="#fff" stroke="#d9e0ea" stroke-width="3"/>
+  <circle cx="195" cy="150" r="50" fill="#fff0e6" stroke="#ed6b17" stroke-width="4"/>
+  <path d="M174 153h42M195 132v42" stroke="#ed6b17" stroke-width="8" stroke-linecap="round"/>
+  <text x="195" y="234" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#000b4d">Personal</text>
+  <text x="195" y="266" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#526071">Microsoft account</text>
+  <rect x="112" y="302" width="166" height="46" rx="7" fill="#ed6b17"/>
+  <text x="195" y="332" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#fff">Sign out</text>
+  <path d="M352 220h204" stroke="#283583" stroke-width="10" stroke-linecap="round"/>
+  <path d="M534 188l62 37-62 37z" fill="#283583"/>
+  <rect x="628" y="74" width="282" height="292" rx="14" fill="#fff" stroke="#d9e0ea" stroke-width="3"/>
+  <circle cx="769" cy="150" r="50" fill="#e5f9ff" stroke="#00b3e8" stroke-width="4"/>
+  <path d="M746 153l17 17 34-43" fill="none" stroke="#00b3e8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="769" y="234" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#000b4d">School</text>
+  <text x="769" y="266" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#526071">Microsoft account</text>
+  <rect x="679" y="302" width="180" height="46" rx="7" fill="#283583"/>
+  <text x="769" y="332" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#fff">Return to ClassLink</text>
+  <text x="490" y="438" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#000b4d">Use the school account before opening ClassLink</text>
+</svg>
