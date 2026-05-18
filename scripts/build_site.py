@@ -73,7 +73,6 @@ CATEGORY_OVERRIDES = {
     "OneDrive": "School Systems",
     "Photography Sharepoint": "School Systems",
     "Engage Client": "School Systems",
-    "Universal Printer": "Printing",
     "What is the WiFi password (SSID:Internet)": "Requests & Support",
     "Accident Forms": "School Systems",
 }
@@ -84,6 +83,10 @@ CATEGORY_ACCENTS = [
     "sky",
     "orange",
 ]
+
+SKIP_TITLES = {
+    "Universal Printer",
+}
 
 CUSTOM_ARTICLES = [
     {
@@ -212,6 +215,8 @@ def build_nav():
         if not href or not href.startswith(SITE_PATH_PREFIX):
             continue
         if label == "Claremont School IT":
+            continue
+        if label in SKIP_TITLES:
             continue
         source_url = normalize_source_url(full_source_url(href))
         if source_url in seen:
@@ -465,7 +470,7 @@ def home_page(articles, categories):
         "Chromebook won't turn on",
         "How to Log Into Google Drive",
         "Papercut Hive",
-        "Universal Printer",
+        "Changing Toner",
         "Have you tried switching it off and on again?!",
         "No sound and the speaker icon has a red cross through it",
     ]
