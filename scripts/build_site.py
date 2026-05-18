@@ -509,8 +509,11 @@ def generated_media_svg(article):
 
 
 def ensure_generated_media(article):
-    if has_reliable_visual_media(article["body"]):
-        return article
+    article["body"] = re.sub(
+        r'<figure class="media-frame help-illustration"><img[^>]+assets/media/generated/[^>]+></figure>\n?',
+        "",
+        article["body"],
+    )
     article["body"] = re.sub(
         r'<figure class="media-frame"><img src="https?://[^"]*googleusercontent\.com/sitesv/[^"]+" alt="[^"]*"></figure>\n?',
         "",
@@ -582,7 +585,7 @@ def apply_local_media(article):
         for item in article["media"]
         if item["type"] not in {"image", "unresolved embedded media"}
     ]
-    return article
+    return ensure_generated_media(article)
 
 
 def build_nav():
@@ -1102,7 +1105,7 @@ def main():
             continue
         print(f"Fetching {item['title']}")
         articles.append(extract_article(item))
-    articles.extend(CUSTOM_ARTICLES)
+    articles.extend(apply_article_updates(article.copy()) for article in CUSTOM_ARTICLES)
 
     category_order = [c for c in CATEGORY_ORDER if any(a["category"] == c for a in articles)]
     for article in articles:

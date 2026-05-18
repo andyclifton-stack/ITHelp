@@ -514,21 +514,21 @@ window.IT_HELP_SEARCH_INDEX = [
     "title": "Chromebook won't turn on",
     "category": "Devices & Windows",
     "url": "articles/chromebook-wont-turn-on/index.html",
-    "summary": "A quick key combination that often wakes a Chromebook when the screen is blank or the device appears not to turn on.",
-    "text": "If a student says their Chromebook won't turn on, hold Refresh, tap Power once, then let go of Refresh when the screen lights up."
+    "summary": "If a student says their Chromebook will not turn on, this quick reset often wakes the device straight away. Ask the student to try this Hold down the Refresh key, which looks like a circular arrow. While still holding Refresh, tap the Power button once. Let go",
+    "text": "If a student says their Chromebook will not turn on, this quick reset often wakes the device straight away. Ask the student to try this Hold down the Refresh key, which looks like a circular arrow. While still holding Refresh, tap the Power button once. Let go of Refresh when the screen lights up. If the Chromebook still does not respond, plug it into charge for a few minutes and submit a support ticket."
   },
   {
     "title": "ClassLink page not appearing automatically",
     "category": "Classlink",
     "url": "articles/classlink/classlink-page-not-appearing-automatically/index.html",
-    "summary": "What to do if the usual ClassLink home page does not open automatically or Google shows the generic ClassLink login finder.",
-    "text": "If the ClassLink home page is not appearing automatically, search for ISP on the ClassLink login finder and choose Staff and Students, or go directly to https://launchpad.classlink.com/ispschools."
+    "summary": "Some staff have reported that the usual ClassLink home page is not appearing automatically. If yousearch for ClassLink on Google, you may see the generic ClassLink page that asks you to find your login page. Option 1: Search for ISP On the ClassLink page, typ",
+    "text": "Some staff have reported that the usual ClassLink home page is not appearing automatically. If yousearch for ClassLink on Google, you may see the generic ClassLink page that asks you to find your login page. Option 1: Search for ISP On the ClassLink page, type ISP into the Find your login page box. Select Staff and Students . You should then see the ISP landing page. ISP means International Schools Partnership. Select Sign in with Microsoft . Option 2: Go directly to our login page Use this direct link to bypass the login finder: https://launchpad.classlink.com/ispschools If you still cannot access ClassLink after trying these steps, please let IT know as soon as possible."
   },
   {
     "title": "ClassLink using a personal Microsoft account",
     "category": "Classlink",
     "url": "articles/classlink/classlink-using-a-personal-microsoft-account/index.html",
-    "summary": "How to fix ClassLink opening with a personal Microsoft account instead of your school account.",
-    "text": "If ClassLink defaults to a personal Microsoft account, sign out at myaccount.microsoft.com and make sure your school account is the active account before returning to ClassLink."
+    "summary": "If ClassLink is defaulting to your personal Microsoft account instead of your school account, it is usually because a personal account has previously been used on the device and kept signed in. Fix the account selection Go to https://myaccount.microsoft.com/ .",
+    "text": "If ClassLink is defaulting to your personal Microsoft account instead of your school account, it is usually because a personal account has previously been used on the device and kept signed in. Fix the account selection Go to https://myaccount.microsoft.com/ . Select your profile picture or initials in the top-right corner. Sign out of your personal Microsoft account. Make sure your school account is the only account signed in. Sign in with your school account if needed. Go back to ClassLink. It should now take you through using your school account. If ClassLink still chooses the wrong account, submit a support ticket and IT can help clear the browser sign-in state."
   }
 ];
