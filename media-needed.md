@@ -2,7 +2,7 @@
 
 ## Have you tried switching it off and on again?!
 - Original page: https://sites.google.com/claremontschool.co.uk/claremontschoolit/have-you-tried-switching-it-off-and-on-again
-- iframe: https://www.youtube.com/embed/t2F1rFmyQmY?embed_config=%7B%22enc%22:%22AXH1ezntSOZiB5IoSZ7LSNGp8P-nVlxLCHv1qqrjzjScGWoIChd2zXne3BYEpwF6mLSeIw5kv9wNeRA2IXf3LuXPR9PArzY-wZZdvdp-tAfCC610Yo_0a3g9uB80-vMyKF1mQJ9n81Y6jL-wxzyB3zz96MuYqdJVi9pBWmHgFWgdrctu%22%7D&errorlinks=1
+- iframe: https://www.youtube.com/embed/t2F1rFmyQmY?embed_config=%7B%22enc%22:%22AXH1ezmZsOWks-V4QaqXulRjuIkd6434ULxG-UyAX5ym0slBBznqEr3vj-oQzjDqwhkTttlmPievxClx5aHd_7Eu3Dk1hLl3doD4bxO9wnaTeNR7G2NAR5vDhHwgp1yxPSKwRdYzgWkiF31J3aj8GXhaM19x5ODo5vW-HbnpJ-wg5vkg%22%7D&errorlinks=1
 
 ## Password Resetting
 - Original page: https://sites.google.com/claremontschool.co.uk/claremontschoolit/classlink/password-resetting

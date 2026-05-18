@@ -460,17 +460,17 @@ def generated_media_filename(article):
 
 
 def generated_media_svg(article):
-    title_lines = wrap_svg_text(article["title"], 24, 3)
-    summary_lines = wrap_svg_text(article["summary"] or article["category"], 52, 2)
+    title_lines = wrap_svg_text(article["title"], 28, 3)
+    helper_lines = wrap_svg_text("Use the steps on this page to complete the task.", 46, 2)
     category = html.escape(article["category"])
     title_tspans = "\n".join(
-        f'<tspan x="82" y="{118 + index * 54}">{html.escape(line)}</tspan>'
+        f'<tspan x="82" y="{172 + index * 50}">{html.escape(line)}</tspan>'
         for index, line in enumerate(title_lines)
     )
-    summary_start = 324 if len(title_lines) > 2 else 284
-    summary_tspans = "\n".join(
-        f'<tspan x="82" y="{summary_start + index * 32}">{html.escape(line)}</tspan>'
-        for index, line in enumerate(summary_lines)
+    helper_start = 370 if len(title_lines) > 2 else 330
+    helper_tspans = "\n".join(
+        f'<tspan x="82" y="{helper_start + index * 32}">{html.escape(line)}</tspan>'
+        for index, line in enumerate(helper_lines)
     )
     icon_label = html.escape(article["category"][:2].upper())
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
@@ -495,9 +495,9 @@ def generated_media_svg(article):
   <path d="M1010 334h84M1010 362h56" stroke="#071564" stroke-width="12" stroke-linecap="round"/>
   <circle cx="1052" cy="210" r="52" fill="#071564"/>
   <text x="1052" y="226" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#fff">{icon_label}</text>
-  <text x="82" y="92" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#245b85">{category}</text>
-  <text font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#071564">{title_tspans}</text>
-  <text font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#43546a">{summary_tspans}</text>
+  <text x="82" y="104" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#245b85">{category}</text>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#071564">{title_tspans}</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#43546a">{helper_tspans}</text>
   <g transform="translate(82 520)">
     <rect width="360" height="70" rx="10" fill="#f0f6fb" stroke="#d5e4ee"/>
     <circle cx="36" cy="35" r="15" fill="#ff7a1a"/>
@@ -532,6 +532,34 @@ def ensure_generated_media(article):
         + article["body"].lstrip()
     )
     return article
+
+
+def linkify_plain_urls(body):
+    soup = BeautifulSoup(body, "lxml")
+    pattern = re.compile(r"(?<![\"'=])(https?://[^\s<>()]+)")
+    for text_node in list(soup.find_all(string=pattern)):
+        if text_node.find_parent("a"):
+            continue
+        pieces = []
+        last = 0
+        text = str(text_node)
+        for match in pattern.finditer(text):
+            url = match.group(1).rstrip(".,;:")
+            trailing = match.group(1)[len(url):]
+            if match.start() > last:
+                pieces.append(NavigableString(text[last:match.start()]))
+            link = soup.new_tag("a", href=url)
+            link.string = url
+            pieces.append(link)
+            if trailing:
+                pieces.append(NavigableString(trailing))
+            last = match.end()
+        if last < len(text):
+            pieces.append(NavigableString(text[last:]))
+        for piece in reversed(pieces):
+            text_node.insert_after(piece)
+        text_node.extract()
+    return "".join(str(child) for child in soup.body.contents) if soup.body else str(soup)
 
 
 def apply_local_media(article):
@@ -845,6 +873,7 @@ def apply_article_updates(article):
                 item["url"] = "https://docs.google.com/spreadsheets/d/11HlvnGVHtu8QgzNGS97aYUz8LlHXKQwDr5M5q_j3vtw/edit?usp=sharing"
 
     apply_local_media(article)
+    article["body"] = linkify_plain_urls(article["body"])
     article["summary"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True)[:260])
     article["text"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True))
     return article
