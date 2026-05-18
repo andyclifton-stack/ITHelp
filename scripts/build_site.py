@@ -84,6 +84,8 @@ CATEGORY_ACCENTS = [
     "orange",
 ]
 
+SERVICE_DESK_URL = "https://servicedesk.ispschools.com"
+
 SKIP_TITLES = {
     "Universal Printer",
     "YouTube to MP3",
@@ -416,10 +418,126 @@ def local_media_figure(article, item):
     return f'<figure class="media-frame"><img src="{src}" alt="{alt}"></figure>'
 
 
+def has_visual_media(body):
+    soup = BeautifulSoup(body, "lxml")
+    return bool(soup.find(["img", "video", "iframe"]))
+
+
+def has_reliable_visual_media(body):
+    soup = BeautifulSoup(body, "lxml")
+    if soup.find(["video", "iframe"]):
+        return True
+    for img in soup.find_all("img"):
+        src = img.get("src", "")
+        if "googleusercontent.com/sitesv/" not in src:
+            return True
+    return False
+
+
+def wrap_svg_text(value, max_chars=28, max_lines=3):
+    words = clean_text(value).split()
+    lines = []
+    current = ""
+    for word in words:
+        candidate = f"{current} {word}".strip()
+        if len(candidate) <= max_chars:
+            current = candidate
+        else:
+            if current:
+                lines.append(current)
+            current = word
+        if len(lines) == max_lines:
+            break
+    if current and len(lines) < max_lines:
+        lines.append(current)
+    if len(lines) == max_lines and len(" ".join(words)) > len(" ".join(lines)):
+        lines[-1] = lines[-1].rstrip(".,;:") + "..."
+    return lines or [value]
+
+
+def generated_media_filename(article):
+    return f"generated/{slugify(article['title'])}.svg"
+
+
+def generated_media_svg(article):
+    title_lines = wrap_svg_text(article["title"], 24, 3)
+    summary_lines = wrap_svg_text(article["summary"] or article["category"], 52, 2)
+    category = html.escape(article["category"])
+    title_tspans = "\n".join(
+        f'<tspan x="82" y="{118 + index * 54}">{html.escape(line)}</tspan>'
+        for index, line in enumerate(title_lines)
+    )
+    summary_start = 324 if len(title_lines) > 2 else 284
+    summary_tspans = "\n".join(
+        f'<tspan x="82" y="{summary_start + index * 32}">{html.escape(line)}</tspan>'
+        for index, line in enumerate(summary_lines)
+    )
+    icon_label = html.escape(article["category"][:2].upper())
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">{html.escape(article['title'])}</title>
+  <desc id="desc">Support guide illustration for {html.escape(article['title'])}.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#071564"/>
+      <stop offset="1" stop-color="#245b85"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#001044" flood-opacity="0.24"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="720" fill="#f4f7fb"/>
+  <rect x="0" y="0" width="1280" height="720" fill="url(#bg)"/>
+  <path d="M900 0c130 110 194 240 192 390-2 123-40 229-116 318h304V0H900Z" fill="#2d729a" opacity=".34"/>
+  <rect x="64" y="64" width="1152" height="592" rx="22" fill="#fff" filter="url(#shadow)"/>
+  <rect x="64" y="64" width="18" height="592" fill="#ff7a1a"/>
+  <circle cx="1052" cy="210" r="104" fill="#eef7fb" stroke="#d5e4ee" stroke-width="3"/>
+  <rect x="972" y="294" width="160" height="104" rx="14" fill="#f7fbfd" stroke="#d5e4ee" stroke-width="3"/>
+  <path d="M1010 334h84M1010 362h56" stroke="#071564" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="1052" cy="210" r="52" fill="#071564"/>
+  <text x="1052" y="226" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#fff">{icon_label}</text>
+  <text x="82" y="92" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#245b85">{category}</text>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#071564">{title_tspans}</text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#43546a">{summary_tspans}</text>
+  <g transform="translate(82 520)">
+    <rect width="360" height="70" rx="10" fill="#f0f6fb" stroke="#d5e4ee"/>
+    <circle cx="36" cy="35" r="15" fill="#ff7a1a"/>
+    <path d="M29 35l5 6 11-14" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="68" y="43" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#071564">Step-by-step staff guide</text>
+  </g>
+</svg>
+"""
+
+
+def ensure_generated_media(article):
+    if has_reliable_visual_media(article["body"]):
+        return article
+    article["body"] = re.sub(
+        r'<figure class="media-frame"><img src="https?://[^"]*googleusercontent\.com/sitesv/[^"]+" alt="[^"]*"></figure>\n?',
+        "",
+        article["body"],
+    )
+    article["media"] = [
+        item
+        for item in article["media"]
+        if not (item["type"] == "image" and "googleusercontent.com/sitesv/" in item["url"])
+    ]
+    filename = generated_media_filename(article)
+    target = ROOT / "assets" / "media" / filename
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(generated_media_svg(article), encoding="utf-8")
+    article["body"] = (
+        f'<figure class="media-frame help-illustration">'
+        f'<img src="{html.escape(asset_path_for(article, filename))}" alt="{html.escape(article["title"])} support guide illustration.">'
+        "</figure>\n"
+        + article["body"].lstrip()
+    )
+    return article
+
+
 def apply_local_media(article):
     items = LOCAL_MEDIA.get(article["title"])
     if not items:
-        return article
+        return ensure_generated_media(article)
     article["body"] = re.sub(
         r'<figure class="media-frame"><img src="https?://[^"]+" alt="[^"]*"></figure>\n?',
         "",
@@ -777,12 +895,6 @@ def write(path, content):
 
 
 def article_page(article):
-    source_note = ""
-    if article.get("source_url"):
-        source_note = f"""
-          <div class="source-note">
-            <strong>Original source:</strong> <a href="{html.escape(article['source_url'])}">Google Site page</a>
-          </div>"""
     body = f"""
     <section class="page-hero compact">
       <div class="container">
@@ -794,12 +906,11 @@ def article_page(article):
       <div class="container article-layout">
         <article class="article-content">
           {article['body']}
-          {source_note}
         </article>
         <aside class="article-aside">
           <h2>Need more help?</h2>
           <p>For faults or requests, submit a ticket through the Service Desk so the IT team can track and respond properly.</p>
-          <a class="button" href="/articles/submitting-a-support-ticket/index.html">Submit a support ticket</a>
+          <a class="button" href="{SERVICE_DESK_URL}">Submit a support ticket</a>
         </aside>
       </div>
     </section>"""
@@ -952,6 +1063,9 @@ def main():
 
     for folder in ["articles", "categories"]:
         shutil.rmtree(ROOT / folder, onexc=clear_readonly)
+    generated_media = ROOT / "assets" / "media" / "generated"
+    if generated_media.exists():
+        shutil.rmtree(generated_media, onexc=clear_readonly)
     nav = build_nav()
     articles = []
     for item in nav:
