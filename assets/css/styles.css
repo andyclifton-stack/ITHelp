@@ -175,7 +175,6 @@ input:focus-visible {
 }
 
 .home-hero-inner {
-  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
   gap: clamp(1.5rem, 4vw, 3rem);
@@ -873,6 +872,14 @@ th {
   .home-hero-inner {
     grid-template-columns: 1fr;
   }
+
+  .home-intro {
+    padding-left: 0;
+  }
+
+  .hero-logo {
+    display: none;
+  }
 }
 
 @media (max-width: 780px) {
@@ -906,14 +913,6 @@ th {
 
   .home-intro h1 {
     font-size: clamp(2.35rem, 11vw, 3.45rem);
-  }
-
-  .home-intro {
-    padding-left: 0;
-  }
-
-  .hero-logo {
-    display: none;
   }
 
   .home-hero {
