@@ -227,6 +227,7 @@ def build_nav():
 def rewrite_href(href):
     if not href:
         return "#"
+    href = href.replace("?utm_source=chatgpt.com", "").replace("&utm_source=chatgpt.com", "")
     if href.startswith("#"):
         return href
     full = normalize_source_url(full_source_url(href))
@@ -276,6 +277,18 @@ def should_skip_tag(tag):
     return text in {"Report abuse", "Page details", "Page updated"}
 
 
+def should_skip_migrated_content(text):
+    lowered = text.lower()
+    return any(
+        phrase in lowered
+        for phrase in [
+            "ai chatbot",
+            "uses chatgpt",
+            "chatgpt and local knowledgebase",
+        ]
+    )
+
+
 def extract_article(item):
     soup = BeautifulSoup(fetch(item["source_url"]), "lxml")
     h1 = None
@@ -300,6 +313,8 @@ def extract_article(item):
             text = clean_text(tag.get_text(" ", strip=True))
             if text in {"Learn more"}:
                 break
+            if should_skip_migrated_content(text):
+                continue
             if tag.name == "h2":
                 parts.append(f"<h2>{html.escape(text)}</h2>")
                 plain.append(text)

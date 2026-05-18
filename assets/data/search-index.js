@@ -18,7 +18,7 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Requests & Support",
     "url": "articles/submitting-a-support-ticket/index.html",
     "summary": "How to submit a support ticket Navigate to https://launchpad.classlink.com/ispschools Click on the Service Desk icon Click on Technology Service Desk Click on either Incident Request or Service request (whichever fits your needs best) Complete the details and",
-    "text": "How to submit a support ticket Navigate to https://launchpad.classlink.com/ispschools Click on the Service Desk icon Click on Technology Service Desk Click on either Incident Request or Service request (whichever fits your needs best) Complete the details and log the issue or request. Quick Solutions (without submitting a ticket) AI Chatbot - The chatbot will automatically pop up and can be used for quick assistance (uses ChatGPT and local knowledgebase) Self-Help - Click on Self-Help to manually look through or search the knowledgebase for solutions."
+    "text": "How to submit a support ticket Navigate to https://launchpad.classlink.com/ispschools Click on the Service Desk icon Click on Technology Service Desk Click on either Incident Request or Service request (whichever fits your needs best) Complete the details and log the issue or request. Quick Solutions (without submitting a ticket) Self-Help - Click on Self-Help to manually look through or search the knowledgebase for solutions."
   },
   {
     "title": "Tab Wrangler",
