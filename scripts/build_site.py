@@ -1,4 +1,4 @@
-import html
+﻿import html
 import json
 import re
 import shutil
@@ -72,7 +72,6 @@ CATEGORY_OVERRIDES = {
     "Sign In App": "School Systems",
     "OneDrive": "School Systems",
     "Photography Sharepoint": "School Systems",
-    "Engage Client": "School Systems",
     "What is the WiFi password (SSID:Internet)": "Requests & Support",
     "Accident Forms": "School Systems",
 }
@@ -86,6 +85,8 @@ CATEGORY_ACCENTS = [
 
 SKIP_TITLES = {
     "Universal Printer",
+    "YouTube to MP3",
+    "Engage Client",
 }
 
 CUSTOM_ARTICLES = [
@@ -128,10 +129,17 @@ CLEANUPS = {
     "How do i": "How do I",
     "add/remote": "add/remove",
     "SEPERATE": "SEPARATE",
-    "Persistant": "Persistent",
-    "quick assistant": "quick assistance",
+    "seperate": "separate",
+    "incase": "in case",
+    "re quently": "frequently",
+    "requently": "frequently",
+    "sceen": "screen",
+    "CLick": "Click",
+    "Playstore": "Play Store",
+    "Appstore": "App Store",
+    "onli ne": "online",
+    "u se": "use",
 }
-
 SESSION = requests.Session()
 SESSION.headers.update({"User-Agent": "Claremont IT static migration/1.0"})
 
@@ -378,7 +386,7 @@ def extract_article(item):
         media.append({"type": "unresolved embedded media", "url": item["source_url"]})
     summary = " ".join(plain)
     summary = clean_text(summary[:260])
-    return {
+    article = {
         **item,
         "title": title,
         "summary": summary,
@@ -387,6 +395,87 @@ def extract_article(item):
         "media": media,
         "output": page_output_path(item["source_url"]),
     }
+    return apply_article_updates(article)
+
+
+def replace_everywhere(article, old, new):
+    for key in ["title", "summary", "body", "text"]:
+        article[key] = article[key].replace(old, new)
+
+
+def apply_article_updates(article):
+    title = article["title"]
+
+    if title == "How to create a team drive and how to add/remove people":
+        article["title"] = "How to create a shared drive and add/remove people"
+        replace_everywhere(article, "team drive", "shared drive")
+        replace_everywhere(article, "Team Drive", "Shared drive")
+
+    if title == "Submitting a Support Ticket":
+        replace_everywhere(
+            article,
+            '<ol><li>Navigate to <a href="https://isp.onelogin.com/">https://isp.onelogin.com/</a>  <a href="https://launchpad.classlink.com/ispschools">https://launchpad.classlink.com/ispschools</a></li>',
+            '<ol><li>Navigate to <a href="https://launchpad.classlink.com/ispschools">https://launchpad.classlink.com/ispschools</a></li>',
+        )
+        replace_everywhere(
+            article,
+            "Navigate to https://launchpad.classlink.com/ispschools Click on the Service Desk icon",
+            "Navigate to https://launchpad.classlink.com/ispschools Click on the Service Desk icon",
+        )
+
+    if title == "Signing in":
+        replace_everywhere(
+            article,
+            '<ol><li>Go to  <a href="https://isp.onelogin.com/">isp.onelogin.com</a></li><li>Select ISP: Everything</li><li>Click on iSAMS</li></ol>',
+            '<ol><li>Open <a href="https://launchpad.classlink.com/ispschools">ClassLink</a>.</li><li>Sign in with your school account if prompted.</li><li>Click on iSAMS.</li></ol>',
+        )
+        replace_everywhere(article, "Sig ning in to iSAMS ( Mobile App )", "Signing in to iSAMS (mobile app)")
+        replace_everywhere(article, "Click login with Onelogin", "Tap the school account sign-in option")
+        replace_everywhere(article, "Use your onelogin details", "Sign in with your school account")
+
+    if title == "Creating Microsoft Teams":
+        replace_everywhere(
+            article,
+            "Log into ISP&#x27;s Onelogin page / Log in to the Microsoft Teams application with your school email (which will ask your for your onelogin)",
+            "Sign in to the Microsoft Teams application with your school email address",
+        )
+        replace_everywhere(
+            article,
+            "Log into ISP's Onelogin page / Log in to the Microsoft Teams application with your school email (which will ask your for your onelogin)",
+            "Sign in to the Microsoft Teams application with your school email address",
+        )
+
+    if title == "Photography Sharepoint":
+        replace_everywhere(
+            article,
+            'Login to onelogin or go directly to  <a href="https://www.office.com/">https://www.office.com/</a>  and login',
+            'Go to <a href="https://www.office.com/">office.com</a> and sign in with your school account',
+        )
+        replace_everywhere(
+            article,
+            "Accessing the Shortcut in OneDrive (online)",
+            "Accessing the Shortcut in OneDrive (online)",
+        )
+
+    if title == "Exam Information":
+        replace_everywhere(article, "Log into Google account via onelogin", "Log into the school Google account")
+        replace_everywhere(
+            article,
+            "If it is not connected, connect to wifiStudent. Password: greenwood12",
+            "If it is not connected, connect to the correct exam WiFi network or use one of the spare laptops",
+        )
+        replace_everywhere(article, "<p>wifiStudent password is greenwood12</p>\n", "")
+
+    if title == "Google Drive is no longer showing in the file explorer":
+        replace_everywhere(
+            article,
+            '<ol><li>For PC follow this link &gt;  <a href="https://dl.google.com/drive-file-stream/GoogleDriveFSSetup.exe">https://dl.Google.com/drive-file-stream/GoogleDriveFSSetup.exe</a></li><li>For Mac follow this link &gt;  <a href="https://dl.google.com/drive-file-stream/GoogleDrive.dmg">https://dl.Google.com/drive-file-stream/GoogleDrive.dmg</a></li><li>Follow the given instructions on the install packages</li><li>Submit a ticket to the  <a href="/articles/submitting-a-support-ticket/index.html">service desk</a>  if you have any issues</li></ol>',
+            '<ol><li>Download Google Drive for desktop from <a href="https://support.google.com/drive/answer/10838124">Google Drive Help</a>.</li><li>Open the installer and follow the on-screen instructions.</li><li>Submit a ticket to the <a href="/articles/submitting-a-support-ticket/index.html">service desk</a> if you have any issues.</li></ol>',
+        )
+
+    article["summary"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True)[:260])
+    article["text"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True))
+    return article
 
 
 def category_slug(category):
@@ -642,3 +731,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
