@@ -551,5 +551,12 @@ window.IT_HELP_SEARCH_INDEX = [
     "url": "articles/miscellaneous/accident-forms/index.html",
     "summary": "Link to Claremont Medical Form Claremont Medical Form",
     "text": "Link to Claremont Medical Form Claremont Medical Form"
+  },
+  {
+    "title": "Chromebook won't turn on",
+    "category": "Devices & Windows",
+    "url": "articles/chromebook-wont-turn-on/index.html",
+    "summary": "A quick key combination that often wakes a Chromebook when the screen is blank or the device appears not to turn on.",
+    "text": "If a student says their Chromebook won't turn on, hold Refresh, tap Power once, then let go of Refresh when the screen lights up."
   }
 ];

@@ -85,6 +85,32 @@ CATEGORY_ACCENTS = [
     "orange",
 ]
 
+CUSTOM_ARTICLES = [
+    {
+        "title": "Chromebook won't turn on",
+        "category": "Devices & Windows",
+        "summary": "A quick key combination that often wakes a Chromebook when the screen is blank or the device appears not to turn on.",
+        "text": "If a student says their Chromebook won't turn on, hold Refresh, tap Power once, then let go of Refresh when the screen lights up.",
+        "body": """
+          <p>If a student says their Chromebook will not turn on, this quick reset often wakes the device straight away.</p>
+          <figure class="media-frame help-illustration">
+            <img src="../../assets/img/chromebook-refresh-power.svg" alt="Hold Refresh, tap Power once, then release Refresh when the Chromebook screen lights up.">
+          </figure>
+          <h3>Ask the student to try this</h3>
+          <ol>
+            <li>Hold down the <strong>Refresh</strong> key, which looks like a circular arrow.</li>
+            <li>While still holding Refresh, tap the <strong>Power</strong> button once.</li>
+            <li>Let go of Refresh when the screen lights up.</li>
+          </ol>
+          <p>If the Chromebook still does not respond, plug it into charge for a few minutes and submit a support ticket.</p>
+        """.strip(),
+        "media": [],
+        "output": "articles/chromebook-wont-turn-on/index.html",
+        "source_url": "",
+        "custom": True,
+    }
+]
+
 CLEANUPS = {
     "Sevice Desk": "Service Desk",
     "soltutions": "solutions",
@@ -388,6 +414,12 @@ def write(path, content):
 
 
 def article_page(article):
+    source_note = ""
+    if article.get("source_url"):
+        source_note = f"""
+          <div class="source-note">
+            <strong>Original source:</strong> <a href="{html.escape(article['source_url'])}">Google Site page</a>
+          </div>"""
     body = f"""
     <section class="page-hero compact">
       <div class="container">
@@ -399,9 +431,7 @@ def article_page(article):
       <div class="container article-layout">
         <article class="article-content">
           {article['body']}
-          <div class="source-note">
-            <strong>Original source:</strong> <a href="{html.escape(article['source_url'])}">Google Site page</a>
-          </div>
+          {source_note}
         </article>
         <aside class="article-aside">
           <h2>Need more help?</h2>
@@ -414,24 +444,25 @@ def article_page(article):
 
 
 def home_page(articles, categories):
-    featured_titles = [
+    quick_task_titles = [
         "Submitting a Support Ticket",
         "Student Password Reset Form",
+        "Chromebook won't turn on",
         "How to Log Into Google Drive",
         "Papercut Hive",
-        "What is the WiFi password (SSID:Internet)",
+        "Universal Printer",
         "Have you tried switching it off and on again?!",
+        "No sound and the speaker icon has a red cross through it",
     ]
     by_title = {a["title"]: a for a in articles}
-    cards = []
-    for title in featured_titles:
+    quick_link_cards = []
+    for title in quick_task_titles:
         article = by_title.get(title)
         if article:
-            cards.append(f"""<article class="card">
-              <h3>{html.escape(article['title'])}</h3>
-              <p>{html.escape(excerpt(article['summary'], 150))}</p>
-              <a href="/{article['output']}">Open guide</a>
-            </article>""")
+            quick_link_cards.append(f"""<a class="quick-link" href="/{article['output']}">
+              <strong>{html.escape(article['title'])}</strong>
+              <span>{html.escape(excerpt(article['summary'], 115))}</span>
+            </a>""")
     category_cards = []
     for category in categories:
         count = len([a for a in articles if a["category"] == category])
@@ -448,19 +479,6 @@ def home_page(articles, categories):
               <strong>{html.escape(category)}</strong>
             </a>""")
     total_articles = len(articles)
-    quick_links = [
-        ("Submit a Support Ticket", "/articles/submitting-a-support-ticket/index.html", "For faults, requests and anything that needs tracking."),
-        ("Student Password Reset", "/articles/student-password-reset-form/index.html", "Reset requests for student accounts."),
-        ("Printing Help", "/categories/printing/index.html", "Papercut Hive, toner and exam paper printing."),
-        ("Google Workspace", "/categories/google-workspace/index.html", "Drive, Gmail, Calendar, Meet and Classroom guides."),
-    ]
-    quick_link_cards = "".join(
-        f"""<a class="quick-link" href="{href}">
-          <strong>{html.escape(title)}</strong>
-          <span>{html.escape(description)}</span>
-        </a>"""
-        for title, href, description in quick_links
-    )
     body = f"""
     <section class="home-hero">
       <div class="container home-hero-inner">
@@ -471,7 +489,7 @@ def home_page(articles, categories):
         </div>
         <div class="search-panel" role="search">
           <label for="site-search">Search IT help</label>
-          <input id="site-search" type="search" placeholder="Try password, Gmail, Teams, printing, iSAMS or WiFi">
+          <input id="site-search" type="search" placeholder="Try password, Gmail, Teams or WiFi">
           <div id="search-results" class="search-results" aria-live="polite"></div>
         </div>
       </div>
@@ -491,8 +509,7 @@ def home_page(articles, categories):
           <h2>Common Tasks</h2>
           <p>{total_articles} guides across {len(categories)} help areas.</p>
         </div>
-        <div class="quick-link-grid">{quick_link_cards}</div>
-        <div class="grid">{''.join(cards)}</div>
+        <div class="quick-link-grid">{''.join(quick_link_cards)}</div>
       </div>
     </section>
     <section class="section soft home-section">
@@ -551,7 +568,8 @@ def media_inventory(articles):
     for article in articles:
         if article["media"]:
             rows.append(f"## {article['title']}")
-            rows.append(f"- Original page: {article['source_url']}")
+            if article.get("source_url"):
+                rows.append(f"- Original page: {article['source_url']}")
             for item in article["media"]:
                 rows.append(f"- {item['type']}: {item['url']}")
             rows.append("")
@@ -578,6 +596,7 @@ def main():
             continue
         print(f"Fetching {item['title']}")
         articles.append(extract_article(item))
+    articles.extend(CUSTOM_ARTICLES)
 
     category_order = [c for c in CATEGORY_ORDER if any(a["category"] == c for a in articles)]
     for article in articles:

@@ -84,8 +84,10 @@ function wireSearch() {
   function render(matches) {
     if (!input.value.trim()) {
       results.innerHTML = "";
+      results.classList.remove("active");
       return;
     }
+    results.classList.add("active");
     if (!matches.length) {
       results.innerHTML = "<p>No matching guides found.</p>";
       return;
@@ -119,6 +121,18 @@ function wireSearch() {
       .filter((item) => item.score > 0)
       .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
     render(matches);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".search-panel")) {
+      results.classList.remove("active");
+    }
+  });
+
+  input.addEventListener("focus", () => {
+    if (input.value.trim() && results.innerHTML.trim()) {
+      results.classList.add("active");
+    }
   });
 }
 
