@@ -1,5 +1,6 @@
 ﻿import html
 import json
+import os
 import re
 import shutil
 import textwrap
@@ -87,6 +88,144 @@ SKIP_TITLES = {
     "Universal Printer",
     "YouTube to MP3",
     "Engage Client",
+    "Multi-Factor Authentication",
+    "Multi-Factor Authentication - Google",
+    "Signing in",
+    "Student Portal",
+}
+
+LOCAL_MEDIA = {
+    "Log-in Page": [
+        {"type": "image", "file": "log-in-page.png", "alt": "ClassLink login page."},
+    ],
+    "Customisation": [
+        {"type": "image", "file": "customisation-customlinks.png", "alt": "ClassLink custom links."},
+        {"type": "image", "file": "customisation-favorites.png", "alt": "ClassLink favourites."},
+        {"type": "image", "file": "customisation-folders.png", "alt": "ClassLink folders."},
+    ],
+    "Gmail Customisation": [
+        {"type": "image", "file": "gmail-customisation-1.jpg", "alt": "Gmail customisation step 1."},
+        {"type": "image", "file": "gmail-customisation-2.jpg", "alt": "Gmail customisation step 2."},
+        {"type": "image", "file": "gmail-customisation-3.jpg", "alt": "Gmail customisation step 3."},
+    ],
+    "Add/edit your Gmail signature": [
+        {"type": "image", "file": "gmail-signature-1.png", "alt": "Gmail signature settings."},
+        {"type": "image", "file": "gmail-signature-2.png", "alt": "Gmail signature editor."},
+    ],
+    "Remove conversation view in Gmail": [
+        {"type": "image", "file": "conversation-view-1.png", "alt": "Gmail conversation view setting."},
+        {"type": "image", "file": "conversation-view-2.png", "alt": "Gmail conversation view switched off."},
+    ],
+    "Persistant Meet link in Google Calendar": [
+        {"type": "image", "file": "persistent-meet.png", "alt": "Persistent Google Meet link in Calendar."},
+        {"type": "video", "file": "persistent-meet-link-google-calendar.mp4", "caption": "Persistent Meet link walkthrough."},
+    ],
+    "How to Log Into Google Drive": [
+        {"type": "image", "file": "school-drive-1.png", "alt": "Google Drive sign-in step 1."},
+        {"type": "image", "file": "school-drive-2.png", "alt": "Google Drive sign-in step 2."},
+        {"type": "image", "file": "school-drive-3.png", "alt": "Google Drive sign-in step 3."},
+    ],
+    "Recording Google Meets/Classroom": [
+        {"type": "video", "file": "recording-google-meet.mp4", "caption": "Recording a Google Meet walkthrough."},
+    ],
+    "Guardian Summaries on Google Classroom": [
+        {"type": "image", "file": "guardian-summaries.png", "alt": "Guardian summaries setting in Google Classroom."},
+        {"type": "video", "file": "guardian-summaries.mp4", "caption": "Guardian summaries walkthrough."},
+    ],
+    "Creating a new Google Calendar": [
+        {"type": "image", "file": "new-google-calendar.png", "alt": "Create a new Google Calendar."},
+    ],
+    "Presentation Template": [
+        {"type": "image", "file": "presentation-template-1.png", "alt": "Presentation template step 1."},
+        {"type": "image", "file": "presentation-template-2.png", "alt": "Presentation template step 2."},
+        {"type": "image", "file": "presentation-template-3.png", "alt": "Presentation template step 3."},
+    ],
+    "Creating Microsoft Teams": [
+        {"type": "video", "file": "creating-microsoft-teams.mp4", "caption": "Creating a Microsoft Team walkthrough."},
+    ],
+    "Theatre Projector & Sound (Senior)": [
+        {"type": "video", "file": "senior-theatre-audio.mp4", "caption": "Senior theatre projector and sound walkthrough."},
+    ],
+    "Prep Meeting Room": [
+        {"type": "image", "file": "prep-meeting-room-1.png", "alt": "Prep meeting room setup step 1."},
+        {"type": "image", "file": "prep-meeting-room-2.png", "alt": "Prep meeting room setup step 2."},
+        {"type": "image", "file": "prep-meeting-room-3.png", "alt": "Prep meeting room setup step 3."},
+        {"type": "image", "file": "prep-meeting-room-4.png", "alt": "Prep meeting room setup step 4."},
+    ],
+    "Converting a file format": [
+        {"type": "video", "file": "converting-file-format.mp4", "caption": "Converting a file format walkthrough."},
+    ],
+    "Files in a ZIP folder won't open": [
+        {"type": "video", "file": "extracting-zip-folder.mp4", "caption": "Extracting files from a ZIP folder walkthrough."},
+    ],
+    "How do I Spot Phishing Emails": [
+        {"type": "image", "file": "phish-1.png", "alt": "Phishing email example 1."},
+        {"type": "image", "file": "phish-2.png", "alt": "Phishing email example 2."},
+        {"type": "image", "file": "phish-3.png", "alt": "Phishing email example 3."},
+        {"type": "image", "file": "phish-4.png", "alt": "Phishing email example 4."},
+    ],
+    "Exam papers printing with grid lines": [
+        {"type": "image", "file": "exam-papers.png", "alt": "Exam paper print settings."},
+    ],
+    "Papercut Hive": [
+        {"type": "image", "file": "hive.png", "alt": "Papercut Hive printing screen."},
+    ],
+    "Forwarding Calls": [
+        {"type": "image", "file": "forwarding-calls.png", "alt": "Desk phone forwarding buttons."},
+    ],
+    "iSAMS": [
+        {"type": "image", "file": "wizard-bar-isams.png", "alt": "iSAMS wizard bar."},
+    ],
+    "How to take a register": [
+        {"type": "image", "file": "isams-register.png", "alt": "iSAMS register screen."},
+        {"type": "video", "file": "registration-eng.mp4", "caption": "Taking a register walkthrough."},
+    ],
+    "Rewards and Conduct": [
+        {"type": "image", "file": "rewards-and-conduct-1.png", "alt": "Rewards and conduct step 1."},
+        {"type": "image", "file": "rewards-and-conduct-2.png", "alt": "Rewards and conduct step 2."},
+    ],
+    "How To View a Timetable": [
+        {"type": "image", "file": "timetable-1.png", "alt": "Timetable view step 1."},
+        {"type": "image", "file": "timetable-2.png", "alt": "Timetable view step 2."},
+    ],
+    "Writing Reports": [
+        {"type": "image", "file": "writing-reports-1.png", "alt": "Writing reports step 1."},
+        {"type": "image", "file": "writing-reports-2.png", "alt": "Writing reports step 2."},
+    ],
+    "Searching up a Student": [
+        {"type": "image", "file": "search-a-student-1.png", "alt": "Search for a student step 1."},
+        {"type": "image", "file": "search-a-student-2.png", "alt": "Search for a student step 2."},
+    ],
+    "Emailing Correspondents": [
+        {"type": "image", "file": "correspondence-1.png", "alt": "Email correspondents step 1."},
+        {"type": "image", "file": "correspondence-2.png", "alt": "Email correspondents step 2."},
+        {"type": "image", "file": "correspondence-3.png", "alt": "Email correspondents step 3."},
+        {"type": "image", "file": "correspondence-4.png", "alt": "Email correspondents step 4."},
+    ],
+    "Creating a Group": [
+        {"type": "image", "file": "group1.png", "alt": "Create an iSAMS group step 1."},
+        {"type": "image", "file": "group2.png", "alt": "Create an iSAMS group step 2."},
+        {"type": "image", "file": "group3.png", "alt": "Create an iSAMS group step 3."},
+        {"type": "image", "file": "group4.png", "alt": "Create an iSAMS group step 4."},
+    ],
+    "Emailing Students": [
+        {"type": "image", "file": "emailing-students-1.png", "alt": "Email students step 1."},
+        {"type": "image", "file": "emailing-students-2.png", "alt": "Email students step 2."},
+        {"type": "image", "file": "emailing-students-3.png", "alt": "Email students step 3."},
+        {"type": "image", "file": "emailing-students-4.png", "alt": "Email students step 4."},
+    ],
+    "Attendance data for your form": [
+        {"type": "image", "file": "attendance-data-1.png", "alt": "Attendance data step 1."},
+        {"type": "image", "file": "attendance-data-2.png", "alt": "Attendance data step 2."},
+    ],
+    "Finding Pupil Information": [
+        {"type": "image", "file": "pupil-information-1.png", "alt": "Find pupil information step 1."},
+        {"type": "image", "file": "pupil-information-2.png", "alt": "Find pupil information step 2."},
+    ],
+    "OneDrive": [
+        {"type": "image", "file": "onedrive-1.png", "alt": "OneDrive setup step 1."},
+        {"type": "image", "file": "onedrive-2.png", "alt": "OneDrive setup step 2."},
+    ],
 }
 
 CUSTOM_ARTICLES = [
@@ -257,6 +396,49 @@ def href_for(source_url, from_output):
     return Path(target).as_posix()
 
 
+def asset_path_for(article, filename):
+    article_dir = ROOT / Path(article["output"]).parent
+    asset_path = ROOT / "assets" / "media" / filename
+    return Path(os.path.relpath(asset_path, article_dir)).as_posix()
+
+
+def local_media_figure(article, item):
+    src = html.escape(asset_path_for(article, item["file"]))
+    if item["type"] == "video":
+        caption = html.escape(item.get("caption", "Video walkthrough."))
+        return (
+            '<figure class="media-frame">'
+            f'<video controls preload="metadata" src="{src}"></video>'
+            f"<figcaption>{caption}</figcaption>"
+            "</figure>"
+        )
+    alt = html.escape(item.get("alt", article["title"]))
+    return f'<figure class="media-frame"><img src="{src}" alt="{alt}"></figure>'
+
+
+def apply_local_media(article):
+    items = LOCAL_MEDIA.get(article["title"])
+    if not items:
+        return article
+    article["body"] = re.sub(
+        r'<figure class="media-frame"><img src="https?://[^"]+" alt="[^"]*"></figure>\n?',
+        "",
+        article["body"],
+    )
+    article["body"] = article["body"].replace(
+        '<p class="resource-link">This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed.</p>',
+        "",
+    )
+    media_html = "\n".join(local_media_figure(article, item) for item in items)
+    article["body"] = article["body"].rstrip() + "\n" + media_html
+    article["media"] = [
+        item
+        for item in article["media"]
+        if item["type"] not in {"image", "unresolved embedded media"}
+    ]
+    return article
+
+
 def build_nav():
     soup = BeautifulSoup(fetch(SOURCE_HOME), "lxml")
     items = []
@@ -417,7 +599,14 @@ def extract_article(item):
             elif tag.name in {"iframe", "video"}:
                 src = tag.get("src")
                 if src:
-                    parts.append(f'<p class="resource-link"><a href="{html.escape(src)}">Open embedded media</a></p>')
+                    if "youtube.com/embed" in src:
+                        parts.append(
+                            '<figure class="media-frame video-embed">'
+                            f'<iframe src="{html.escape(src)}" title="{html.escape(title)} video" allowfullscreen></iframe>'
+                            "</figure>"
+                        )
+                    else:
+                        parts.append(f'<p class="resource-link"><a href="{html.escape(src)}">Open embedded media</a></p>')
                     media.append({"type": tag.name, "url": src})
                     resource_media.append(src)
             elif tag.name == "a":
@@ -524,6 +713,20 @@ def apply_article_updates(article):
             '<ol><li>Download Google Drive for desktop from <a href="https://support.google.com/drive/answer/10838124">Google Drive Help</a>.</li><li>Open the installer and follow the on-screen instructions.</li><li>Submit a ticket to the <a href="/articles/submitting-a-support-ticket/index.html">service desk</a> if you have any issues.</li></ol>',
         )
 
+    if title == "Password Resetting":
+        replace_everywhere(article, "Open embedded media", "Open the student password reset form")
+
+    if title == "Phone Extensions":
+        replace_everywhere(
+            article,
+            "https://drive.google.com/open?id=11HlvnGVHtu8QgzNGS97aYUz8LlHXKQwDr5M5q_j3vtw",
+            "https://docs.google.com/spreadsheets/d/11HlvnGVHtu8QgzNGS97aYUz8LlHXKQwDr5M5q_j3vtw/edit?usp=sharing",
+        )
+        for item in article["media"]:
+            if item["type"] == "embedded resource":
+                item["url"] = "https://docs.google.com/spreadsheets/d/11HlvnGVHtu8QgzNGS97aYUz8LlHXKQwDr5M5q_j3vtw/edit?usp=sharing"
+
+    apply_local_media(article)
     article["summary"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True)[:260])
     article["text"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True))
     return article
@@ -733,7 +936,7 @@ def media_inventory(articles):
             for item in article["media"]:
                 rows.append(f"- {item['type']}: {item['url']}")
             rows.append("")
-        elif "video" in article["text"].lower() or "recording" in article["title"].lower():
+        elif article["title"] not in LOCAL_MEDIA and ("video" in article["text"].lower() or "recording" in article["title"].lower()):
             unresolved.append(article)
     if unresolved:
         rows.extend(["## Pages mentioning video with no resolved embed", ""])

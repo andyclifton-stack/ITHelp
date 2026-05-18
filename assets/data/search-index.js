@@ -4,7 +4,7 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Start Here",
     "url": "articles/have-you-tried-switching-it-off-and-on-again/index.html",
     "summary": "This is a running joke, but really, have you tried switching it off and on again? Although not always convenient, and there are other ways to resolve issues, so many times getting the device to start again resolves the issue. There are technical and non-techni",
-    "text": "This is a running joke, but really, have you tried switching it off and on again? Although not always convenient, and there are other ways to resolve issues, so many times getting the device to start again resolves the issue. There are technical and non-technical reasons why this will resolve some issues but if possible, definitely give it a go. Open embedded media"
+    "text": "This is a running joke, but really, have you tried switching it off and on again? Although not always convenient, and there are other ways to resolve issues, so many times getting the device to start again resolves the issue. There are technical and non-technical reasons why this will resolve some issues but if possible, definitely give it a go."
   },
   {
     "title": "Student Password Reset Form",
@@ -60,7 +60,7 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Classlink",
     "url": "articles/classlink/password-resetting/index.html",
     "summary": "Currently, we have a Google form for staff to request a students password reset. Click here to be taken to it. Staff will need to provide the student's email address, we will then create a service desk ticket on your behalf and notify you of the new password v",
-    "text": "Currently, we have a Google form for staff to request a students password reset. Click here to be taken to it. Staff will need to provide the student's email address, we will then create a service desk ticket on your behalf and notify you of the new password via a reply to your ticket. Open embedded media"
+    "text": "Currently, we have a Google form for staff to request a students password reset. Click here to be taken to it. Staff will need to provide the student's email address, we will then create a service desk ticket on your behalf and notify you of the new password via a reply to your ticket. Open the student password reset form"
   },
   {
     "title": "4 Tips on Staying Organised",
@@ -109,7 +109,7 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Google Workspace",
     "url": "articles/google-drive-mail-meet-etc/persistent-meet-link/index.html",
     "summary": "Persistant Meet link in Google Calendar Open Google Calendar. Click on the date you wish to create the Event. Add a title and click on the date to add a date/time. Click where it says 'Doesn't Repeat' and select which ever is appropriate. Add a Google Meet by",
-    "text": "Persistant Meet link in Google Calendar Open Google Calendar. Click on the date you wish to create the Event. Add a title and click on the date to add a date/time. Click where it says 'Doesn't Repeat' and select which ever is appropriate. Add a Google Meet by clicking the blue button. Copy the Google Meet info (button on the left of the settings cog) . Paste the information in an email to send to recipients. Video Tutorial"
+    "text": "Persistant Meet link in Google Calendar Open Google Calendar. Click on the date you wish to create the Event. Add a title and click on the date to add a date/time. Click where it says 'Doesn't Repeat' and select which ever is appropriate. Add a Google Meet by clicking the blue button. Copy the Google Meet info (button on the left of the settings cog) . Paste the information in an email to send to recipients. Video Tutorial Persistent Meet link walkthrough."
   },
   {
     "title": "How to search in Gmail",
@@ -151,7 +151,7 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Google Workspace",
     "url": "articles/google-drive-mail-meet-etc/recording-google-meetsclassroom/index.html",
     "summary": "FOR PC/LAPTOP USE. LOOKING INTO CHROMEBOOK SOLUTION This is a bit of a longer one, it might be a good idea to get the recording starting before your meet/lesson to make sure its working and you won't hold up the meet/lesson. The video will show how to do this",
-    "text": "FOR PC/LAPTOP USE. LOOKING INTO CHROMEBOOK SOLUTION This is a bit of a longer one, it might be a good idea to get the recording starting before your meet/lesson to make sure its working and you won't hold up the meet/lesson. The video will show how to do this if the step by step instructions below are not clear enough. In the video I give examples of \"teaching\" by changing tabs to slides/sheets and then playing a video so you can see how it will look when doing it. The extension can be found here if you do not have it installed to chrome already. Recording your Google Classroom or Google Meet Open 'Screen Recorder' extension Capture 'Only Screen'. You do not need to capture camera as the Google meet already has your camera showing. Select 'System + mic' for the audio recording. Click 'Start Recording' and then click 'Chrome Tab and select your Google meet tab. Make sure the 'Share Tab Audio' box is ticked. (This will now record just that tab, even if you change tab) Carry on presenting/teaching as normal When finished, open the Screen Recorder again and click 'Stop' Optional: Watch the recording playback Click Save (It will automatically save to your downloads) IF THE VIDEO IS NOT LOADING THEN PLEASE CLICK THE TOP RIGHT OF IT AND IT WILL OPEN IN A SEPARATE WINDOW Video This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed."
+    "text": "FOR PC/LAPTOP USE. LOOKING INTO CHROMEBOOK SOLUTION This is a bit of a longer one, it might be a good idea to get the recording starting before your meet/lesson to make sure its working and you won't hold up the meet/lesson. The video will show how to do this if the step by step instructions below are not clear enough. In the video I give examples of \"teaching\" by changing tabs to slides/sheets and then playing a video so you can see how it will look when doing it. The extension can be found here if you do not have it installed to chrome already. Recording your Google Classroom or Google Meet Open 'Screen Recorder' extension Capture 'Only Screen'. You do not need to capture camera as the Google meet already has your camera showing. Select 'System + mic' for the audio recording. Click 'Start Recording' and then click 'Chrome Tab and select your Google meet tab. Make sure the 'Share Tab Audio' box is ticked. (This will now record just that tab, even if you change tab) Carry on presenting/teaching as normal When finished, open the Screen Recorder again and click 'Stop' Optional: Watch the recording playback Click Save (It will automatically save to your downloads) IF THE VIDEO IS NOT LOADING THEN PLEASE CLICK THE TOP RIGHT OF IT AND IT WILL OPEN IN A SEPARATE WINDOW Video Recording a Google Meet walkthrough."
   },
   {
     "title": "I have mistakenly deleted a file in Google Drive",
@@ -179,7 +179,7 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Google Workspace",
     "url": "articles/google-drive-mail-meet-etc/guardian-summaries-on-google-classroom/index.html",
     "summary": "By default Guardian Summaries are off on Google Classroom. They are a really good feature for Guardians as they show Students missing work, upcoming work (due in the week as these are weekly emails) as well as the class activities set by the Teacher(s) Turning",
-    "text": "By default Guardian Summaries are off on Google Classroom. They are a really good feature for Guardians as they show Students missing work, upcoming work (due in the week as these are weekly emails) as well as the class activities set by the Teacher(s) Turning Guardian Summaries on Go to classroom.Google.com Click on your Class Go to the settings cog in the top right Scroll down to 'Guardian Summaries' and toggle it on Tick or Untick 'Add all the classes that you teach to Guardian Summaries' Video This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed."
+    "text": "By default Guardian Summaries are off on Google Classroom. They are a really good feature for Guardians as they show Students missing work, upcoming work (due in the week as these are weekly emails) as well as the class activities set by the Teacher(s) Turning Guardian Summaries on Go to classroom.Google.com Click on your Class Go to the settings cog in the top right Scroll down to 'Guardian Summaries' and toggle it on Tick or Untick 'Add all the classes that you teach to Guardian Summaries' Video Guardian summaries walkthrough."
   },
   {
     "title": "Creating a new Google Calendar",
@@ -207,7 +207,7 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Microsoft Teams",
     "url": "articles/microsoft-teams/creating-a-microsoft-teams/index.html",
     "summary": "Creating Microsoft Teams Sign in to the Microsoft Teams application with your school email address Open Office 365 (if you are using the Teams application skip this) and click on Teams on the left side bar Click on 'Teams' on the left bar again if you are not",
-    "text": "Creating Microsoft Teams Sign in to the Microsoft Teams application with your school email address Open Office 365 (if you are using the Teams application skip this) and click on Teams on the left side bar Click on 'Teams' on the left bar again if you are not automatically put on the Teams page Click 'Create Team' (if you already have a team the create button will be in the top right) Select a Team type Add a name and description to your team, then click next Add/invite people to your team. e.g. Class teams will have a students & teachers option Click next/skip Video This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed."
+    "text": "Creating Microsoft Teams Sign in to the Microsoft Teams application with your school email address Open Office 365 (if you are using the Teams application skip this) and click on Teams on the left side bar Click on 'Teams' on the left bar again if you are not automatically put on the Teams page Click 'Create Team' (if you already have a team the create button will be in the top right) Select a Team type Add a name and description to your team, then click next Add/invite people to your team. e.g. Class teams will have a students & teachers option Click next/skip Video Creating a Microsoft Team walkthrough."
   },
   {
     "title": "Create a Teams Meeting",
@@ -242,7 +242,7 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Room Help",
     "url": "articles/senior-specific-room-help/theatre-projector-sound/index.html",
     "summary": "Setting up the projector Get the two remotes (usually locked in the control room) Make sure the projector is on. The switch is near the HDMI port on the wall Point the projector remote (bigger one) directly at the projector and press the power button. This mig",
-    "text": "Setting up the projector Get the two remotes (usually locked in the control room) Make sure the projector is on. The switch is near the HDMI port on the wall Point the projector remote (bigger one) directly at the projector and press the power button. This might take a few tries, the green light will flash when successful. Use the smaller remote to bring down the screen, press the middle button to make the screen stop. Plug your laptop in with the HDMI cable. If you require an adapter please let IT know what adapter you need so we can make sure we have the correct one. Change how it displays based on what you require (optional) - Click here for How to change display settings Getting audio working Go to the control room Make sure the 2 switches on the left side are on - Labelled 'Sound Power' Make sure the power to the little black box is also on Turn the amplifier 'PLX1104' on Make sure the link box from the projector to the audio table is on Bring the slider labelled 'AUX' up (second one in from the right) Slowly bring the 'Main PA' sliders up to the volume you require. Video This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed."
+    "text": "Setting up the projector Get the two remotes (usually locked in the control room) Make sure the projector is on. The switch is near the HDMI port on the wall Point the projector remote (bigger one) directly at the projector and press the power button. This might take a few tries, the green light will flash when successful. Use the smaller remote to bring down the screen, press the middle button to make the screen stop. Plug your laptop in with the HDMI cable. If you require an adapter please let IT know what adapter you need so we can make sure we have the correct one. Change how it displays based on what you require (optional) - Click here for How to change display settings Getting audio working Go to the control room Make sure the 2 switches on the left side are on - Labelled 'Sound Power' Make sure the power to the little black box is also on Turn the amplifier 'PLX1104' on Make sure the link box from the projector to the audio table is on Bring the slider labelled 'AUX' up (second one in from the right) Slowly bring the 'Main PA' sliders up to the volume you require. Video Senior theatre projector and sound walkthrough."
   },
   {
     "title": "Prep Meeting Room",
@@ -256,14 +256,14 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Files & Conversion",
     "url": "articles/conversion-general-file-problems/converting-a-file-format/index.html",
     "summary": "Very easy but also very useful one, changing a file format e.g. a .wma file to .mp3 file Changing a file format Use Google to search for what you want to go from and to (e.g wma to mp3, HEIC to jpg etc) Open one of the websites from the results, the two I use",
-    "text": "Very easy but also very useful one, changing a file format e.g. a .wma file to .mp3 file Changing a file format Use Google to search for what you want to go from and to (e.g wma to mp3, HEIC to jpg etc) Open one of the websites from the results, the two I use most fffrequently are CloudConvert and FreeConvert Upload the file to the website, change any settings to fit your needs and hit convert Download finished file (sometimes websites auto download upon completion) Video This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed."
+    "text": "Very easy but also very useful one, changing a file format e.g. a .wma file to .mp3 file Changing a file format Use Google to search for what you want to go from and to (e.g wma to mp3, HEIC to jpg etc) Open one of the websites from the results, the two I use most fffrequently are CloudConvert and FreeConvert Upload the file to the website, change any settings to fit your needs and hit convert Download finished file (sometimes websites auto download upon completion) Video Converting a file format walkthrough."
   },
   {
     "title": "Files in a ZIP folder won't open",
     "category": "Files & Conversion",
     "url": "articles/conversion-general-file-problems/files-in-a-zip-folder-wont-open/index.html",
     "summary": "ZIP folders are basically like presents, they have been packaged up and need to be unwrapped to access what is inside. Unzip a folder Navigate to the ZIP folders location Right click and click \"extract all\" Check extract location (where the folder will end up)",
-    "text": "ZIP folders are basically like presents, they have been packaged up and need to be unwrapped to access what is inside. Unzip a folder Navigate to the ZIP folders location Right click and click \"extract all\" Check extract location (where the folder will end up) by default this is the same parent folder of the zip Click \"extract\" Video This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed."
+    "text": "ZIP folders are basically like presents, they have been packaged up and need to be unwrapped to access what is inside. Unzip a folder Navigate to the ZIP folders location Right click and click \"extract all\" Check extract location (where the folder will end up) by default this is the same parent folder of the zip Click \"extract\" Video Extracting files from a ZIP folder walkthrough."
   },
   {
     "title": "Zip and Unzip Files",
@@ -285,13 +285,6 @@ window.IT_HELP_SEARCH_INDEX = [
     "url": "articles/security/google-account-password-security/index.html",
     "summary": "Change your password Open your Google Account. You might need to sign in. Under \"Security,\" select Signing in to Google. Choose Password. You might need to sign in again. Enter your new password, then select Change Password Forgotten Password If a student has",
     "text": "Change your password Open your Google Account. You might need to sign in. Under \"Security,\" select Signing in to Google. Choose Password. You might need to sign in again. Enter your new password, then select Change Password Forgotten Password If a student has forgotten their password please email on their behalf to support@claremontschool.co.uk however if you have forgotten your password, for security, please either call Sam (internal extension 211) or Andy (01424230441 or internal extension 007) or pop in and see us. Security Checkup https://myaccount.Google.com/security-checkup?hl=en This will allow you to see devices that have connected to your account and allow you to check further security settings. This is very useful and should be checked reguarily. I'm still unsure about something Account security is extremely important so if you're unsure about anything submit a ticket on the service desk"
-  },
-  {
-    "title": "Multi-Factor Authentication - Google",
-    "category": "Security",
-    "url": "articles/security/multi-factor-authentication/index.html",
-    "summary": "There are a variety of ways to help keep your account protected, below will be instructions on how you can enable MFA (multi-factor authentication) for your account. We heavily recommend you enable at least one of these methods, the more the better! Online sec",
-    "text": "There are a variety of ways to help keep your account protected, below will be instructions on how you can enable MFA (multi-factor authentication) for your account. We heavily recommend you enable at least one of these methods, the more the better! Online security is extremely important, not just at work but also at home. Use these tips/methods to protect your personal accounts too! Method 1 - Confirming a log in using your phone Navigate to your Google Account . Select \"Security\" on the left side Under the section \"Signing in to Google\" select 2-Step Verification > Get started Follow the on-screen steps to complete setup Once you confirm a device you can add it to your \"Trusted Devices\" list, this means you will not have to confirm your login every time you use this device. Most people will always have their phone on them at all times and will not even leave the house without it. This is my favourite go to method as I am always able to confirm my logins wherever I am. I can also know immediately when someone has tried to access my account. We never expect anyone to use their personal phones for anything work related, this decision is completely down to you. No data is stored on the devices used for authentication Method 2 - Physical USB Security Key Purchase the USB from here When logging in and prompted for your usb key, plug it in Method 3 - Google Authenticator App Download the Google Authenticator App On your Android device, go to your Google Account . At the top, tap the Security tab. If at first you don’t get the Security tab, swipe through all tabs until you find i"
   },
   {
     "title": "How do I Spot Phishing Emails",
@@ -357,18 +350,11 @@ window.IT_HELP_SEARCH_INDEX = [
     "text": "THE WIZARD BAR AKA The most useful tool The wizard bar is probably the most useful place on the iSAMS website, it has quick access to all you need (as you can see from the image on the left). The wizard bar will save you a lot of time and effort, remember to utilize it!"
   },
   {
-    "title": "Signing in",
-    "category": "iSAMS",
-    "url": "articles/isams/signing-in/index.html",
-    "summary": "Signing in to iSAMS (web) Open ClassLink . Sign in with your school account if prompted. Click on iSAMS. If you are unable to login to iSAMS please send an email to support@claremontschool.co.uk Signing in to iSAMS (mobile app) Download the iTeacher App from t",
-    "text": "Signing in to iSAMS (web) Open ClassLink . Sign in with your school account if prompted. Click on iSAMS. If you are unable to login to iSAMS please send an email to support@claremontschool.co.uk Signing in to iSAMS (mobile app) Download the iTeacher App from the Play Store / App Store Open the app Type in the school code CLMT Tap the school account sign-in option Sign in with your school account"
-  },
-  {
     "title": "How to take a register",
     "category": "iSAMS",
     "url": "articles/isams/how-to-take-a-register/index.html",
     "summary": "Taking a Register Expand the Registration category on the right hand side of the screen and click on Take a Register. A new window will open Select the Registration Date, Time and Form/Set using the drop down menus When the selections above are complete click",
-    "text": "Taking a Register Expand the Registration category on the right hand side of the screen and click on Take a Register. A new window will open Select the Registration Date, Time and Form/Set using the drop down menus When the selections above are complete click Go. A list of students for the selected form is displayed Mark students as present or away/absent: The register automatically saves after a short period of time. You can click Force Save to manually save any changes. If a student has been marked as absent, click on the drop down list to select the reason for their absence Click the + icon next to a student to add a note. For example, if the student has brought in a note from parents or an appointment card, make a note of it here. Click on Close Window when you have completed the changes. Video Video provided by mileschool This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed."
+    "text": "Taking a Register Expand the Registration category on the right hand side of the screen and click on Take a Register. A new window will open Select the Registration Date, Time and Form/Set using the drop down menus When the selections above are complete click Go. A list of students for the selected form is displayed Mark students as present or away/absent: The register automatically saves after a short period of time. You can click Force Save to manually save any changes. If a student has been marked as absent, click on the drop down list to select the reason for their absence Click the + icon next to a student to add a note. For example, if the student has brought in a note from parents or an appointment card, make a note of it here. Click on Close Window when you have completed the changes. Video Video provided by mileschool Taking a register walkthrough."
   },
   {
     "title": "Rewards and Conduct",
@@ -418,13 +404,6 @@ window.IT_HELP_SEARCH_INDEX = [
     "url": "articles/isams/emailing-students/index.html",
     "summary": "Emailing Students Open the Student Manager module. Use your preferred search method to find the student records you want to work with Select the checkboxes by the students you wish to contact: Select Email Wizard from the pink drop down list. Check Selected st",
     "text": "Emailing Students Open the Student Manager module. Use your preferred search method to find the student records you want to work with Select the checkboxes by the students you wish to contact: Select Email Wizard from the pink drop down list. Check Selected students: Click Next. Click OK to confirm your selection. Use the fields in the Message tab to compose your e-mail: Select the Recipients tab and confirm the recipients of the e-mail Select the Attachments tab and upload attachments, as required. Use the Options tab to set e-mail properties: Click Send E-Mail when you are ready. Click View Summary to check on the status of the e-mail delivery."
-  },
-  {
-    "title": "Student Portal",
-    "category": "iSAMS",
-    "url": "articles/isams/student-portal/index.html",
-    "summary": "",
-    "text": ""
   },
   {
     "title": "Attendance data for your form",
