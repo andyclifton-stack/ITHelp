@@ -190,7 +190,7 @@ input:focus-visible {
 }
 
 .home-intro {
-  padding-left: clamp(11rem, 18vw, 15rem);
+  padding-left: 0;
 }
 
 .home-intro h1 {
@@ -826,6 +826,10 @@ th {
     top: 1rem;
   }
 
+  .home-intro {
+    padding-left: clamp(10rem, 16vw, 13rem);
+  }
+
   .nav-toggle {
     display: block;
     flex: 0 0 auto;
@@ -878,7 +882,7 @@ th {
   }
 
   .hero-logo {
-    display: none;
+    display: none !important;
   }
 }
 
