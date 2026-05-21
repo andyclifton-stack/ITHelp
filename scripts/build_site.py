@@ -5,6 +5,7 @@ import re
 import shutil
 import textwrap
 import stat
+import sys
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
@@ -85,6 +86,398 @@ CATEGORY_ACCENTS = [
 ]
 
 SERVICE_DESK_URL = "https://servicedesk.ispschools.com"
+
+RELATED_GUIDES = {
+    "Have you tried switching it off and on again?!": [
+        "Submitting a Support Ticket",
+        "How to use Chrome Remote Desktop",
+        "No sound and the speaker icon has a red cross through it",
+    ],
+    "Student Password Reset Form": [
+        "Password Resetting",
+        "What to do if a student needs IT help",
+        "Submitting a Support Ticket",
+    ],
+    "What to do if a student needs IT help": [
+        "Student Password Reset Form",
+        "Chromebook won't turn on",
+        "What is the WiFi password (Internet access)",
+        "Submitting a Support Ticket",
+    ],
+    "Submitting a Support Ticket": [
+        "What to do if a student needs IT help",
+        "How to use Chrome Remote Desktop",
+        "Have you tried switching it off and on again?!",
+    ],
+    "Log-in Page": [
+        "ClassLink page not appearing automatically",
+        "ClassLink using a personal Microsoft account",
+        "Authenticator",
+        "Customisation",
+    ],
+    "Authenticator": [
+        "Log-in Page",
+        "Google Account password and security",
+        "ClassLink using a personal Microsoft account",
+    ],
+    "Customisation": [
+        "Log-in Page",
+        "ClassLink page not appearing automatically",
+        "Opening multiple favourite tabs",
+    ],
+    "Password Resetting": [
+        "Student Password Reset Form",
+        "What to do if a student needs IT help",
+        "Log-in Page",
+    ],
+    "ClassLink page not appearing automatically": [
+        "Log-in Page",
+        "ClassLink using a personal Microsoft account",
+        "Customisation",
+    ],
+    "ClassLink using a personal Microsoft account": [
+        "Log-in Page",
+        "ClassLink page not appearing automatically",
+        "Google Account password and security",
+    ],
+    "4 Tips on Staying Organised": [
+        "How to Log Into Google Drive",
+        "Google Drive is no longer showing in the file explorer",
+        "I have overwritten a file in Google Drive",
+    ],
+    "Gmail Customisation": [
+        "Remove conversation view in Gmail",
+        "Add/edit your Gmail signature",
+        "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling",
+    ],
+    "Add/edit your Gmail signature": [
+        "Gmail Customisation",
+        "Adding a Hyperlink to an Email",
+        "Out of office in Gmail",
+    ],
+    "Adding a Hyperlink to an Email": [
+        "Add/edit your Gmail signature",
+        "Gmail Customisation",
+        "How to search in Gmail",
+    ],
+    "Remove conversation view in Gmail": [
+        "Gmail Customisation",
+        "How to search in Gmail",
+        "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling",
+    ],
+    "Out of office in Gmail": [
+        "Add/edit your Gmail signature",
+        "Gmail Customisation",
+        "Create appointment schedules in Google Calendar",
+    ],
+    "Persistant Meet link in Google Calendar": [
+        "Create appointment schedules in Google Calendar",
+        "Creating a new Google Calendar",
+        "Recording Google Meets/Classroom",
+    ],
+    "How to search in Gmail": [
+        "How to create filters in Gmail",
+        "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling",
+        "Remove conversation view in Gmail",
+    ],
+    "How to create filters in Gmail": [
+        "How to search in Gmail",
+        "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling",
+        "Gmail Customisation",
+    ],
+    "Create appointment schedules in Google Calendar": [
+        "Creating a new Google Calendar",
+        "Persistant Meet link in Google Calendar",
+        "Out of office in Gmail",
+    ],
+    "How to Log Into Google Drive": [
+        "Google Drive is no longer showing in the file explorer",
+        "4 Tips on Staying Organised",
+        "I have mistakenly deleted a file in Google Drive",
+    ],
+    "Google Drive is no longer showing in the file explorer": [
+        "How to Log Into Google Drive",
+        "OneDrive",
+        "4 Tips on Staying Organised",
+    ],
+    "Recording Google Meets/Classroom": [
+        "Persistant Meet link in Google Calendar",
+        "Create appointment schedules in Google Calendar",
+        "Recording a Meeting",
+        "Sharing a Recorded Meeting",
+    ],
+    "I have mistakenly deleted a file in Google Drive": [
+        "I have overwritten a file in Google Drive",
+        "How to Log Into Google Drive",
+        "4 Tips on Staying Organised",
+    ],
+    "How to create a shared drive and add/remove people": [
+        "How to Log Into Google Drive",
+        "4 Tips on Staying Organised",
+        "Photography Sharepoint",
+    ],
+    "I have overwritten a file in Google Drive": [
+        "I have mistakenly deleted a file in Google Drive",
+        "4 Tips on Staying Organised",
+        "How to Log Into Google Drive",
+    ],
+    "Guardian Summaries on Google Classroom": [
+        "Recording Google Meets/Classroom",
+        "Create appointment schedules in Google Calendar",
+        "How to create a shared drive and add/remove people",
+    ],
+    "Creating a new Google Calendar": [
+        "Create appointment schedules in Google Calendar",
+        "Persistant Meet link in Google Calendar",
+        "Out of office in Gmail",
+    ],
+    "Presentation Template": [
+        "How to Log Into Google Drive",
+        "4 Tips on Staying Organised",
+        "Default Apps/Files",
+    ],
+    "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling": [
+        "How to create filters in Gmail",
+        "How to search in Gmail",
+        "Remove conversation view in Gmail",
+        "Gmail Customisation",
+    ],
+    "Creating Microsoft Teams": [
+        "Create a Teams Meeting",
+        "How to Admit Participants from the Waiting Room",
+        "Recording a Meeting",
+    ],
+    "Create a Teams Meeting": [
+        "Creating Microsoft Teams",
+        "How to Admit Participants from the Waiting Room",
+        "Recording a Meeting",
+    ],
+    "How to Admit Participants from the Waiting Room": [
+        "Create a Teams Meeting",
+        "Creating Microsoft Teams",
+        "Recording a Meeting",
+    ],
+    "Recording a Meeting": [
+        "Sharing a Recorded Meeting",
+        "Create a Teams Meeting",
+        "Recording Google Meets/Classroom",
+    ],
+    "Sharing a Recorded Meeting": [
+        "Recording a Meeting",
+        "Creating Microsoft Teams",
+        "Create a Teams Meeting",
+    ],
+    "Theatre Projector & Sound (Senior)": [
+        "Changing display settings",
+        "No sound and the speaker icon has a red cross through it",
+        "Prep Meeting Room",
+    ],
+    "Prep Meeting Room": [
+        "Theatre Projector & Sound (Senior)",
+        "Create a Teams Meeting",
+        "No sound and the speaker icon has a red cross through it",
+    ],
+    "Converting a file format": [
+        "Default Apps/Files",
+        "Files in a ZIP folder won't open",
+        "Zip and Unzip Files",
+        "Exam papers printing with grid lines",
+    ],
+    "Files in a ZIP folder won't open": [
+        "Zip and Unzip Files",
+        "Default Apps/Files",
+        "Converting a file format",
+    ],
+    "Zip and Unzip Files": [
+        "Files in a ZIP folder won't open",
+        "Converting a file format",
+        "Default Apps/Files",
+    ],
+    "Default Apps/Files": [
+        "Converting a file format",
+        "Files in a ZIP folder won't open",
+        "Exam papers printing with grid lines",
+    ],
+    "Google Account password and security": [
+        "How do I Spot Phishing Emails",
+        "Authenticator",
+        "ClassLink using a personal Microsoft account",
+    ],
+    "How do I Spot Phishing Emails": [
+        "Google Account password and security",
+        "Authenticator",
+        "Submitting a Support Ticket",
+    ],
+    "Exam papers printing with grid lines": [
+        "Papercut Hive",
+        "Converting a file format",
+        "Default Apps/Files",
+    ],
+    "Papercut Hive": [
+        "Changing Toner",
+        "Exam papers printing with grid lines",
+        "Submitting a Support Ticket",
+    ],
+    "Changing Toner": [
+        "Papercut Hive",
+        "Submitting a Support Ticket",
+        "Exam papers printing with grid lines",
+    ],
+    "Phone Extensions": [
+        "Forwarding Calls",
+        "Office phone doesn't work - orange lights",
+        "Submitting a Support Ticket",
+    ],
+    "Office phone doesn't work - orange lights": [
+        "Phone Extensions",
+        "Forwarding Calls",
+        "Submitting a Support Ticket",
+    ],
+    "Forwarding Calls": [
+        "Phone Extensions",
+        "Office phone doesn't work - orange lights",
+        "Submitting a Support Ticket",
+    ],
+    "Exam Information": [
+        "Exam papers printing with grid lines",
+        "Presentation Template",
+        "Submitting a Support Ticket",
+    ],
+    "iSAMS": [
+        "How to take a register",
+        "Searching up a Student",
+        "How To View a Timetable",
+    ],
+    "How to take a register": [
+        "Attendance data for your form",
+        "Searching up a Student",
+        "How To View a Timetable",
+    ],
+    "Rewards and Conduct": [
+        "Searching up a Student",
+        "Finding Pupil Information",
+        "How To View a Timetable",
+    ],
+    "How To View a Timetable": [
+        "Searching up a Student",
+        "Finding Pupil Information",
+        "How to take a register",
+    ],
+    "Writing Reports": [
+        "Finding Pupil Information",
+        "Photo Report",
+        "Searching up a Student",
+    ],
+    "Searching up a Student": [
+        "Finding Pupil Information",
+        "How To View a Timetable",
+        "Emailing Correspondents",
+    ],
+    "Emailing Correspondents": [
+        "Emailing Students",
+        "Creating a Group",
+        "Searching up a Student",
+    ],
+    "Creating a Group": [
+        "Emailing Students",
+        "Emailing Correspondents",
+        "Searching up a Student",
+    ],
+    "Emailing Students": [
+        "Creating a Group",
+        "Emailing Correspondents",
+        "Searching up a Student",
+    ],
+    "Attendance data for your form": [
+        "How to take a register",
+        "Extracting Data",
+        "Creating a Group",
+    ],
+    "Finding Pupil Information": [
+        "Searching up a Student",
+        "Photo Report",
+        "Writing Reports",
+    ],
+    "Photo Report": [
+        "Finding Pupil Information",
+        "Writing Reports",
+        "Searching up a Student",
+    ],
+    "Extracting Data": [
+        "Attendance data for your form",
+        "Creating a Group",
+        "Default Apps/Files",
+    ],
+    "Sign In App": [
+        "Phone Extensions",
+        "Submitting a Support Ticket",
+        "Accident Forms",
+    ],
+    "OneDrive": [
+        "Photography Sharepoint",
+        "Google Drive is no longer showing in the file explorer",
+        "4 Tips on Staying Organised",
+    ],
+    "Photography Sharepoint": [
+        "OneDrive",
+        "How to create a shared drive and add/remove people",
+        "How to Log Into Google Drive",
+    ],
+    "What is the WiFi password (Internet access)": [
+        "Submitting a Support Ticket",
+        "What to do if a student needs IT help",
+        "How to use Chrome Remote Desktop",
+    ],
+    "Opening multiple favourite tabs": [
+        "Tab Wrangler",
+        "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More",
+        "Customisation",
+    ],
+    "Tab Wrangler": [
+        "Opening multiple favourite tabs",
+        "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More",
+        "4 Tips on Staying Organised",
+    ],
+    "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More": [
+        "Opening multiple favourite tabs",
+        "Tab Wrangler",
+        "Activating Text to Speech - Chromebook & Windows",
+    ],
+    "How to use Chrome Remote Desktop": [
+        "Submitting a Support Ticket",
+        "Google Account password and security",
+        "How do I Spot Phishing Emails",
+    ],
+    "No sound and the speaker icon has a red cross through it": [
+        "Theatre Projector & Sound (Senior)",
+        "Prep Meeting Room",
+        "Submitting a Support Ticket",
+    ],
+    "Chromebook shortcuts": [
+        "Chromebook won't turn on",
+        "Changing display settings",
+        "Activating Text to Speech - Chromebook & Windows",
+    ],
+    "Changing display settings": [
+        "Theatre Projector & Sound (Senior)",
+        "Chromebook shortcuts",
+        "No sound and the speaker icon has a red cross through it",
+    ],
+    "Activating Text to Speech - Chromebook & Windows": [
+        "Chromebook shortcuts",
+        "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More",
+        "Changing display settings",
+    ],
+    "Accident Forms": [
+        "Sign In App",
+        "Submitting a Support Ticket",
+    ],
+    "Chromebook won't turn on": [
+        "What to do if a student needs IT help",
+        "Chromebook shortcuts",
+        "Submitting a Support Ticket",
+    ],
+}
 
 SKIP_TITLES = {
     "Universal Printer",
@@ -971,7 +1364,42 @@ def write(path, content):
     target.write_text(content, encoding="utf-8")
 
 
-def article_page(article):
+def related_articles_for(article, articles, limit=4):
+    by_title = {item["title"]: item for item in articles}
+    related = []
+    seen = {article["title"]}
+
+    for title in RELATED_GUIDES.get(article["title"], []):
+        item = by_title.get(title)
+        if item and item["title"] not in seen:
+            related.append(item)
+            seen.add(item["title"])
+
+    if len(related) < limit:
+        for item in articles:
+            if item["category"] == article["category"] and item["title"] not in seen:
+                related.append(item)
+                seen.add(item["title"])
+                if len(related) == limit:
+                    break
+
+    return related[:limit]
+
+
+def related_guides_html(article, articles):
+    related = related_articles_for(article, articles)
+    if not related:
+        return ""
+    links = "".join(
+        f'<li><a href="/{item["output"]}">{html.escape(item["title"])}</a></li>'
+        for item in related
+    )
+    return f"""
+          <h3>Related guides</h3>
+          <ul>{links}</ul>"""
+
+
+def article_page(article, articles):
     body = f"""
     <section class="page-hero compact">
       <div class="container">
@@ -988,6 +1416,7 @@ def article_page(article):
           <h2>Need more help?</h2>
           <p>For faults or requests, submit a ticket through the Service Desk so the IT team can track and respond properly.</p>
           <a class="button" href="{SERVICE_DESK_URL}">Submit a support ticket</a>
+          {related_guides_html(article, articles)}
         </aside>
       </div>
     </section>"""
@@ -1134,31 +1563,65 @@ def media_inventory(articles):
     return "\n".join(rows).strip() + "\n"
 
 
+def articles_from_existing_site():
+    index_path = ROOT / "assets" / "data" / "search-index.js"
+    data = index_path.read_text(encoding="utf-8")
+    match = re.search(r"=\s*(\[[\s\S]*\]);", data)
+    if not match:
+        raise RuntimeError("Could not read local search index.")
+
+    articles = []
+    for item in json.loads(match.group(1)):
+        page_path = ROOT / item["url"]
+        soup = BeautifulSoup(page_path.read_text(encoding="utf-8"), "lxml")
+        content = soup.select_one(".article-content")
+        if not content:
+            continue
+        articles.append({
+            "title": item["title"],
+            "category": item["category"],
+            "summary": item["summary"],
+            "text": item["text"],
+            "body": content.decode_contents().strip(),
+            "media": [],
+            "source_url": "",
+            "output": item["url"],
+        })
+    return articles
+
+
 def main():
     def clear_readonly(func, path, _exc):
         Path(path).chmod(stat.S_IWRITE)
         func(path)
 
-    nav = build_nav()
-    if len(nav) < 30:
-        raise RuntimeError(f"Source navigation returned only {len(nav)} items; aborting before clearing generated pages.")
+    use_local = "--from-local" in sys.argv
+    if use_local:
+        articles = articles_from_existing_site()
+        if len(articles) < 30:
+            raise RuntimeError(f"Local site returned only {len(articles)} articles; aborting before clearing generated pages.")
+    else:
+        nav = build_nav()
+        if len(nav) < 30:
+            raise RuntimeError(f"Source navigation returned only {len(nav)} items; aborting before clearing generated pages.")
 
     for folder in ["articles", "categories"]:
         shutil.rmtree(ROOT / folder, onexc=clear_readonly)
     generated_media = ROOT / "assets" / "media" / "generated"
-    if generated_media.exists():
+    if generated_media.exists() and not use_local:
         shutil.rmtree(generated_media, onexc=clear_readonly)
-    articles = []
-    for item in nav:
-        if item["title"] == "Home":
-            continue
-        print(f"Fetching {item['title']}")
-        articles.append(extract_article(item))
-    articles.extend(apply_article_updates(article.copy()) for article in CUSTOM_ARTICLES)
+    if not use_local:
+        articles = []
+        for item in nav:
+            if item["title"] == "Home":
+                continue
+            print(f"Fetching {item['title']}")
+            articles.append(extract_article(item))
+        articles.extend(apply_article_updates(article.copy()) for article in CUSTOM_ARTICLES)
 
     category_order = [c for c in CATEGORY_ORDER if any(a["category"] == c for a in articles)]
     for article in articles:
-        write(article["output"], article_page(article))
+        write(article["output"], article_page(article, articles))
     for category in category_order:
         write(category_slug(category), category_page(category, [a for a in articles if a["category"] == category]))
     write("index.html", home_page(articles, category_order))
