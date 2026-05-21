@@ -304,6 +304,45 @@ CUSTOM_ARTICLES = [
         "output": "articles/classlink/classlink-using-a-personal-microsoft-account/index.html",
         "source_url": "",
         "custom": True,
+    },
+    {
+        "title": "What to do if a student needs IT help",
+        "category": "Requests & Support",
+        "summary": "How form tutors and teachers can guide students to the student support site, collect useful details, handle password resets, and raise a support request when IT needs to help.",
+        "text": "Direct students to the student support site first. Ask what they were trying to do, what happened instead, when it started, where it happens, and any exact error message. Staff can request student password resets. If the issue still needs IT, raise a support ticket with the student details and troubleshooting already tried.",
+        "body": """
+          <p>The student support site is now live at <a href="https://help.claremontstudent.co.uk/">https://help.claremontstudent.co.uk/</a>. It gives students practical guides for laptops, passwords, ClassLink, OneDrive, apps, safety and common fixes.</p>
+          <p>If a student asks you for help, please guide them to the student site first where appropriate. The aim is to help them try the right guide, gather useful information, and then involve IT if the problem cannot be resolved.</p>
+
+          <h3>Suggested route for students</h3>
+          <ol>
+            <li>Ask the student to search the <a href="https://help.claremontstudent.co.uk/">student support site</a> for the issue.</li>
+            <li>If the issue is about a forgotten password, use the <a href="/articles/student-password-reset-form/index.html">student password reset form</a>. The student guide is also available here: <a href="https://help.claremontstudent.co.uk/articles/what-to-do-if-you-forgot-your-password/index.html">What to do if you forgot your password</a>.</li>
+            <li>For quick laptop issues, ask the student to restart the device if it is safe to do so, check power or WiFi, and note any error message.</li>
+            <li>If they are still stuck, gather the details below and raise a support request.</li>
+          </ol>
+
+          <h3>Information to collect before raising a request</h3>
+          <ul>
+            <li>Student full name and form group.</li>
+            <li>What the student was trying to do.</li>
+            <li>What happened instead.</li>
+            <li>When the problem started.</li>
+            <li>Whether it happens at school, at home, or both.</li>
+            <li>The device name, asset label, or room number if relevant.</li>
+            <li>The exact error message or a screenshot, if one is available.</li>
+            <li>Any checks already tried, such as restarting, checking WiFi, trying ClassLink again, or using the relevant student guide.</li>
+          </ul>
+
+          <h3>When to raise a support request</h3>
+          <p>Raise a support request when the student has tried the relevant guidance and the issue still needs IT, or when the problem affects learning, access to school systems, hardware, safeguarding, or a wider group of students.</p>
+          <p>Please include the details above in the request. IT will review the issue and get back to the form tutor or the member of staff who raised it.</p>
+          <p><a class="button" href="/articles/submitting-a-support-ticket/index.html">How to submit a support ticket</a></p>
+        """.strip(),
+        "media": [],
+        "output": "articles/student-it-help/index.html",
+        "source_url": "",
+        "custom": True,
     }
 ]
 
@@ -951,6 +990,7 @@ def article_page(article):
 
 def home_page(articles, categories):
     quick_task_titles = [
+        "What to do if a student needs IT help",
         "Submitting a Support Ticket",
         "Student Password Reset Form",
         "Chromebook won't turn on",
@@ -1093,12 +1133,15 @@ def main():
         Path(path).chmod(stat.S_IWRITE)
         func(path)
 
+    nav = build_nav()
+    if len(nav) < 30:
+        raise RuntimeError(f"Source navigation returned only {len(nav)} items; aborting before clearing generated pages.")
+
     for folder in ["articles", "categories"]:
         shutil.rmtree(ROOT / folder, onexc=clear_readonly)
     generated_media = ROOT / "assets" / "media" / "generated"
     if generated_media.exists():
         shutil.rmtree(generated_media, onexc=clear_readonly)
-    nav = build_nav()
     articles = []
     for item in nav:
         if item["title"] == "Home":

@@ -14,6 +14,13 @@ window.IT_HELP_SEARCH_INDEX = [
     "text": "Form Link - https://forms.gle/muNA8ENNUvmbdwE67"
   },
   {
+    "title": "What to do if a student needs IT help",
+    "category": "Requests & Support",
+    "url": "articles/student-it-help/index.html",
+    "summary": "Guide students to the student support site first, collect useful details, handle password resets, and raise a support request when IT needs to help.",
+    "text": "The student support site is now live at https://help.claremontstudent.co.uk/. It gives students practical guides for laptops, passwords, ClassLink, OneDrive, apps, safety and common fixes. If a student asks you for help, guide them to the student site first where appropriate. Ask the student to search the student support site for the issue. If the issue is about a forgotten password, use the student password reset form. Collect the student full name and form group, what they were trying to do, what happened instead, when the problem started, whether it happens at school or home, device or room details, the exact error message or screenshot, and any checks already tried. Raise a support request when the student has tried the relevant guidance and the issue still needs IT."
+  },
+  {
     "title": "Submitting a Support Ticket",
     "category": "Requests & Support",
     "url": "articles/submitting-a-support-ticket/index.html",

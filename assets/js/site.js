@@ -54,6 +54,9 @@ function renderFooter() {
           <img src="${siteUrl("assets/img/claremont-logo.png")}" alt="Claremont School">
           <span>Claremont School IT Help</span>
         </div>
+        <div class="footer-links">
+          <a href="${siteUrl("articles/student-it-help/index.html")}">What if a student needs help?</a>
+        </div>
       </div>
     </footer>
   `;
