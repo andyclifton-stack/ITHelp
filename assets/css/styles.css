@@ -497,6 +497,34 @@ li {
   color: var(--navy);
 }
 
+.student-site-callout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  margin: 0 0 1.25rem;
+  padding: clamp(1.15rem, 2vw, 1.45rem);
+  border: 1px solid #b7d9e7;
+  border-left: 6px solid var(--sky);
+  border-radius: 8px;
+  background: var(--sky-soft);
+}
+
+.student-site-callout strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--navy);
+  font-size: 1.12rem;
+}
+
+.student-site-callout p {
+  margin: 0;
+}
+
+.student-site-callout .button {
+  white-space: nowrap;
+}
+
 .search-panel {
   position: relative;
   z-index: 8;
@@ -935,6 +963,7 @@ th {
 
   .section-heading,
   .support-message,
+  .student-site-callout,
   .footer-inner {
     display: grid;
     grid-template-columns: 1fr;

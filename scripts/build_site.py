@@ -311,7 +311,13 @@ CUSTOM_ARTICLES = [
         "summary": "How form tutors and teachers can guide students to the student support site, collect useful details, handle password resets, and raise a support request when IT needs to help.",
         "text": "Direct students to the student support site first. Ask what they were trying to do, what happened instead, when it started, where it happens, and any exact error message. Staff can request student password resets. If the issue still needs IT, raise a support ticket with the student details and troubleshooting already tried.",
         "body": """
-          <p>The student support site is now live at <a href="https://help.claremontstudent.co.uk/">https://help.claremontstudent.co.uk/</a>. It gives students practical guides for laptops, passwords, ClassLink, OneDrive, apps, safety and common fixes.</p>
+          <div class="student-site-callout">
+            <div>
+              <strong>Student support site</strong>
+              <p>Students can use this site for practical guides on laptops, passwords, ClassLink, OneDrive, apps, safety and common fixes.</p>
+            </div>
+            <a class="button" href="https://help.claremontstudent.co.uk/" target="_blank" rel="noopener noreferrer">Open student support site</a>
+          </div>
           <p>If a student asks you for help, please guide them to the student site first where appropriate. The aim is to help them try the right guide, gather useful information, and then involve IT if the problem cannot be resolved.</p>
 
           <h3>Suggested route for students</h3>
