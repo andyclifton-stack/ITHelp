@@ -20,11 +20,11 @@
   <path d="M1010 334h84M1010 362h56" stroke="#071564" stroke-width="12" stroke-linecap="round"/>
   <circle cx="1052" cy="210" r="52" fill="#071564"/>
   <text x="1052" y="226" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#fff">GO</text>
-  <text x="82" y="104" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#245b85">Google Workspace</text>
-  <text font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#071564"><tspan x="82" y="172">4 Tips on Staying Organised</tspan></text>
-  <text font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#43546a"><tspan x="82" y="330">Use the steps on this page to complete the</tspan>
-<tspan x="82" y="362">task.</tspan></text>
-  <g transform="translate(82 520)">
+  <text x="96" y="104" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#245b85">Google Workspace</text>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#071564"><tspan x="96" y="172">4 Tips on Staying Organised</tspan></text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#43546a"><tspan x="96" y="330">Use the steps on this page to complete the</tspan>
+<tspan x="96" y="362">task.</tspan></text>
+  <g transform="translate(96 520)">
     <rect width="360" height="70" rx="10" fill="#f0f6fb" stroke="#d5e4ee"/>
     <circle cx="36" cy="35" r="15" fill="#ff7a1a"/>
     <path d="M29 35l5 6 11-14" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>

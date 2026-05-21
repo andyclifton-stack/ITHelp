@@ -8,14 +8,14 @@
   <path d="M457 126l51 3-29 43z" fill="#00b3e8"/>
   <rect x="52" y="318" width="876" height="134" rx="16" fill="#fff" stroke="#d9e0ea" stroke-width="3"/>
   <rect x="90" y="350" width="154" height="70" rx="9" fill="#fff0e6" stroke="#ed6b17" stroke-width="4"/>
-  <path d="M161 382a18 18 0 1 1-13 5" fill="none" stroke="#000b4d" stroke-width="7" stroke-linecap="round"/>
-  <path d="M148 377l28 2-16 23z" fill="#000b4d"/>
+  <path d="M161 378a18 18 0 1 1-13 5" fill="none" stroke="#000b4d" stroke-width="7" stroke-linecap="round"/>
+  <path d="M148 373l28 2-16 23z" fill="#000b4d"/>
   <text x="167" y="475" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#000b4d">Hold Refresh</text>
   <rect x="730" y="350" width="106" height="70" rx="35" fill="#e5f9ff" stroke="#00b3e8" stroke-width="4"/>
-  <path d="M783 371v23" stroke="#000b4d" stroke-width="7" stroke-linecap="round"/>
-  <path d="M769 383a19 19 0 1 0 28 0" fill="none" stroke="#000b4d" stroke-width="7" stroke-linecap="round"/>
+  <path d="M783 367v23" stroke="#000b4d" stroke-width="7" stroke-linecap="round"/>
+  <path d="M769 379a19 19 0 1 0 28 0" fill="none" stroke="#000b4d" stroke-width="7" stroke-linecap="round"/>
   <text x="783" y="475" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#000b4d">Tap Power</text>
   <path d="M284 385h390" stroke="#283583" stroke-width="8" stroke-linecap="round"/>
   <path d="M654 362l43 23-43 23z" fill="#283583"/>
-  <text x="489" y="475" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#526071">then release when the screen lights up</text>
+  <text x="489" y="475" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#526071">then release when the screen lights up</text>
 </svg>

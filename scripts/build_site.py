@@ -464,12 +464,12 @@ def generated_media_svg(article):
     helper_lines = wrap_svg_text("Use the steps on this page to complete the task.", 46, 2)
     category = html.escape(article["category"])
     title_tspans = "\n".join(
-        f'<tspan x="82" y="{172 + index * 50}">{html.escape(line)}</tspan>'
+        f'<tspan x="96" y="{172 + index * 50}">{html.escape(line)}</tspan>'
         for index, line in enumerate(title_lines)
     )
     helper_start = 370 if len(title_lines) > 2 else 330
     helper_tspans = "\n".join(
-        f'<tspan x="82" y="{helper_start + index * 32}">{html.escape(line)}</tspan>'
+        f'<tspan x="96" y="{helper_start + index * 32}">{html.escape(line)}</tspan>'
         for index, line in enumerate(helper_lines)
     )
     icon_label = html.escape(article["category"][:2].upper())
@@ -495,10 +495,10 @@ def generated_media_svg(article):
   <path d="M1010 334h84M1010 362h56" stroke="#071564" stroke-width="12" stroke-linecap="round"/>
   <circle cx="1052" cy="210" r="52" fill="#071564"/>
   <text x="1052" y="226" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" fill="#fff">{icon_label}</text>
-  <text x="82" y="104" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#245b85">{category}</text>
+  <text x="96" y="104" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#245b85">{category}</text>
   <text font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#071564">{title_tspans}</text>
   <text font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#43546a">{helper_tspans}</text>
-  <g transform="translate(82 520)">
+  <g transform="translate(96 520)">
     <rect width="360" height="70" rx="10" fill="#f0f6fb" stroke="#d5e4ee"/>
     <circle cx="36" cy="35" r="15" fill="#ff7a1a"/>
     <path d="M29 35l5 6 11-14" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
