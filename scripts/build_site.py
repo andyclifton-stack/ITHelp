@@ -647,7 +647,7 @@ CUSTOM_ARTICLES = [
           <p>Chrome already has useful keyboard shortcuts for moving between tabs, but these move by tab position. Previous Tab adds a shortcut for going back to the <em>previously used</em> tab instead.</p>
 
           <h3>Install Previous Tab</h3>
-          <p>You can install it from the Chrome Web Store here: <a href="https://chromewebstore.google.com/detail/previous-tab/bjaniflnlhhofabpoamhnobeonjcjjpl?hl=en">Previous Tab Chrome extension</a>.</p>
+          <p>You can install it from the Chrome Web Store here: <a href="https://chromewebstore.google.com/detail/previous-tab/bjaniflnlhhofabpoamhnobeonjcjjpl?hl=en" target="_blank" rel="noopener noreferrer">Previous Tab Chrome extension</a>.</p>
 
           <h3>How to use it</h3>
           <ol>
