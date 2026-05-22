@@ -63,6 +63,7 @@ CATEGORY_OVERRIDES = {
     "Student Password Reset Form": "Requests & Support",
     "Submitting a Support Ticket": "Requests & Support",
     "Tab Wrangler": "Devices & Windows",
+    "Previous Tab": "Devices & Windows",
     "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More": "Devices & Windows",
     "Opening multiple favourite tabs": "Devices & Windows",
     "How to use Chrome Remote Desktop": "Devices & Windows",
@@ -429,16 +430,25 @@ RELATED_GUIDES = {
         "How to use Chrome Remote Desktop",
     ],
     "Opening multiple favourite tabs": [
+        "Previous Tab",
         "Tab Wrangler",
         "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More",
         "Customisation",
     ],
     "Tab Wrangler": [
+        "Previous Tab",
         "Opening multiple favourite tabs",
         "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More",
         "4 Tips on Staying Organised",
     ],
+    "Previous Tab": [
+        "Opening multiple favourite tabs",
+        "Tab Wrangler",
+        "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More",
+        "4 Tips on Staying Organised",
+    ],
     "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More": [
+        "Previous Tab",
         "Opening multiple favourite tabs",
         "Tab Wrangler",
         "Activating Text to Speech - Chromebook & Windows",
@@ -624,6 +634,46 @@ LOCAL_MEDIA = {
 }
 
 CUSTOM_ARTICLES = [
+    {
+        "title": "Previous Tab",
+        "category": "Devices & Windows",
+        "summary": "Use the Previous Tab Chrome extension to jump straight back to the tab you were using before, even when you have lots of tabs open.",
+        "text": "Previous Tab is a Chrome extension that lets you press Ctrl+Q to switch back to the previously used tab. Chrome has built-in shortcuts for moving through tabs by position, but not for returning to the last active tab.",
+        "body": """
+          <figure class="media-frame help-illustration">
+            <img src="../../assets/media/previous-tab.png" alt="Chrome browser with multiple school work tabs and a Ctrl+Q shortcut overlay.">
+          </figure>
+          <p>If you often move between several Chrome tabs while planning, teaching or checking school systems, the <strong>Previous Tab</strong> extension can make it much quicker to get back to the tab you were just using.</p>
+          <p>Chrome already has useful keyboard shortcuts for moving between tabs, but these move by tab position. Previous Tab adds a shortcut for going back to the <em>previously used</em> tab instead.</p>
+
+          <h3>Install Previous Tab</h3>
+          <p>You can install it from the Chrome Web Store here: <a href="https://chromewebstore.google.com/detail/previous-tab/bjaniflnlhhofabpoamhnobeonjcjjpl?hl=en">Previous Tab Chrome extension</a>.</p>
+
+          <h3>How to use it</h3>
+          <ol>
+            <li>Install the extension in Chrome.</li>
+            <li>Press and hold <strong>Ctrl</strong>.</li>
+            <li>Tap <strong>Q</strong>.</li>
+          </ol>
+          <p>Chrome will switch back to the tab you were using immediately before the current one. For example, if you were working on tab 3 and then moved to tab 9, pressing <strong>Ctrl+Q</strong> takes you straight back to tab 3.</p>
+
+          <h3>Useful built-in Chrome tab shortcuts</h3>
+          <ul>
+            <li><strong>Ctrl+Tab</strong> moves to the next open tab.</li>
+            <li><strong>Ctrl+Shift+Tab</strong> moves to the previous open tab.</li>
+            <li><strong>Ctrl+1</strong> to <strong>Ctrl+8</strong> moves to a specific tab position.</li>
+            <li><strong>Ctrl+9</strong> moves to the rightmost tab.</li>
+          </ul>
+          <p>Those shortcuts are still useful, but they do not jump to the tab you last used. That is the gap Previous Tab fills.</p>
+
+          <h3>A quick note on lots of tabs</h3>
+          <p>It is still worth closing tabs you no longer need, especially if Chrome starts to feel slow. In practice, lesson planning often means having registers, resources, email, calendars and documents open at the same time, so this shortcut can be a helpful way to stay oriented.</p>
+        """.strip(),
+        "media": [],
+        "output": "articles/previous-tab/index.html",
+        "source_url": "",
+        "custom": True,
+    },
     {
         "title": "Chromebook won't turn on",
         "category": "Devices & Windows",
@@ -947,6 +997,11 @@ def generated_media_svg(article):
 
 
 def ensure_generated_media(article):
+    soup = BeautifulSoup(article["body"], "lxml")
+    for figure in soup.select("figure.media-frame.help-illustration"):
+        image = figure.find("img")
+        if image and "assets/media/generated/" not in image.get("src", ""):
+            return article
     article["body"] = re.sub(
         r'<figure class="media-frame help-illustration"><img[^>]+assets/media/generated/[^>]+></figure>\n?',
         "",
@@ -1590,6 +1645,19 @@ def articles_from_existing_site():
     return articles
 
 
+def merge_custom_articles(articles, replace_existing=True):
+    by_title = {article["title"]: index for index, article in enumerate(articles)}
+    for custom_article in CUSTOM_ARTICLES:
+        article = apply_article_updates(custom_article.copy())
+        existing_index = by_title.get(article["title"])
+        if existing_index is None:
+            by_title[article["title"]] = len(articles)
+            articles.append(article)
+        elif replace_existing:
+            articles[existing_index] = article
+    return articles
+
+
 def main():
     def clear_readonly(func, path, _exc):
         Path(path).chmod(stat.S_IWRITE)
@@ -1617,7 +1685,7 @@ def main():
                 continue
             print(f"Fetching {item['title']}")
             articles.append(extract_article(item))
-        articles.extend(apply_article_updates(article.copy()) for article in CUSTOM_ARTICLES)
+    merge_custom_articles(articles, replace_existing=not use_local)
 
     category_order = [c for c in CATEGORY_ORDER if any(a["category"] == c for a in articles)]
     for article in articles:
