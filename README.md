@@ -12,7 +12,7 @@ Then open `http://localhost:8000`.
 
 ## Regenerate migrated content
 
-The migration script crawls the public Google Site navigation and rebuilds article pages, category pages, the search index, and `media-needed.md`.
+The migration script crawls the public Google Site navigation and rebuilds article pages, category pages, and the search index.
 
 ```powershell
 python scripts\build_site.py

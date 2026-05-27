@@ -149,7 +149,7 @@ RELATED_GUIDES = {
     "Gmail Customisation": [
         "Remove conversation view in Gmail",
         "Add/edit your Gmail signature",
-        "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling",
+        "Gmail filters, labels, snooze and scheduling",
     ],
     "Add/edit your Gmail signature": [
         "Gmail Customisation",
@@ -164,31 +164,31 @@ RELATED_GUIDES = {
     "Remove conversation view in Gmail": [
         "Gmail Customisation",
         "How to search in Gmail",
-        "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling",
+        "Gmail filters, labels, snooze and scheduling",
     ],
     "Out of office in Gmail": [
         "Add/edit your Gmail signature",
         "Gmail Customisation",
         "Create appointment schedules in Google Calendar",
     ],
-    "Persistant Meet link in Google Calendar": [
+    "Persistent Meet link in Google Calendar": [
         "Create appointment schedules in Google Calendar",
         "Creating a new Google Calendar",
         "Recording Google Meets/Classroom",
     ],
     "How to search in Gmail": [
         "How to create filters in Gmail",
-        "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling",
+        "Gmail filters, labels, snooze and scheduling",
         "Remove conversation view in Gmail",
     ],
     "How to create filters in Gmail": [
         "How to search in Gmail",
-        "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling",
+        "Gmail filters, labels, snooze and scheduling",
         "Gmail Customisation",
     ],
     "Create appointment schedules in Google Calendar": [
         "Creating a new Google Calendar",
-        "Persistant Meet link in Google Calendar",
+        "Persistent Meet link in Google Calendar",
         "Out of office in Gmail",
     ],
     "How to Log Into Google Drive": [
@@ -202,7 +202,7 @@ RELATED_GUIDES = {
         "4 Tips on Staying Organised",
     ],
     "Recording Google Meets/Classroom": [
-        "Persistant Meet link in Google Calendar",
+        "Persistent Meet link in Google Calendar",
         "Create appointment schedules in Google Calendar",
         "Recording a Meeting",
         "Sharing a Recorded Meeting",
@@ -229,7 +229,7 @@ RELATED_GUIDES = {
     ],
     "Creating a new Google Calendar": [
         "Create appointment schedules in Google Calendar",
-        "Persistant Meet link in Google Calendar",
+        "Persistent Meet link in Google Calendar",
         "Out of office in Gmail",
     ],
     "Presentation Template": [
@@ -237,7 +237,7 @@ RELATED_GUIDES = {
         "4 Tips on Staying Organised",
         "Default Apps/Files",
     ],
-    "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling": [
+    "Gmail filters, labels, snooze and scheduling": [
         "How to create filters in Gmail",
         "How to search in Gmail",
         "Remove conversation view in Gmail",
@@ -521,7 +521,7 @@ LOCAL_MEDIA = {
         {"type": "image", "file": "conversation-view-1.png", "alt": "Gmail conversation view setting."},
         {"type": "image", "file": "conversation-view-2.png", "alt": "Gmail conversation view switched off."},
     ],
-    "Persistant Meet link in Google Calendar": [
+    "Persistent Meet link in Google Calendar": [
         {"type": "image", "file": "persistent-meet.png", "alt": "Persistent Google Meet link in Calendar."},
         {"type": "video", "file": "persistent-meet-link-google-calendar.mp4", "caption": "Persistent Meet link walkthrough."},
     ],
@@ -1062,14 +1062,18 @@ def apply_local_media(article):
     items = LOCAL_MEDIA.get(article["title"])
     if not items:
         return ensure_generated_media(article)
+    soup = BeautifulSoup(article["body"], "lxml")
+    local_files = {item["file"] for item in items}
+    for figure in soup.select("figure.media-frame"):
+        source = figure.find(["img", "video"])
+        src = source.get("src", "") if source else ""
+        if any(src.endswith(f"/{filename}") for filename in local_files):
+            figure.decompose()
+    article["body"] = "".join(str(child) for child in soup.body.contents) if soup.body else str(soup)
     article["body"] = re.sub(
         r'<figure class="media-frame"><img src="https?://[^"]+" alt="[^"]*"></figure>\n?',
         "",
         article["body"],
-    )
-    article["body"] = article["body"].replace(
-        '<p class="resource-link">This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed.</p>',
-        "",
     )
     media_html = "\n".join(local_media_figure(article, item) for item in items)
     article["body"] = article["body"].rstrip() + "\n" + media_html
@@ -1192,8 +1196,6 @@ def extract_article(item):
     parts = []
     plain = []
     media = []
-    resource_media = []
-    resource_headings = []
     if h1:
         for tag in h1.find_all_next(["h2", "h3", "p", "ul", "ol", "table", "img", "iframe", "video", "a"]):
             if should_skip_tag(tag):
@@ -1206,13 +1208,9 @@ def extract_article(item):
             if tag.name == "h2":
                 parts.append(f"<h2>{html.escape(text)}</h2>")
                 plain.append(text)
-                if text.lower() in {"video", "embedded files", "embedded file"}:
-                    resource_headings.append(text)
             elif tag.name == "h3":
                 parts.append(f"<h3>{html.escape(text)}</h3>")
                 plain.append(text)
-                if text.lower() in {"video", "embedded files", "embedded file"}:
-                    resource_headings.append(text)
             elif tag.name == "p":
                 body = render_inline(tag).strip()
                 if body:
@@ -1250,22 +1248,17 @@ def extract_article(item):
                     else:
                         parts.append(f'<p class="resource-link"><a href="{html.escape(src)}">Open embedded media</a></p>')
                     media.append({"type": tag.name, "url": src})
-                    resource_media.append(src)
             elif tag.name == "a":
                 href = tag.get("href")
                 label = clean_text(tag.get_text(" ", strip=True))
                 if href and ("googleusercontent" in href or "drive.google" in href):
-                    link_text = label or "Open original embedded resource"
+                    link_text = label or "Open supporting resource"
                     parts.append(f'<p class="resource-link"><a href="{html.escape(href)}">{html.escape(link_text)}</a></p>')
                     media.append({"type": "embedded resource", "url": href})
-                    resource_media.append(href)
 
     if not parts:
-        parts = ["<p>This page did not expose readable body content during migration. Please check the original Google Site source.</p>"]
+        parts = ["<p>Content for this guide is currently unavailable. Please submit a support ticket if you need help with this task.</p>"]
         media.append({"type": "unresolved", "url": item["source_url"]})
-    if resource_headings and not resource_media:
-        parts.append('<p class="resource-link">This page references an embedded video or file, but the Google Site did not expose a direct public media link during migration. Use the original source link below if needed.</p>')
-        media.append({"type": "unresolved embedded media", "url": item["source_url"]})
     summary = " ".join(plain)
     summary = clean_text(summary[:260])
     article = {
@@ -1287,6 +1280,97 @@ def replace_everywhere(article, old, new):
 
 def apply_article_updates(article):
     title = article["title"]
+
+    if title == "Persistant Meet link in Google Calendar":
+        replace_everywhere(article, "Persistant", "Persistent")
+
+    if title == "Gmail Guide: Master Filters, Labels, Snooze, and Scheduling":
+        article["title"] = "Gmail filters, labels, snooze and scheduling"
+        article["body"] = """
+<p>Use the steps below to organise email and control when messages return to your inbox or are sent.</p>
+<h3>Create filters</h3>
+<p>Filters apply actions automatically to incoming email based on criteria such as sender, keywords or subject.</p>
+<ol><li>Click the search bar at the top of Gmail.</li><li>Enter an email address, keyword or other search criterion.</li><li>Click the search options icon, then choose "Create filter".</li><li>Select the actions to apply, such as "Skip the Inbox", "Apply the label" or "Mark as read".</li></ol>
+<h3>Use labels</h3>
+<ol><li>In the left-hand menu, click "Create new label".</li><li>Use filters if you want messages to be labelled automatically.</li><li>Click a label to see messages assigned to it.</li></ol>
+<h3>Snooze an email</h3>
+<ol><li>Hover over a message in your inbox.</li><li>Click the clock icon on the right-hand side.</li><li>Choose when the message should return to your inbox.</li></ol>
+<h3>Schedule an email</h3>
+<ol><li>Compose your message.</li><li>Click the dropdown arrow next to the "Send" button.</li><li>Select "Schedule send", then choose the date and time.</li></ol>
+<p>Submit a support ticket if you need help configuring Gmail for your work.</p>
+""".strip()
+
+    if title == "Device Tips: Enable Dark Mode, Emoji Shortcuts, and More":
+        article["body"] = """
+<p>These settings and shortcuts cover common day-to-day tasks on Windows, Mac and Chromebook devices.</p>
+<h3>Use dark mode</h3>
+<ul><li>Windows: Go to Settings &gt; Personalisation &gt; Colours and select Dark.</li><li>Mac: Go to System Preferences &gt; General &gt; Appearance and select Dark.</li><li>Chromebook: Go to Settings &gt; Personalisation &gt; Set wallpaper &amp; style, then select Dark theme.</li></ul>
+<h3>Enter emoji characters</h3>
+<ul><li>Windows: Press Win + . (period).</li><li>Mac: Press Ctrl + Command + Space.</li><li>Chromebook: Right-click in a text field and select Emoji, or press Search + Shift + Space.</li></ul>
+<h3>Arrange two windows side by side</h3>
+<ul><li>Windows: Drag a window to the side of the screen or press Win + Left/Right Arrow.</li><li>Mac: Hover over the green button in the top-left of a window and choose Tile Window to Left/Right of Screen.</li><li>Chromebook: Drag the window to the side or press Alt + [ (left bracket) or Alt + ] (right bracket).</li></ul>
+<h3>Use dictation</h3>
+<ul><li>Windows: Press Win + H to enable dictation.</li><li>Mac: Go to System Preferences &gt; Keyboard &gt; Dictation to turn it on.</li><li>Chromebook: Go to Settings &gt; Accessibility, enable Dictation, and use the microphone icon in the status bar.</li></ul>
+<h3>Search for files, apps or settings</h3>
+<ul><li>Windows: Press Win + S to open the search bar.</li><li>Mac: Press Command + Space for Spotlight Search.</li><li>Chromebook: Press the Search key (or Launcher key) on your keyboard.</li></ul>
+<h3>Adjust page zoom</h3>
+<ul><li>Windows/Mac/Chromebook: Press Ctrl + Plus/Minus to zoom in or out.</li></ul>
+<p>Submit a support ticket if you need help finding or enabling any of these settings.</p>
+""".strip()
+
+    if title == "Adding a Hyperlink to an Email":
+        article["body"] = """
+<p>Using descriptive link text can make an email easier to read than displaying a long web address.</p>
+<h3>Add a hyperlink in Gmail</h3>
+<ol><li>Compose a new email.</li><li>Press Ctrl + K to open the link window.</li><li>Enter the text that recipients should see.</li><li>Paste the URL into the web address field.</li><li>Click OK.</li></ol>
+<p>To add a link to text you have already written, highlight the text and press Ctrl + K, then paste the URL.</p>
+<h3>Add a hyperlink in Outlook</h3>
+<ol><li>Compose a new email.</li><li>Press Ctrl + K, or select the Insert tab and choose Link.</li><li>Enter the text that recipients should see.</li><li>Paste the URL into the address field.</li><li>Click OK.</li></ol>
+""".strip()
+
+    if title == "Remove conversation view in Gmail":
+        article["body"] = """
+<p>Conversation view groups messages in the same email thread together. You can turn it off if you would prefer each message to appear separately in your inbox.</p>
+<h3>Turn off conversation view in Gmail</h3>
+<ol><li>In Gmail, click the gear icon and select "See all settings".</li><li>On the General tab, scroll down to the Conversation view section.</li><li>Select "Conversation view off".</li><li>Scroll to the bottom of the page and click "Save Changes".</li></ol>
+<h3>Comparison of views</h3>
+""".strip()
+
+    if title == "Extracting Data":
+        article["body"] = """
+<p>Follow the steps below to export student data from iSAMS into a spreadsheet.</p>
+<h3>Export student data</h3>
+<ol><li>Open iSAMS.</li><li>Navigate to Student Manager.</li><li>Enter search criteria if required.</li><li>Select the students whose data you want to export.</li><li>Open the pink dropdown on the right-hand side and select "Export Wizard".</li><li>Select "Create a custom report", or select an existing report if appropriate.</li><li>Click Next.</li><li>Select the data fields you want to export and click Next.</li><li>Review the preview of the data to be exported and click Next.</li><li>Select .xlsx or .csv, depending on your requirements, and click Next.</li><li>Click the download link when the export is ready.</li><li>Open the file in Google Sheets or Microsoft Excel.</li></ol>
+""".strip()
+
+    if title == "Activating Text to Speech - Chromebook & Windows":
+        article["body"] = """
+<p>Text to speech can read selected content aloud on Chromebooks and Windows PCs. Use the steps below to enable it.</p>
+<h3>Chromebook</h3>
+<ol><li>Click the time in the bottom-right corner.</li><li>Click the Accessibility icon. If it is not displayed, contact IT.</li><li>Turn on "Select-to-speak".</li><li>Click the Select-to-speak icon in the bottom-right corner.</li><li>Click and drag over the text you want to hear.</li><li>Use the displayed controls to play, pause, skip or change speed.</li><li>Click the icon again to stop using the feature.</li></ol>
+<h3>Windows</h3>
+<ol><li>Open Narrator by pressing Ctrl + Windows + N, or open Settings &gt; Ease of Access &gt; Narrator.</li><li>Turn Narrator on.</li><li>Press Ctrl if you need to stop Narrator reading immediately.</li><li>Open the page containing the text you want read aloud.</li><li>Click the content or use the arrow keys to choose what Narrator reads.</li><li>Return to Narrator settings to turn it off when finished.</li></ol>
+""".strip()
+
+    if title == "Changing display settings":
+        article["body"] = article["body"].replace("<h3>Video Example</h3>\n", "")
+        article["body"] = article["body"].replace("displa y", "display")
+
+    if title == "I have overwritten a file in Google Drive":
+        article["body"] = article["body"].replace("<h3>Video Example</h3>\n<p>Restore Previous Version</p>", "")
+
+    if title == "Papercut Hive":
+        article["body"] = article["body"].replace(
+            "<h3>Video Guide</h3>\n<p>Make sure Sync is on before following the video</p>",
+            "<h3>Reference image</h3>\n<p>The image below shows the PaperCut Hive printing screen.</p>",
+        )
+
+    if title == "Create a Teams Meeting":
+        replace_everywhere(article, "downlaod", "download")
+        replace_everywhere(article, "apllication", "application")
+
+    if title == "Google Account password and security":
+        replace_everywhere(article, "reguarily", "regularly")
 
     if title == "How to create a team drive and how to add/remove people":
         article["title"] = "How to create a shared drive and add/remove people"
@@ -1359,6 +1443,8 @@ def apply_article_updates(article):
         replace_everywhere(article, "Open embedded media", "Open the student password reset form")
 
     if title == "Phone Extensions":
+        replace_everywhere(article, "Open original embedded resource", "Open the extension directory")
+        replace_everywhere(article, "Open supporting resource", "Open the extension directory")
         replace_everywhere(
             article,
             "https://drive.google.com/open?id=11HlvnGVHtu8QgzNGS97aYUz8LlHXKQwDr5M5q_j3vtw",
@@ -1472,7 +1558,7 @@ def article_page(article, articles):
           <h2>Need more help?</h2>
           <p>For faults or requests, submit a ticket through the Service Desk so the IT team can track and respond properly.</p>
           <a class="button" href="{SERVICE_DESK_URL}">Submit a support ticket</a>
-          {related_guides_html(article, articles)}
+{related_guides_html(article, articles)}
         </aside>
       </div>
     </section>"""
@@ -1599,26 +1685,6 @@ def category_page(category, articles):
     return page_shell(category, f"{category} IT help guides.", body, slugify(category), category_slug(category))
 
 
-def media_inventory(articles):
-    rows = ["# Media and Embedded Resource Inventory", ""]
-    unresolved = []
-    for article in articles:
-        if article["media"]:
-            rows.append(f"## {article['title']}")
-            if article.get("source_url"):
-                rows.append(f"- Original page: {article['source_url']}")
-            for item in article["media"]:
-                rows.append(f"- {item['type']}: {item['url']}")
-            rows.append("")
-        elif article["title"] not in LOCAL_MEDIA and ("video" in article["text"].lower() or "recording" in article["title"].lower()):
-            unresolved.append(article)
-    if unresolved:
-        rows.extend(["## Pages mentioning video with no resolved embed", ""])
-        for article in unresolved:
-            rows.append(f"- {article['title']}: {article['source_url']}")
-    return "\n".join(rows).strip() + "\n"
-
-
 def articles_from_existing_site():
     index_path = ROOT / "assets" / "data" / "search-index.js"
     data = index_path.read_text(encoding="utf-8")
@@ -1633,7 +1699,7 @@ def articles_from_existing_site():
         content = soup.select_one(".article-content")
         if not content:
             continue
-        articles.append({
+        article = {
             "title": item["title"],
             "category": item["category"],
             "summary": item["summary"],
@@ -1642,7 +1708,8 @@ def articles_from_existing_site():
             "media": [],
             "source_url": "",
             "output": item["url"],
-        })
+        }
+        articles.append(apply_article_updates(article))
     return articles
 
 
@@ -1706,7 +1773,6 @@ def main():
         for a in articles
     ]
     write("assets/data/search-index.js", "window.IT_HELP_SEARCH_INDEX = " + json.dumps(search_index, ensure_ascii=False, indent=2) + ";\n")
-    write("media-needed.md", media_inventory(articles))
     print(f"Generated {len(articles)} articles and {len(category_order)} category pages.")
 
 
