@@ -279,10 +279,16 @@ RELATED_GUIDES = {
         "No sound and the speaker icon has a red cross through it",
     ],
     "Converting a file format": [
+        "Edit a PDF Online",
         "Default Apps/Files",
         "Files in a ZIP folder won't open",
         "Zip and Unzip Files",
-        "Exam papers printing with grid lines",
+    ],
+    "Edit a PDF Online": [
+        "Converting a file format",
+        "Default Apps/Files",
+        "Submitting a Support Ticket",
+        "Zip and Unzip Files",
     ],
     "Files in a ZIP folder won't open": [
         "Zip and Unzip Files",
@@ -295,9 +301,10 @@ RELATED_GUIDES = {
         "Default Apps/Files",
     ],
     "Default Apps/Files": [
+        "Edit a PDF Online",
         "Converting a file format",
         "Files in a ZIP folder won't open",
-        "Exam papers printing with grid lines",
+        "Zip and Unzip Files",
     ],
     "Google Account password and security": [
         "How do I Spot Phishing Emails",
@@ -634,6 +641,38 @@ LOCAL_MEDIA = {
 }
 
 CUSTOM_ARTICLES = [
+    {
+        "title": "Edit a PDF Online",
+        "category": "Files & Conversion",
+        "summary": "Use PDFgear online to edit PDFs without installing software, try other online PDF tools if needed, and raise a Service Desk ticket if you want PDFgear installed on your school device.",
+        "text": "PDFgear online can edit PDFs without installing software. Open https://www.pdfgear.com/edit-pdf/ upload the PDF, make the required edits, and download the updated PDF. PDFgear also includes tools such as PDF to Word, compression, merging and splitting. Other PDF editing options can be found by searching Google. If you want PDFgear installed, raise a Service Desk ticket.",
+        "body": """
+          <figure class="media-frame help-illustration"><img alt="Edit a PDF Online support guide illustration." src="../../../assets/media/generated/edit-a-pdf-online.svg"></figure>
+          <p>If you need to make a quick edit to a PDF, the online version of PDFgear works well and does not need to be installed on your computer.</p>
+          <div class="callout blue">
+            <p><strong>Open PDFgear online:</strong> <a href="https://www.pdfgear.com/edit-pdf/" target="_blank" rel="noopener noreferrer">https://www.pdfgear.com/edit-pdf/</a></p>
+          </div>
+          <h3>Editing a PDF online</h3>
+          <ol>
+            <li>Open <a href="https://www.pdfgear.com/edit-pdf/" target="_blank" rel="noopener noreferrer">PDFgear Edit PDF</a>.</li>
+            <li>Upload the PDF you need to edit.</li>
+            <li>Use the tools on the page to add or change text, highlight, annotate, sign, add pages or remove pages as needed.</li>
+            <li>Download the updated PDF when you have finished.</li>
+          </ol>
+          <h3>Other PDF tools</h3>
+          <p>PDFgear also includes other online tools, such as PDF to Word, compression, merging and splitting. Other PDF editing options can also be found by searching Google if PDFgear does not do exactly what you need.</p>
+          <h3>If you want PDFgear installed</h3>
+          <p>The online version does not require installation and is usually enough for quick edits. If you would like PDFgear installed on your school device, please go to the Service Desk and raise a ticket so IT can review and action the request.</p>
+          <p><a class="button" href="https://servicedesk.ispschools.com">Raise a Service Desk ticket</a></p>
+          <div class="callout">
+            <p><strong>Before uploading a file:</strong> only use online tools for documents you are allowed to upload to an external website. If you are unsure, raise a Service Desk ticket and ask IT for advice.</p>
+          </div>
+        """.strip(),
+        "media": [],
+        "output": "articles/conversion-general-file-problems/edit-a-pdf-online/index.html",
+        "source_url": "",
+        "custom": True,
+    },
     {
         "title": "Previous Tab",
         "category": "Devices & Windows",

@@ -259,6 +259,13 @@ window.IT_HELP_SEARCH_INDEX = [
     "text": "Please note, the TV must be on and the mini PC connected to the TV must not be asleep. Please press a button on the wireless mouse or tap the keyboard so you can see the Windows desktop If the screen displays a message \"weak or no signal \" this means the mini PC is off - Please press the power button the bottom right edge of the mini PC on the wall (under the TV) The TV must be on input HDMI 1 How to use AirPlay / wirelessly send your Macbook to the Prep meeting room screen Make sure your Mac and Apple TV are on the same network. Click the AirPlay status icon in the menu bar, then choose your Apple TV. Note: If you don’t see the AirPlay status icon in the menu bar, check that your Apple TV is set up correctly. To set whether your desktop matches the size of the Mac screen or the TV screen, click the AirPlay status icon, then choose This Mac or your Apple TV. When you’re using AirPlay Mirroring, the AirPlay status icon in the menu bar is blue. Wirelessly streaming your phone's display is also an option if needed How to Cast / wirelessly send your Windows or Chromebook to the Prep meeting room screen 1 Cast Screen using Chrome Browser Open Google Chrome . Select Menu in the top-right corner, then select Cast . From the Cast box, select Sources then Cast Desktop . Select your Chromecast from the list. You'll be asked what you'd like to share. Your Entire Screen is selected by default. Make sure Share audio is checked, then select Share . A blue Casting icon will appear on your Chrome toolbar to indicate you are casting. Don't close the Chrome window you're using, it will stop "
   },
   {
+    "title": "Edit a PDF Online",
+    "category": "Files & Conversion",
+    "url": "articles/conversion-general-file-problems/edit-a-pdf-online/index.html",
+    "summary": "Use PDFgear online to edit PDFs without installing software, try other online PDF tools if needed, and raise a Service Desk ticket if you want PDFgear installed on your school device.",
+    "text": "PDFgear online can edit PDFs without installing software. Open https://www.pdfgear.com/edit-pdf/ upload the PDF, make the required edits, and download the updated PDF. PDFgear also includes tools such as PDF to Word, compression, merging and splitting. Other PDF editing options can be found by searching Google. If you want PDFgear installed, raise a Service Desk ticket."
+  },
+  {
     "title": "Converting a file format",
     "category": "Files & Conversion",
     "url": "articles/conversion-general-file-problems/converting-a-file-format/index.html",

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Edit a PDF Online</title>
+  <desc id="desc">Support guide illustration for editing a PDF online.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#071564"/>
+      <stop offset="1" stop-color="#245b85"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#001044" flood-opacity="0.24"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="720" fill="#f4f7fb"/>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <path d="M885 0c144 104 218 240 216 406-1 116-37 218-108 302h287V0H885Z" fill="#2d729a" opacity=".34"/>
+  <rect x="64" y="64" width="1152" height="592" rx="22" fill="#fff" filter="url(#shadow)"/>
+  <rect x="64" y="64" width="18" height="592" fill="#ff7a1a"/>
+  <text x="96" y="104" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#245b85">Files &amp; Conversion</text>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#071564"><tspan x="96" y="176">Edit a PDF Online</tspan></text>
+  <text font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#43546a"><tspan x="96" y="318">Use an online PDF editor for quick changes,</tspan><tspan x="96" y="352">or request the app through Service Desk.</tspan></text>
+  <g transform="translate(96 492)">
+    <rect width="385" height="70" rx="10" fill="#f0f6fb" stroke="#d5e4ee"/>
+    <circle cx="38" cy="35" r="15" fill="#ff7a1a"/>
+    <path d="M31 35l5 6 12-15" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="70" y="43" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#071564">No install needed online</text>
+  </g>
+  <g transform="translate(724 128)">
+    <rect x="0" y="0" width="330" height="440" rx="18" fill="#f7fbfd" stroke="#d5e4ee" stroke-width="4"/>
+    <path d="M224 0v96h106" fill="#e9f4fa"/>
+    <path d="M224 0v96h106" fill="none" stroke="#d5e4ee" stroke-width="4"/>
+    <rect x="46" y="102" width="138" height="54" rx="10" fill="#071564"/>
+    <text x="115" y="139" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#fff">PDF</text>
+    <path d="M48 218h190M48 264h230M48 310h158" stroke="#245b85" stroke-width="14" stroke-linecap="round"/>
+    <path d="M250 352l70 70M319 353l-67 68" stroke="#ff7a1a" stroke-width="18" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(1010 416) rotate(-18)">
+    <rect x="0" y="0" width="52" height="178" rx="18" fill="#ff7a1a"/>
+    <path d="M8 126h36l-18 48Z" fill="#071564"/>
+    <path d="M8 24h36" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+  </g>
+</svg>
