@@ -1508,6 +1508,7 @@ def apply_article_updates(article):
         replace_everywhere(article, "Open embedded media", "Open the student password reset form")
 
     if title == "Phone Extensions":
+        replace_everywhere(article, "Last updated 04/09/2025", "Last updated 03/09/2026")
         replace_everywhere(article, "Open original embedded resource", "Open the extension directory")
         replace_everywhere(article, "Open supporting resource", "Open the extension directory")
         replace_everywhere(
