@@ -79,6 +79,12 @@ CATEGORY_OVERRIDES = {
     "Accident Forms": "School Systems",
 }
 
+ADDITIONAL_CATEGORY_GUIDES = {
+    "Start Here": [
+        "Sign In App: Link Your Staff ID Card",
+    ],
+}
+
 CATEGORY_ACCENTS = [
     "navy",
     "blue",
@@ -416,10 +422,8 @@ RELATED_GUIDES = {
         "Creating a Group",
         "Default Apps/Files",
     ],
-    "Sign In App": [
-        "Phone Extensions",
+    "Sign In App: Link Your Staff ID Card": [
         "Submitting a Support Ticket",
-        "Accident Forms",
     ],
     "OneDrive": [
         "Photography Sharepoint",
@@ -486,7 +490,6 @@ RELATED_GUIDES = {
         "Changing display settings",
     ],
     "Accident Forms": [
-        "Sign In App",
         "Submitting a Support Ticket",
     ],
     "Chromebook won't turn on": [
@@ -494,6 +497,12 @@ RELATED_GUIDES = {
         "Chromebook shortcuts",
         "Submitting a Support Ticket",
     ],
+}
+
+EXACT_RELATED_GUIDES = {
+    "Sign In App: Link Your Staff ID Card",
+    "Accident Forms",
+    "Exam Information",
 }
 
 SKIP_TITLES = {
@@ -1320,6 +1329,23 @@ def replace_everywhere(article, old, new):
 def apply_article_updates(article):
     title = article["title"]
 
+    if title in {"Sign In App", "Sign In App: Link Your Staff ID Card"}:
+        article["title"] = "Sign In App: Link Your Staff ID Card"
+        article["search_keywords"] = (
+            "staff ID staff badge ID card badge RFID sign-in screen signin screen "
+            "sign in screen podium tablet tap card clock in clock out sign in sign out"
+        )
+        article["body"] = """
+<p>Link your staff ID card once at any school Sign In App screen. After it is connected, you can tap your card on the reader to sign in or out.</p>
+<div class="callout blue"><p><strong>You will need:</strong> your staff ID card and access to a Sign In App screen or podium.</p></div>
+<h3>Link your staff ID card</h3>
+<ol><li>Tap the Sign In App screen to begin.</li><li>Tap the <strong>search icon</strong> in the top-right corner and find your name.</li><li>Tap your name, then select <strong>Connect an RFID</strong>.</li><li>Hold your staff ID card against the RFID reader next to the tablet until the screen confirms it has connected.</li></ol>
+<h3>Use your card afterwards</h3>
+<p>Tap your card on the reader whenever you need to sign in or out. Check that the screen confirms your status before walking away.</p>
+<h3>If it does not work</h3>
+<p>If your name is not listed, the card will not connect, or the screen shows an error, submit a support ticket. Include the location of the sign-in screen and the message shown, if there is one.</p>
+""".strip()
+
     if title == "Persistant Meet link in Google Calendar":
         replace_everywhere(article, "Persistant", "Persistent")
 
@@ -1497,6 +1523,10 @@ def apply_article_updates(article):
     article["body"] = linkify_plain_urls(article["body"])
     article["summary"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True)[:260])
     article["text"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True))
+    if article["title"] == "Sign In App: Link Your Staff ID Card":
+        article["summary"] = (
+            "Link your staff ID card to a school Sign In App screen so you can tap the reader to sign in and out."
+        )
     return article
 
 
@@ -1556,6 +1586,9 @@ def related_articles_for(article, articles, limit=4):
             related.append(item)
             seen.add(item["title"])
 
+    if article["title"] in EXACT_RELATED_GUIDES:
+        return related[:limit]
+
     if len(related) < limit:
         for item in articles:
             if item["category"] == article["category"] and item["title"] not in seen:
@@ -1565,6 +1598,18 @@ def related_articles_for(article, articles, limit=4):
                     break
 
     return related[:limit]
+
+
+def articles_for_category(category, articles):
+    category_articles = [article for article in articles if article["category"] == category]
+    seen = {article["title"] for article in category_articles}
+    by_title = {article["title"]: article for article in articles}
+    for title in ADDITIONAL_CATEGORY_GUIDES.get(category, []):
+        article = by_title.get(title)
+        if article and article["title"] not in seen:
+            category_articles.append(article)
+            seen.add(article["title"])
+    return category_articles
 
 
 def related_guides_html(article, articles):
@@ -1627,7 +1672,7 @@ def home_page(articles, categories):
             </a>""")
     category_cards = []
     for category in categories:
-        count = len([a for a in articles if a["category"] == category])
+        count = len(articles_for_category(category, articles))
         if count:
             accent = CATEGORY_ACCENTS[len(category_cards) % len(CATEGORY_ACCENTS)]
             icon_path = CATEGORY_ICONS.get(category, CATEGORY_ICONS["Miscellaneous"])
@@ -1651,7 +1696,7 @@ def home_page(articles, categories):
         </div>
         <div class="search-panel" role="search">
           <label for="site-search">Search IT help</label>
-          <input id="site-search" type="search" placeholder="Try password, Gmail, Teams or WiFi">
+          <input id="site-search" type="search" placeholder="Try staff ID, password, Gmail, Teams or WiFi">
           <div id="search-results" class="search-results" aria-live="polite"></div>
         </div>
       </div>
@@ -1794,23 +1839,25 @@ def main():
             articles.append(extract_article(item))
     merge_custom_articles(articles, replace_existing=not use_local)
 
-    category_order = [c for c in CATEGORY_ORDER if any(a["category"] == c for a in articles)]
+    category_order = [c for c in CATEGORY_ORDER if articles_for_category(c, articles)]
     for article in articles:
         write(article["output"], article_page(article, articles))
     for category in category_order:
-        write(category_slug(category), category_page(category, [a for a in articles if a["category"] == category]))
+        write(category_slug(category), category_page(category, articles_for_category(category, articles)))
     write("index.html", home_page(articles, category_order))
 
-    search_index = [
-        {
+    search_index = []
+    for a in articles:
+        search_item = {
             "title": a["title"],
             "category": a["category"],
             "url": a["output"],
             "summary": a["summary"],
             "text": a["text"][:1600],
         }
-        for a in articles
-    ]
+        if a.get("search_keywords"):
+            search_item["keywords"] = a["search_keywords"]
+        search_index.append(search_item)
     write("assets/data/search-index.js", "window.IT_HELP_SEARCH_INDEX = " + json.dumps(search_index, ensure_ascii=False, indent=2) + ";\n")
     print(f"Generated {len(articles)} articles and {len(category_order)} category pages.")
 

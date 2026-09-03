@@ -79,6 +79,28 @@ function wireSearch() {
   const index = window.IT_HELP_SEARCH_INDEX || [];
   if (!input || !results || !index.length) return;
 
+  const stopWords = new Set(["a", "an", "and", "for", "how", "in", "of", "on", "the", "to", "with", "your"]);
+
+  function normaliseSearchText(value) {
+    return String(value || "")
+      .toLowerCase()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[’']/g, "")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+  }
+
+  function meaningfulTerms(query) {
+    const allTerms = normaliseSearchText(query).split(/\s+/).filter(Boolean);
+    const usefulTerms = allTerms.filter((term) => !stopWords.has(term));
+    return usefulTerms.length ? usefulTerms : allTerms;
+  }
+
+  function words(value) {
+    return new Set(normaliseSearchText(value).split(/\s+/).filter(Boolean));
+  }
+
   function render(matches) {
     if (!input.value.trim()) {
       results.innerHTML = "";
@@ -90,30 +112,56 @@ function wireSearch() {
       results.innerHTML = "<p>No matching guides found.</p>";
       return;
     }
-    results.innerHTML = matches
-      .slice(0, 8)
+    const visibleMatches = matches.slice(0, 8);
+    const status = matches.length > visibleMatches.length
+      ? `<p class="search-results-status">Showing ${visibleMatches.length} of ${matches.length} results. Add another word to narrow the list.</p>`
+      : `<p class="search-results-status">${matches.length} ${matches.length === 1 ? "result" : "results"}</p>`;
+    results.innerHTML = visibleMatches
       .map(
         (item) => `<a href="${siteUrl(item.url)}">
           <strong>${item.title}</strong>
           <span>${item.category} - ${item.summary || "Open guide"}</span>
         </a>`
       )
-      .join("");
+      .join("") + status;
   }
 
   input.addEventListener("input", () => {
-    const terms = input.value
-      .toLowerCase()
-      .split(/\s+/)
-      .filter(Boolean);
+    const query = normaliseSearchText(input.value);
+    const terms = meaningfulTerms(input.value);
     if (!terms.length) {
       render([]);
       return;
     }
     const matches = index
       .map((item) => {
-        const haystack = `${item.title} ${item.category} ${item.summary} ${item.text}`.toLowerCase();
-        const score = terms.reduce((total, term) => total + (haystack.includes(term) ? 1 : 0), 0);
+        const title = normaliseSearchText(item.title);
+        const category = normaliseSearchText(item.category);
+        const summary = normaliseSearchText(item.summary);
+        const text = normaliseSearchText(item.text);
+        const keywords = normaliseSearchText(item.keywords);
+        const titleWords = words(title);
+        const categoryWords = words(category);
+        const summaryWords = words(summary);
+        const textWords = words(text);
+        const keywordWords = words(keywords);
+        const matchesEveryTerm = terms.every(
+          (term) => titleWords.has(term) || categoryWords.has(term) || summaryWords.has(term) || textWords.has(term) || keywordWords.has(term)
+        );
+        if (!matchesEveryTerm) return { ...item, score: 0 };
+
+        let score = 0;
+        if (title === query) score += 1000;
+        else if (title.startsWith(query)) score += 700;
+        else if (title.includes(query)) score += 500;
+        if (keywords.includes(query)) score += 300;
+        for (const term of terms) {
+          if (titleWords.has(term)) score += 80;
+          if (keywordWords.has(term)) score += 40;
+          if (categoryWords.has(term)) score += 20;
+          if (summaryWords.has(term)) score += 10;
+          if (textWords.has(term)) score += 3;
+        }
         return { ...item, score };
       })
       .filter((item) => item.score > 0)
