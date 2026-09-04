@@ -101,6 +101,17 @@ function wireSearch() {
     return new Set(normaliseSearchText(value).split(/\s+/).filter(Boolean));
   }
 
+  function matchesTerm(wordSet, term) {
+    if (wordSet.has(term)) return true;
+    if (term.length < 4) return false;
+    return Array.from(wordSet).some((word) => word.startsWith(term));
+  }
+
+  function termScore(wordSet, term, exactScore, prefixScore) {
+    if (wordSet.has(term)) return exactScore;
+    return matchesTerm(wordSet, term) ? prefixScore : 0;
+  }
+
   function render(matches) {
     if (!input.value.trim()) {
       results.innerHTML = "";
@@ -146,7 +157,7 @@ function wireSearch() {
         const textWords = words(text);
         const keywordWords = words(keywords);
         const matchesEveryTerm = terms.every(
-          (term) => titleWords.has(term) || categoryWords.has(term) || summaryWords.has(term) || textWords.has(term) || keywordWords.has(term)
+          (term) => matchesTerm(titleWords, term) || matchesTerm(categoryWords, term) || matchesTerm(summaryWords, term) || matchesTerm(textWords, term) || matchesTerm(keywordWords, term)
         );
         if (!matchesEveryTerm) return { ...item, score: 0 };
 
@@ -156,11 +167,11 @@ function wireSearch() {
         else if (title.includes(query)) score += 500;
         if (keywords.includes(query)) score += 300;
         for (const term of terms) {
-          if (titleWords.has(term)) score += 80;
-          if (keywordWords.has(term)) score += 40;
-          if (categoryWords.has(term)) score += 20;
-          if (summaryWords.has(term)) score += 10;
-          if (textWords.has(term)) score += 3;
+          score += termScore(titleWords, term, 80, 50);
+          score += termScore(keywordWords, term, 40, 25);
+          score += termScore(categoryWords, term, 20, 12);
+          score += termScore(summaryWords, term, 10, 6);
+          score += termScore(textWords, term, 3, 1);
         }
         return { ...item, score };
       })
