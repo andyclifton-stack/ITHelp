@@ -854,7 +854,7 @@ CUSTOM_ARTICLES = [
         "title": "Google Chat staff spaces",
         "category": "Google Workspace",
         "summary": "Use the private Teachers spaces in Google Chat to share staff updates, reply in threads and work with files. Access follows your staff Google Group.",
-        "text": "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive mention @all. Open chat.google.com or Chat in Gmail. Select the relevant Teachers space under Spaces or use New chat and Browse spaces. Post in the message box, reply in a thread, attach files from your computer or Google Drive, use @mentions, and use @all sparingly. Access is automatic through teachers-preprep@claremontschool.co.uk, teachers-prep@claremontschool.co.uk or teachers-senior@claremontschool.co.uk.",
+        "text": "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive mention @all poll. Open chat.google.com or Chat in Gmail. Select the relevant Teachers space under Spaces or use New chat and Browse spaces. Post in the message box, reply in a thread, attach files from your computer or Google Drive, create a poll from the Poll app integration menu or with /poll, use @mentions, and use @all sparingly. Access is automatic through teachers-preprep@claremontschool.co.uk, teachers-prep@claremontschool.co.uk or teachers-senior@claremontschool.co.uk.",
         "body": """
           <div class="callout blue">
             <p><strong>Google Chat is for quick staff collaboration:</strong> share updates, ask questions and keep useful files together with colleagues in your part of the school.</p>
@@ -922,6 +922,14 @@ CUSTOM_ARTICLES = [
             <li>If Google asks about access, check the sharing option before sending.</li>
           </ol>
           <p>Files shared in the space can also be found from the <strong>Shared</strong> or <strong>Files</strong> tab at the top, depending on the version of Google Chat you see.</p>
+
+          <h3>6. Create a poll</h3>
+          <p>Use either of these options:</p>
+          <ul>
+            <li>Select the <strong>Poll</strong> app from the integration menu, then choose <strong>“Create a poll”</strong>.</li>
+            <li>Type <strong>/poll</strong> into the compose bar and send.</li>
+          </ul>
+          <p>Follow the prompts to add your question and answer choices, then send the poll to the space.</p>
 
           <h3>Mentions</h3>
           <ul>
@@ -1632,7 +1640,8 @@ def apply_article_updates(article):
         )
         article["search_keywords"] = (
             "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive "
-            "mention @all Google Groups teachers-preprep teachers-prep teachers-senior"
+            "mention @all poll polling vote survey integration menu slash command Google Groups "
+            "teachers-preprep teachers-prep teachers-senior"
         )
     return article
 

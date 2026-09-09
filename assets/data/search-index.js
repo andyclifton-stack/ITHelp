@@ -81,8 +81,8 @@ window.IT_HELP_SEARCH_INDEX = [
     "category": "Google Workspace",
     "url": "articles/google-drive-mail-meet-etc/google-chat-staff-spaces/index.html",
     "summary": "Use the private Teachers spaces in Google Chat to share staff updates, reply in threads and work with files. Access follows your staff Google Group.",
-    "text": "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive mention @all. Open chat.google.com or Chat in Gmail. Select the relevant Teachers space under Spaces or use New chat and Browse spaces. Post in the message box, reply in a thread, attach files from your computer or Google Drive, use @mentions, and use @all sparingly. Access is automatic through teachers-preprep@claremontschool.co.uk, teachers-prep@claremontschool.co.uk or teachers-senior@claremontschool.co.uk.",
-    "keywords": "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive mention @all Google Groups teachers-preprep teachers-prep teachers-senior"
+    "text": "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive mention @all poll. Open chat.google.com or Chat in Gmail. Select the relevant Teachers space under Spaces or use New chat and Browse spaces. Post in the message box, reply in a thread, attach files from your computer or Google Drive, create a poll from the Poll app integration menu or with /poll, use @mentions, and use @all sparingly. Access is automatic through teachers-preprep@claremontschool.co.uk, teachers-prep@claremontschool.co.uk or teachers-senior@claremontschool.co.uk.",
+    "keywords": "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive mention @all poll polling vote survey integration menu slash command Google Groups teachers-preprep teachers-prep teachers-senior"
   },
   {
     "title": "Gmail Customisation",
