@@ -77,6 +77,14 @@ window.IT_HELP_SEARCH_INDEX = [
     "text": "4 Simple Google Drive Tips to Stay Organised 1. Add Shortcuts Instead of Duplicating Files Why? Avoid clutter and version confusion. How? Right-click a file/folder → Add shortcut to Drive → Place it where you need it. 2. Declutter with an Archive Folder Why? Keep your main Drive clean by moving old files. How? Create an Archive folder and add subfolders like “2023” or “Completed Work.” 3. Star Files for Quick Access Why? Quickly find your most-used files. How? Right-click a file/folder → Add to Starred. Access them in the Starred tab. 4. Use Colour Coding for Folders Why? Spot important folders at a glance. How? Right-click a folder → Change colour → Pick a colour. These small changes can save you time and keep your Drive tidy. Try them out, and let us know if you have any questions!"
   },
   {
+    "title": "Google Chat staff spaces",
+    "category": "Google Workspace",
+    "url": "articles/google-drive-mail-meet-etc/google-chat-staff-spaces/index.html",
+    "summary": "Use the private Teachers spaces in Google Chat to share staff updates, reply in threads and work with files. Access follows your staff Google Group.",
+    "text": "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive mention @all. Open chat.google.com or Chat in Gmail. Select the relevant Teachers space under Spaces or use New chat and Browse spaces. Post in the message box, reply in a thread, attach files from your computer or Google Drive, use @mentions, and use @all sparingly. Access is automatic through teachers-preprep@claremontschool.co.uk, teachers-prep@claremontschool.co.uk or teachers-senior@claremontschool.co.uk.",
+    "keywords": "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive mention @all Google Groups teachers-preprep teachers-prep teachers-senior"
+  },
+  {
     "title": "Gmail Customisation",
     "category": "Google Workspace",
     "url": "articles/google-drive-mail-meet-etc/gmail-customisation/index.html",

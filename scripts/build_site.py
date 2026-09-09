@@ -151,6 +151,7 @@ RELATED_GUIDES = {
         "How to Log Into Google Drive",
         "Google Drive is no longer showing in the file explorer",
         "I have overwritten a file in Google Drive",
+        "Google Chat staff spaces",
     ],
     "Gmail Customisation": [
         "Remove conversation view in Gmail",
@@ -222,6 +223,7 @@ RELATED_GUIDES = {
         "How to Log Into Google Drive",
         "4 Tips on Staying Organised",
         "Photography Sharepoint",
+        "Google Chat staff spaces",
     ],
     "I have overwritten a file in Google Drive": [
         "I have mistakenly deleted a file in Google Drive",
@@ -497,12 +499,19 @@ RELATED_GUIDES = {
         "Chromebook shortcuts",
         "Submitting a Support Ticket",
     ],
+    "Google Chat staff spaces": [
+        "How to Log Into Google Drive",
+        "How to create a shared drive and add/remove people",
+        "4 Tips on Staying Organised",
+        "Submitting a Support Ticket",
+    ],
 }
 
 EXACT_RELATED_GUIDES = {
     "Sign In App: Link Your Staff ID Card",
     "Accident Forms",
     "Exam Information",
+    "Google Chat staff spaces",
 }
 
 SKIP_TITLES = {
@@ -838,6 +847,94 @@ CUSTOM_ARTICLES = [
         """.strip(),
         "media": [],
         "output": "articles/student-it-help/index.html",
+        "source_url": "",
+        "custom": True,
+    },
+    {
+        "title": "Google Chat staff spaces",
+        "category": "Google Workspace",
+        "summary": "Use the private Teachers spaces in Google Chat to share staff updates, reply in threads and work with files. Access follows your staff Google Group.",
+        "text": "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive mention @all. Open chat.google.com or Chat in Gmail. Select the relevant Teachers space under Spaces or use New chat and Browse spaces. Post in the message box, reply in a thread, attach files from your computer or Google Drive, use @mentions, and use @all sparingly. Access is automatic through teachers-preprep@claremontschool.co.uk, teachers-prep@claremontschool.co.uk or teachers-senior@claremontschool.co.uk.",
+        "body": """
+          <div class="callout blue">
+            <p><strong>Google Chat is for quick staff collaboration:</strong> share updates, ask questions and keep useful files together with colleagues in your part of the school.</p>
+          </div>
+          <p><a class="button" href="https://chat.google.com/" target="_blank" rel="noopener noreferrer">Open Google Chat</a></p>
+
+          <h3>Your staff space</h3>
+          <p>Access is automatic. You will see the space linked to the relevant staff Google Group:</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Google Chat space</th><th>Membership comes from</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Teachers - Pre-Prep</strong></td><td>teachers-preprep@claremontschool.co.uk</td></tr>
+                <tr><td><strong>Teachers - Prep</strong></td><td>teachers-prep@claremontschool.co.uk</td></tr>
+                <tr><td><strong>Teachers - Senior</strong></td><td>teachers-senior@claremontschool.co.uk</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>You do not need to ask to join or add colleagues yourself. If you have just joined or moved team, the membership change may take a little time to appear. Submit a support ticket if you see the wrong space or cannot see the one you need.</p>
+
+          <h3>1. Open Google Chat</h3>
+          <ol>
+            <li>Go to <a href="https://chat.google.com/" target="_blank" rel="noopener noreferrer">chat.google.com</a> and use your school Google account.</li>
+            <li>Alternatively, open Gmail and select <strong>Chat</strong> on the left.</li>
+          </ol>
+
+          <h3>2. Find your space</h3>
+          <ol>
+            <li>Look under <strong>Spaces</strong> on the left.</li>
+            <li>Select <strong>Teachers - Pre-Prep</strong>, <strong>Teachers - Prep</strong> or <strong>Teachers - Senior</strong>, as appropriate.</li>
+            <li>If it is not listed, select <strong>New chat</strong>, then <strong>Browse spaces</strong>, and search for the exact space name.</li>
+          </ol>
+          <figure class="media-frame help-illustration">
+            <img src="../../../assets/media/google-chat/google-chat-spaces.png" alt="Google Chat home screen with the Spaces list shown on the left.">
+            <figcaption>Google's example screen. Your list will show the Claremont staff space or spaces available to you.</figcaption>
+          </figure>
+
+          <h3>3. Post a message</h3>
+          <ol>
+            <li>Open the staff space.</li>
+            <li>Click the message box at the bottom and type your update or question.</li>
+            <li>Select the blue <strong>Send</strong> arrow.</li>
+          </ol>
+          <figure class="media-frame help-illustration">
+            <img src="../../../assets/media/google-chat/google-chat-message.png" alt="Google Chat conversation with the message box and blue Send arrow at the bottom.">
+            <figcaption>Type in the message box. The buttons beside it also let you add files and other items.</figcaption>
+          </figure>
+
+          <h3>4. Reply to a message</h3>
+          <ol>
+            <li>Point to the message you want to answer.</li>
+            <li>Select <strong>Reply in thread</strong>.</li>
+            <li>Type your reply in the thread panel and select <strong>Send</strong>.</li>
+          </ol>
+          <p>Use a thread when you are answering a particular message. This keeps the main space easier to follow.</p>
+          <figure class="media-frame help-illustration">
+            <img src="../../../assets/media/google-chat/google-chat-thread.png" alt="Google Chat space with an existing message on the left and its reply thread open on the right.">
+            <figcaption>A thread opens beside the main conversation so replies stay with the original message.</figcaption>
+          </figure>
+
+          <h3>5. Share a file</h3>
+          <ol>
+            <li>In the message box, select <strong>Upload file</strong> or <strong>Add Google Drive file</strong>.</li>
+            <li>Choose the file, add a short message if helpful, then select <strong>Send</strong>.</li>
+            <li>If Google asks about access, check the sharing option before sending.</li>
+          </ol>
+          <p>Files shared in the space can also be found from the <strong>Shared</strong> or <strong>Files</strong> tab at the top, depending on the version of Google Chat you see.</p>
+
+          <h3>Mentions</h3>
+          <ul>
+            <li>Type <strong>@</strong> followed by a colleague's name to draw their attention to a message.</li>
+            <li>Use <strong>@all</strong> only when everyone in the space genuinely needs the message. It can notify the whole staff group, so please use it sparingly.</li>
+          </ul>
+          <div class="callout">
+            <p><strong>Cannot see your space?</strong> First check that you are using your school Google account. If it is still missing, <a href="../../../articles/submitting-a-support-ticket/index.html">submit a support ticket</a> so IT can check the relevant staff Google Group.</p>
+          </div>
+          <p class="source-note">Screens shown are generic examples from <a href="https://support.google.com/chat/answer/16059642" target="_blank" rel="noopener noreferrer">Google Chat Help</a> and the <a href="https://workspaceupdates.googleblog.com/2022/10/in-line-threading-in-Chat-spaces.html" target="_blank" rel="noopener noreferrer">Google Workspace Updates blog</a>. Google may change the layout slightly.</p>
+        """.strip(),
+        "media": [],
+        "output": "articles/google-drive-mail-meet-etc/google-chat-staff-spaces/index.html",
         "source_url": "",
         "custom": True,
     }
@@ -1528,6 +1625,15 @@ def apply_article_updates(article):
         article["summary"] = (
             "Link your staff ID card to a school Sign In App screen so you can tap the reader to sign in and out."
         )
+    if article["title"] == "Google Chat staff spaces":
+        article["summary"] = (
+            "Use the private Teachers spaces in Google Chat to share staff updates, reply in threads and work with files. "
+            "Access follows your staff Google Group."
+        )
+        article["search_keywords"] = (
+            "Google Chat staff spaces Teachers Pre-Prep Prep Senior collaboration message thread reply file Drive "
+            "mention @all Google Groups teachers-preprep teachers-prep teachers-senior"
+        )
     return article
 
 
@@ -1736,7 +1842,7 @@ def home_page(articles, categories):
           <p>Use Google Chat for quick questions only. Faults and requests should go through the Service Desk so they can be tracked and prioritised.</p>
           <div class="button-row">
             <a class="button" href="/articles/submitting-a-support-ticket/index.html">Service Desk guide</a>
-            <a class="button secondary" href="https://chat.google.com/">Open Google Chat</a>
+            <a class="button secondary" href="/articles/google-drive-mail-meet-etc/google-chat-staff-spaces/index.html">Google Chat staff spaces</a>
           </div>
         </div>
         <aside class="callout blue">
