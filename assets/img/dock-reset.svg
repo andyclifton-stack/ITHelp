@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 560" role="img" aria-labelledby="title desc">
+<title id="title">Reset your dock in three steps</title><desc id="desc">Unplug every cable from the dock, wait 30 seconds, then reconnect the charger, screen cables and laptop.</desc>
+<rect width="640" height="560" rx="16" fill="#eef5fa"/>
+<g font-family="Arial,sans-serif" fill="#001442">
+<text x="32" y="48" font-size="27" font-weight="bold">Try this first: reset the dock</text>
+<g transform="translate(32 82)"><circle cx="25" cy="25" r="25" fill="#001442"/><text x="25" y="33" text-anchor="middle" fill="white" font-size="24">1</text><text x="68" y="23" font-size="23" font-weight="bold">Unplug ALL dock cables</text><text x="68" y="55" font-size="19">Include the charger and laptop cable.</text><rect x="110" y="80" width="260" height="55" rx="12" fill="#001442"/><text x="240" y="115" text-anchor="middle" font-size="22" fill="white">DOCK</text><path d="M70 100H15m400 0h80" stroke="#e38129" stroke-width="9"/><path d="M95 100h-10m305 0h10" stroke="#001442" stroke-width="5"/></g>
+<g transform="translate(32 260)"><circle cx="25" cy="25" r="25" fill="#001442"/><text x="25" y="33" text-anchor="middle" fill="white" font-size="24">2</text><text x="68" y="24" font-size="23" font-weight="bold">Wait 30 seconds</text><text x="68" y="58" font-size="19">Leave every dock cable unplugged.</text></g>
+<g transform="translate(32 374)"><circle cx="25" cy="25" r="25" fill="#001442"/><text x="25" y="33" text-anchor="middle" fill="white" font-size="24">3</text><text x="68" y="24" font-size="23" font-weight="bold">Plug everything back in</text><text x="68" y="58" font-size="19">Charger → dock power / PD IN</text><text x="68" y="89" font-size="19">Screen HDMI + USB → dock</text><text x="68" y="120" font-size="19">Dock’s laptop cable → laptop</text></g>
+</g></svg>

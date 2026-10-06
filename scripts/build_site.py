@@ -1,4 +1,4 @@
-﻿import html
+import html
 import json
 import os
 import re
@@ -80,6 +80,7 @@ CATEGORY_OVERRIDES = {
 }
 
 ADDITIONAL_CATEGORY_GUIDES = {
+    "Devices & Windows": ["Dock issues: screen, touch or charging"],
     "Start Here": [
         "Sign In App: Link Your Staff ID Card",
     ],
@@ -95,7 +96,9 @@ CATEGORY_ACCENTS = [
 SERVICE_DESK_URL = "https://servicedesk.ispschools.com"
 
 RELATED_GUIDES = {
+    'Dock issues: screen, touch or charging': ["Changing display settings", "No sound and the speaker icon has a red cross through it", "Submitting a Support Ticket"],
     "Have you tried switching it off and on again?!": [
+        'Dock issues: screen, touch or charging',
         "Submitting a Support Ticket",
         "How to use Chrome Remote Desktop",
         "No sound and the speaker icon has a red cross through it",
@@ -277,11 +280,13 @@ RELATED_GUIDES = {
         "Create a Teams Meeting",
     ],
     "Theatre Projector & Sound (Senior)": [
+        'Dock issues: screen, touch or charging',
         "Changing display settings",
         "No sound and the speaker icon has a red cross through it",
         "Prep Meeting Room",
     ],
     "Prep Meeting Room": [
+        'Dock issues: screen, touch or charging',
         "Theatre Projector & Sound (Senior)",
         "Create a Teams Meeting",
         "No sound and the speaker icon has a red cross through it",
@@ -472,6 +477,7 @@ RELATED_GUIDES = {
         "How do I Spot Phishing Emails",
     ],
     "No sound and the speaker icon has a red cross through it": [
+        'Dock issues: screen, touch or charging',
         "Theatre Projector & Sound (Senior)",
         "Prep Meeting Room",
         "Submitting a Support Ticket",
@@ -482,6 +488,7 @@ RELATED_GUIDES = {
         "Activating Text to Speech - Chromebook & Windows",
     ],
     "Changing display settings": [
+        'Dock issues: screen, touch or charging',
         "Theatre Projector & Sound (Senior)",
         "Chromebook shortcuts",
         "No sound and the speaker icon has a red cross through it",
@@ -659,6 +666,7 @@ LOCAL_MEDIA = {
 }
 
 CUSTOM_ARTICLES = [
+    {'title': 'Dock issues: screen, touch or charging', 'category': 'Room Help', 'summary': 'Screen blank, touch not working or laptop not charging? Unplug every dock cable, wait 30 seconds, then reconnect with the laptop charger plugged into the dock.', 'text': 'Dock docking station screen board monitor blank no signal not working touch touchscreen interactive ViewSonic HDMI USB not charging charger PD IN. Unplug all dock cables, wait 30 seconds, reconnect charger to dock, screen HDMI and USB, and laptop. Match HDMI and USB TOUCH to the same screen group.    Screen blank, touch not working, or laptop not charging?  Reset the dock first. This fixes most dock issues.  \n 1. Reset the dock \n The dock is the small box or adapter that connects your laptop to the room’s screen and cables. \n \n  Unplug every cable from the dock  — including the laptop cable, charger, HDMI, USB and any other cables. Leave the screen ends in place. \n  Wait 30 seconds  with all dock cables unplugged. \n  Plug the laptop charger into the dock’s power input  (often labelled  PD IN  or  Power ). Make sure the charger is connected to a switched-on wall socket. \n  Reconnect the screen cables and any other cables to the dock.  Most rooms have an HDMI cable for the picture and a USB cable for touch. \n  Reconnect the dock to your laptop , wait a few moments, then check the picture, touch and charging. \n \n   \n 2. Still having a problem? \n No picture / “No signal” \n  Check the screen is switched on and your laptop is awake.  Check the HDMI cable is firmly connected at both ends.  On the screen, select the HDMI input used by the cable (for example, HDMI 1).  If the picture appears but is different from your laptop, follow  Changing display settings .  \n Picture works, but touch does not \n  Check the separate  USB touch cable  is connected to the dock and the screen’s  TOUCH  port. HDMI alone does not carry touch.  At the screen, the HDMI and USB touch cables must use the  same matching group . On ViewSonic screens, look for the printed lines grouping the ports together.  Follow the labels on your screen: the port numbers and groups differ between models. A general USB socket may not be the touch connection.  \n   Example only — follow the printed lines and labels on your room’s screen.  \n  ViewSonic’s connection guide and image (IFP50-5 example) .  Open the manufacturer’s connection image . \n Laptop is not charging \n  Check the  laptop charger is plugged into the dock’s power / PD IN socket , and the wall socket is switched on.  Check the dock’s laptop cable is firmly connected to your laptop.  If it still will not charge, plug the charger directly into your laptop to check whether it charges that way.  \n 3. Still stuck? Contact IT \n  Submit a support ticket  with the  room name , whether  picture, touch or charging  is affected, and whether you tried the 30-second reset. If charging is affected, mention whether charging directly worked. A photo of the dock and screen connections helps. ', 'body': '<div class="callout blue"><p><strong>Screen blank, touch not working, or laptop not charging?</strong> Reset the dock first. This fixes most dock issues.</p></div>\n<h2>1. Reset the dock</h2>\n<p>The dock is the small box or adapter that connects your laptop to the room’s screen and cables.</p>\n<ol>\n<li><strong>Unplug every cable from the dock</strong> — including the laptop cable, charger, HDMI, USB and any other cables. Leave the screen ends in place.</li>\n<li><strong>Wait 30 seconds</strong> with all dock cables unplugged.</li>\n<li><strong>Plug the laptop charger into the dock’s power input</strong> (often labelled <strong>PD IN</strong> or <strong>Power</strong>). Make sure the charger is connected to a switched-on wall socket.</li>\n<li><strong>Reconnect the screen cables and any other cables to the dock.</strong> Most rooms have an HDMI cable for the picture and a USB cable for touch.</li>\n<li><strong>Reconnect the dock to your laptop</strong>, wait a few moments, then check the picture, touch and charging.</li>\n</ol>\n<figure class="media-frame"><img src="../../assets/img/dock-reset.svg" alt="Three-step dock reset: unplug every dock cable, wait 30 seconds, then reconnect the charger, screen cables and laptop." width="640" height="560" style="width:100%;height:auto"></figure>\n<h2>2. Still having a problem?</h2>\n<h3>No picture / “No signal”</h3>\n<ul><li>Check the screen is switched on and your laptop is awake.</li><li>Check the HDMI cable is firmly connected at both ends.</li><li>On the screen, select the HDMI input used by the cable (for example, HDMI 1).</li><li>If the picture appears but is different from your laptop, follow <a href="../changing-display-settings-on-chromebook-and-windows/index.html">Changing display settings</a>.</li></ul>\n<h3>Picture works, but touch does not</h3>\n<ul><li>Check the separate <strong>USB touch cable</strong> is connected to the dock and the screen’s <strong>TOUCH</strong> port. HDMI alone does not carry touch.</li><li>At the screen, the HDMI and USB touch cables must use the <strong>same matching group</strong>. On ViewSonic screens, look for the printed lines grouping the ports together.</li><li>Follow the labels on your screen: the port numbers and groups differ between models. A general USB socket may not be the touch connection.</li></ul>\n<figure class="media-frame"><img src="../../assets/img/dock-touch-group.svg" alt="Example screen connection panel: HDMI IN and USB TOUCH sit inside the same outlined group, with both cables going to the dock." width="640" height="450" style="width:100%;height:auto"><figcaption>Example only — follow the printed lines and labels on your room’s screen.</figcaption></figure>\n<p><a href="https://www.viewsonic.com/solution/kb/en_US/setup-ifp50-5/connecting-devices-1" target="_blank" rel="noopener noreferrer">ViewSonic’s connection guide and image (IFP50-5 example)</a>. <a href="https://static.helpjuice.com/helpjuice_production/uploads/upload/image/9713/3533204/IFP50-5_External_and_Touch_Connection.png" target="_blank" rel="noopener noreferrer">Open the manufacturer’s connection image</a>.</p>\n<h3>Laptop is not charging</h3>\n<ul><li>Check the <strong>laptop charger is plugged into the dock’s power / PD IN socket</strong>, and the wall socket is switched on.</li><li>Check the dock’s laptop cable is firmly connected to your laptop.</li><li>If it still will not charge, plug the charger directly into your laptop to check whether it charges that way.</li></ul>\n<h2>3. Still stuck? Contact IT</h2>\n<p><a href="https://servicedesk.ispschools.com">Submit a support ticket</a> with the <strong>room name</strong>, whether <strong>picture, touch or charging</strong> is affected, and whether you tried the 30-second reset. If charging is affected, mention whether charging directly worked. A photo of the dock and screen connections helps.</p>', 'media': [], 'output': 'articles/dock-screen-touch-charging/index.html', 'source_url': '', 'custom': True},
     {
         "title": "Edit a PDF Online",
         "category": "Files & Conversion",

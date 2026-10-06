@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 450" role="img" aria-labelledby="title desc">
+<title id="title">HDMI and USB touch must use the matching screen group</title><desc id="desc">Example only: a line surrounds an HDMI input and its matching USB touch port. Both cables connect to the dock. Follow the lines and labels on your own screen.</desc>
+<rect width="640" height="450" rx="16" fill="#eef5fa"/>
+<g font-family="Arial,sans-serif" fill="#001442">
+<text x="30" y="45" font-size="26" font-weight="bold">At the interactive screen</text>
+<text x="30" y="77" font-size="19">Look for the printed grouping lines and labels.</text>
+<rect x="40" y="107" width="560" height="153" rx="14" fill="white" stroke="#001442" stroke-width="3"/>
+<text x="60" y="138" font-size="19" font-weight="bold">ONE MATCHING GROUP (example)</text>
+<path d="M112 159h115l-12 34h-91z" fill="#001442"/><text x="170" y="231" text-anchor="middle" font-size="20">HDMI IN</text>
+<path d="M415 159h32l8 8v27h-48v-27z" fill="#001442"/><text x="430" y="231" text-anchor="middle" font-size="20">USB TOUCH</text>
+<path d="M170 194v90h75v45m185-135v90h-75v45" fill="none" stroke="#22719a" stroke-width="7"/>
+<rect x="205" y="329" width="190" height="48" rx="10" fill="#001442"/><text x="300" y="361" text-anchor="middle" fill="white" font-size="23">DOCK</text>
+<text x="30" y="413" font-size="18">Port numbers and positions vary between models.</text>
+</g></svg>
