@@ -80,7 +80,7 @@ CATEGORY_OVERRIDES = {
 }
 
 ADDITIONAL_CATEGORY_GUIDES = {
-    "Devices & Windows": ["Dock issues: screen, touch or charging"],
+    "Devices & Windows": ["Dock issues: screen, touch or charging", "No sound from the classroom screen"],
     "Start Here": [
         "Sign In App: Link Your Staff ID Card",
     ],
@@ -96,7 +96,8 @@ CATEGORY_ACCENTS = [
 SERVICE_DESK_URL = "https://servicedesk.ispschools.com"
 
 RELATED_GUIDES = {
-    'Dock issues: screen, touch or charging': ["Changing display settings", "No sound and the speaker icon has a red cross through it", "Submitting a Support Ticket"],
+    'No sound from the classroom screen': ["Dock issues: screen, touch or charging", "Changing display settings", "No sound and the speaker icon has a red cross through it", "Theatre Projector & Sound (Senior)"],
+    'Dock issues: screen, touch or charging': ["No sound from the classroom screen", "Changing display settings", "No sound and the speaker icon has a red cross through it", "Submitting a Support Ticket"],
     "Have you tried switching it off and on again?!": [
         'Dock issues: screen, touch or charging',
         "Submitting a Support Ticket",
@@ -280,12 +281,14 @@ RELATED_GUIDES = {
         "Create a Teams Meeting",
     ],
     "Theatre Projector & Sound (Senior)": [
+        "No sound from the classroom screen",
         'Dock issues: screen, touch or charging',
         "Changing display settings",
         "No sound and the speaker icon has a red cross through it",
         "Prep Meeting Room",
     ],
     "Prep Meeting Room": [
+        "No sound from the classroom screen",
         'Dock issues: screen, touch or charging',
         "Theatre Projector & Sound (Senior)",
         "Create a Teams Meeting",
@@ -477,6 +480,7 @@ RELATED_GUIDES = {
         "How do I Spot Phishing Emails",
     ],
     "No sound and the speaker icon has a red cross through it": [
+        "No sound from the classroom screen",
         'Dock issues: screen, touch or charging',
         "Theatre Projector & Sound (Senior)",
         "Prep Meeting Room",
@@ -488,6 +492,7 @@ RELATED_GUIDES = {
         "Activating Text to Speech - Chromebook & Windows",
     ],
     "Changing display settings": [
+        "No sound from the classroom screen",
         'Dock issues: screen, touch or charging',
         "Theatre Projector & Sound (Senior)",
         "Chromebook shortcuts",
@@ -666,6 +671,52 @@ LOCAL_MEDIA = {
 }
 
 CUSTOM_ARTICLES = [
+    {
+        "title": "No sound from the classroom screen",
+        "category": "Room Help",
+        "summary": "Sound coming from your laptop instead of the board or TV? Choose the correct sound output and check the volume on Windows or Chromebook.",
+        "search_keywords": "no sound audio board TV classroom screen dock docking station HDMI USB speakers headphones output Windows Chromebook volume silent video clips sound coming from laptop",
+        "text": "",
+        "body": """
+          <div class="callout blue"><p><strong>Picture on the board, but sound coming from your laptop?</strong> Choose the screen or room speakers as your sound output, then check the volume.</p></div>
+          <h2>1. Check the basics</h2>
+          <ul>
+            <li>Make sure the screen is switched on and showing your laptop's picture.</li>
+            <li>Check that the laptop, screen and video player are not muted. Start with a low volume and turn it up gradually.</li>
+            <li>If the room uses separate speakers, check they are switched on and their volume is turned up.</li>
+          </ul>
+          <h2>2. Choose where the sound plays</h2>
+          <h3>Windows laptop</h3>
+          <ol>
+            <li><strong>Right-click the speaker icon</strong> next to the clock at the bottom right of your screen and choose <strong>Sound settings</strong>. You can also open <strong>Start &gt; Settings &gt; System &gt; Sound</strong>.</li>
+            <li>Under <strong>Output</strong>, find <strong>Choose where to play sound</strong> (or <strong>Choose your output device</strong>).</li>
+            <li><strong>Select the classroom screen or room speakers.</strong> It may be listed as a TV, the screen's brand, HDMI or USB Audio. The name may not match the label on the screen.</li>
+            <li>Play a short clip to check. If you are unsure which device is correct, try the available outputs one at a time at a low volume.</li>
+          </ol>
+          <p>If sound still comes from the laptop or headphones, check which output is selected again. You may need to choose it again after reconnecting the dock or moving rooms.</p>
+          <h3>Chromebook</h3>
+          <ol>
+            <li><strong>Select the time</strong> at the bottom right.</li>
+            <li>Next to the volume slider, open <strong>Audio settings</strong>.</li>
+            <li>Under <strong>Output</strong>, select the connected screen or room speakers, then play a short clip to check.</li>
+          </ol>
+          <p>You can also go to <strong>Settings &gt; Device &gt; Audio</strong> and choose the output device there.</p>
+          <h2>3. Still no sound?</h2>
+          <ul>
+            <li><strong>Screen or speakers missing from the list?</strong> Check the HDMI cable is firmly connected at both ends. If you use a dock, follow <a href="/articles/dock-screen-touch-charging/index.html">Dock issues: screen, touch or charging</a>, then reopen sound settings.</li>
+            <li><strong>Only one video or website is silent?</strong> Check its own volume and mute controls. Try a different clip. In Chrome, right-click the tab and choose <strong>Unmute site</strong> if that option appears.</li>
+            <li><strong>Red cross on the Windows speaker icon?</strong> Follow <a href="/articles/no-sound-and-the-speaker-icon-has-a-red-cross-through-it/index.html">the red-cross sound guide</a>.</li>
+            <li><strong>Using the Senior theatre?</strong> Follow <a href="/articles/senior-specific-room-help/theatre-projector-sound/index.html">Theatre Projector &amp; Sound (Senior)</a> for the room's amplifier and audio controls.</li>
+          </ul>
+          <h2>4. Still stuck? Contact IT</h2>
+          <p><a href="https://servicedesk.ispschools.com">Submit a support ticket</a> with the <strong>room name</strong>, whether you use <strong>Windows or a Chromebook</strong>, whether the picture works, and whether sound comes from the laptop or nowhere at all. Include a screenshot of the available output devices and mention the checks you have tried.</p>
+          <p>Further help: <a href="https://support.microsoft.com/en-us/windows/hardware/audio/fix-sound-or-audio-problems-in-windows">Microsoft's Windows sound guide</a> and <a href="https://support.google.com/chromebook/answer/10045949?hl=en-GB">Google's Chromebook audio guide</a>.</p>
+        """,
+        "media": [],
+        "output": "articles/classroom-screen-sound/index.html",
+        "source_url": "",
+        "custom": True,
+    },
     {'title': 'Dock issues: screen, touch or charging', 'category': 'Room Help', 'summary': 'Screen blank, touch not working or laptop not charging? Unplug every dock cable, wait 30 seconds, then reconnect with the laptop charger plugged into the dock.', 'text': 'Dock docking station screen board monitor blank no signal not working touch touchscreen interactive ViewSonic HDMI USB not charging charger PD IN. Unplug all dock cables, wait 30 seconds, reconnect charger to dock, screen HDMI and USB, and laptop. Match HDMI and USB TOUCH to the same screen group.    Screen blank, touch not working, or laptop not charging?  Reset the dock first. This fixes most dock issues.  \n 1. Reset the dock \n The dock is the small box or adapter that connects your laptop to the room’s screen and cables. \n \n  Unplug every cable from the dock  — including the laptop cable, charger, HDMI, USB and any other cables. Leave the screen ends in place. \n  Wait 30 seconds  with all dock cables unplugged. \n  Plug the laptop charger into the dock’s power input  (often labelled  PD IN  or  Power ). Make sure the charger is connected to a switched-on wall socket. \n  Reconnect the screen cables and any other cables to the dock.  Most rooms have an HDMI cable for the picture and a USB cable for touch. \n  Reconnect the dock to your laptop , wait a few moments, then check the picture, touch and charging. \n \n   \n 2. Still having a problem? \n No picture / “No signal” \n  Check the screen is switched on and your laptop is awake.  Check the HDMI cable is firmly connected at both ends.  On the screen, select the HDMI input used by the cable (for example, HDMI 1).  If the picture appears but is different from your laptop, follow  Changing display settings .  \n Picture works, but touch does not \n  Check the separate  USB touch cable  is connected to the dock and the screen’s  TOUCH  port. HDMI alone does not carry touch.  At the screen, the HDMI and USB touch cables must use the  same matching group . On ViewSonic screens, look for the printed lines grouping the ports together.  Follow the labels on your screen: the port numbers and groups differ between models. A general USB socket may not be the touch connection.  \n   Example only — follow the printed lines and labels on your room’s screen.  \n  ViewSonic’s connection guide and image (IFP50-5 example) .  Open the manufacturer’s connection image . \n Laptop is not charging \n  Check the  laptop charger is plugged into the dock’s power / PD IN socket , and the wall socket is switched on.  Check the dock’s laptop cable is firmly connected to your laptop.  If it still will not charge, plug the charger directly into your laptop to check whether it charges that way.  \n 3. Still stuck? Contact IT \n  Submit a support ticket  with the  room name , whether  picture, touch or charging  is affected, and whether you tried the 30-second reset. If charging is affected, mention whether charging directly worked. A photo of the dock and screen connections helps. ', 'body': '<figure class="media-frame help-illustration"><img src="../../assets/media/generated/dock-issues-screen-touch-or-charging.svg" alt="Dock issues: screen, touch or charging support guide illustration."></figure>\n<div class="callout blue"><p><strong>Screen blank, touch not working, or laptop not charging?</strong> Reset the dock first. This fixes most dock issues.</p></div>\n<h2>1. Reset the dock</h2>\n<p>The dock is the small box or adapter that connects your laptop to the room’s screen and cables.</p>\n<ol>\n<li><strong>Unplug every cable from the dock</strong> — including the laptop cable, charger, HDMI, USB and any other cables. Leave the screen ends in place.</li>\n<li><strong>Wait 30 seconds</strong> with all dock cables unplugged.</li>\n<li><strong>Plug the laptop charger into the dock’s power input</strong> (often labelled <strong>PD IN</strong> or <strong>Power</strong>). Make sure the charger is connected to a switched-on wall socket.</li>\n<li><strong>Reconnect the screen cables and any other cables to the dock.</strong> Most rooms have an HDMI cable for the picture and a USB cable for touch.</li>\n<li><strong>Reconnect the dock to your laptop</strong>, wait a few moments, then check the picture, touch and charging.</li>\n</ol>\n<figure class="media-frame"><img src="../../assets/img/dock-reset.svg" alt="Three-step dock reset: unplug every dock cable, wait 30 seconds, then reconnect the charger, screen cables and laptop." width="640" height="560" style="width:100%;height:auto"></figure>\n<h2>2. Still having a problem?</h2>\n<h3>No picture / “No signal”</h3>\n<ul><li>Check the screen is switched on and your laptop is awake.</li><li>Check the HDMI cable is firmly connected at both ends.</li><li>On the screen, select the HDMI input used by the cable (for example, HDMI 1).</li><li>If the picture appears but is different from your laptop, follow <a href="../changing-display-settings-on-chromebook-and-windows/index.html">Changing display settings</a>.</li></ul>\n<h3>Picture works, but touch does not</h3>\n<ul><li>Check the separate <strong>USB touch cable</strong> is connected to the dock and the screen’s <strong>TOUCH</strong> port. HDMI alone does not carry touch.</li><li>At the screen, the HDMI and USB touch cables must use the <strong>same matching group</strong>. On ViewSonic screens, look for the printed lines grouping the ports together.</li><li>Follow the labels on your screen: the port numbers and groups differ between models. A general USB socket may not be the touch connection.</li></ul>\n<figure class="media-frame"><img src="../../assets/img/dock-touch-group.svg" alt="Example screen connection panel: HDMI IN and USB TOUCH sit inside the same outlined group, with both cables going to the dock." width="640" height="450" style="width:100%;height:auto"><figcaption>Example only — follow the printed lines and labels on your room’s screen.</figcaption></figure>\n<p><a href="https://www.viewsonic.com/solution/kb/en_US/setup-ifp50-5/connecting-devices-1" target="_blank" rel="noopener noreferrer">ViewSonic’s connection guide and image (IFP50-5 example)</a>. <a href="https://static.helpjuice.com/helpjuice_production/uploads/upload/image/9713/3533204/IFP50-5_External_and_Touch_Connection.png" target="_blank" rel="noopener noreferrer">Open the manufacturer’s connection image</a>.</p>\n<h3>Laptop is not charging</h3>\n<ul><li>Check the <strong>laptop charger is plugged into the dock’s power / PD IN socket</strong>, and the wall socket is switched on.</li><li>Check the dock’s laptop cable is firmly connected to your laptop.</li><li>If it still will not charge, plug the charger directly into your laptop to check whether it charges that way.</li></ul>\n<h2>3. Still stuck? Contact IT</h2>\n<p><a href="https://servicedesk.ispschools.com">Submit a support ticket</a> with the <strong>room name</strong>, whether <strong>picture, touch or charging</strong> is affected, and whether you tried the 30-second reset. If charging is affected, mention whether charging directly worked. A photo of the dock and screen connections helps.</p>', 'media': [], 'output': 'articles/dock-screen-touch-charging/index.html', 'source_url': '', 'custom': True},
     {
         "title": "Edit a PDF Online",
@@ -1633,10 +1684,22 @@ def apply_article_updates(article):
             if item["type"] == "embedded resource":
                 item["url"] = "https://docs.google.com/spreadsheets/d/11HlvnGVHtu8QgzNGS97aYUz8LlHXKQwDr5M5q_j3vtw/edit?usp=sharing"
 
+    if title == "Dock issues: screen, touch or charging" and "classroom-screen-sound/index.html" not in article["body"]:
+        article["body"] = article["body"].replace(
+            "<h3>Laptop is not charging</h3>",
+            '<h3>Picture works, but there is no sound</h3>\n<p>Choose the screen or room speakers as your sound output. Follow <a href="/articles/classroom-screen-sound/index.html">No sound from the classroom screen</a> for Windows and Chromebook steps.</p>\n<h3>Laptop is not charging</h3>',
+        )
+    if title == "No sound and the speaker icon has a red cross through it" and "classroom-screen-sound/index.html" not in article["body"]:
+        article["body"] = '<div class="callout blue"><p>Sound coming from your laptop instead of the board or TV? Follow <a href="/articles/classroom-screen-sound/index.html">No sound from the classroom screen</a>.</p></div>\n' + article["body"]
+
     apply_local_media(article)
     article["body"] = linkify_plain_urls(article["body"])
     article["summary"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True)[:260])
     article["text"] = clean_text(BeautifulSoup(article["body"], "lxml").get_text(" ", strip=True))
+    if article["title"] == "No sound from the classroom screen":
+        sound_guide = next(item for item in CUSTOM_ARTICLES if item["title"] == article["title"])
+        article["summary"] = sound_guide["summary"]
+        article["search_keywords"] = sound_guide["search_keywords"]
     if article["title"] == "Sign In App: Link Your Staff ID Card":
         article["summary"] = (
             "Link your staff ID card to a school Sign In App screen so you can tap the reader to sign in and out."
