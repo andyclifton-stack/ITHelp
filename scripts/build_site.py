@@ -96,6 +96,7 @@ CATEGORY_ACCENTS = [
 SERVICE_DESK_URL = "https://servicedesk.ispschools.com"
 
 RELATED_GUIDES = {
+    'Use Gemini AI in Google Workspace Studio': ['Google Chat staff spaces', 'Gmail filters, labels, snooze and scheduling', 'Creating a new Google Calendar', '4 Tips on Staying Organised'],
     'No sound from the classroom screen': ["Dock issues: screen, touch or charging", "Changing display settings", "No sound and the speaker icon has a red cross through it", "Theatre Projector & Sound (Senior)"],
     'Dock issues: screen, touch or charging': ["No sound from the classroom screen", "Changing display settings", "No sound and the speaker icon has a red cross through it", "Submitting a Support Ticket"],
     "Have you tried switching it off and on again?!": [
@@ -152,6 +153,7 @@ RELATED_GUIDES = {
         "Google Account password and security",
     ],
     "4 Tips on Staying Organised": [
+        "Use Gemini AI in Google Workspace Studio",
         "How to Log Into Google Drive",
         "Google Drive is no longer showing in the file explorer",
         "I have overwritten a file in Google Drive",
@@ -240,6 +242,7 @@ RELATED_GUIDES = {
         "How to create a shared drive and add/remove people",
     ],
     "Creating a new Google Calendar": [
+        "Use Gemini AI in Google Workspace Studio",
         "Create appointment schedules in Google Calendar",
         "Persistent Meet link in Google Calendar",
         "Out of office in Gmail",
@@ -250,6 +253,7 @@ RELATED_GUIDES = {
         "Default Apps/Files",
     ],
     "Gmail filters, labels, snooze and scheduling": [
+        "Use Gemini AI in Google Workspace Studio",
         "How to create filters in Gmail",
         "How to search in Gmail",
         "Remove conversation view in Gmail",
@@ -512,6 +516,7 @@ RELATED_GUIDES = {
         "Submitting a Support Ticket",
     ],
     "Google Chat staff spaces": [
+        "Use Gemini AI in Google Workspace Studio",
         "How to Log Into Google Drive",
         "How to create a shared drive and add/remove people",
         "4 Tips on Staying Organised",
@@ -520,6 +525,7 @@ RELATED_GUIDES = {
 }
 
 EXACT_RELATED_GUIDES = {
+    'Use Gemini AI in Google Workspace Studio',
     "Sign In App: Link Your Staff ID Card",
     "Accident Forms",
     "Exam Information",
@@ -671,6 +677,17 @@ LOCAL_MEDIA = {
 }
 
 CUSTOM_ARTICLES = [
+    {
+        "title": "Use Gemini AI in Google Workspace Studio",
+        "category": "Google Workspace",
+        "summary": "Bring emails, calendar appointments, changes and deadlines into a short weekday briefing for teaching and office staff.",
+        "text": "Google Workspace Studio Gemini daily morning briefing teacher teachers teaching admin administrator office staff emails calendar invites appointments meetings unread Gmail deadlines schedule 7:30 am Chat notification draft practice test flow turn off turn on edit invoices approvals",
+        "body": (ROOT / "scripts/content/daily-briefing.html").read_text(encoding="utf-8"),
+        "media": [],
+        "output": "articles/google-drive-mail-meet-etc/daily-briefing-quick-guide/index.html",
+        "source_url": "",
+        "custom": True,
+    },
     {
         "title": "No sound from the classroom screen",
         "category": "Room Help",
